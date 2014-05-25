@@ -8,7 +8,6 @@
 
 #import "APAppDelegate.h"
 
-#import "APMasterViewController.h"
 #import "APConstants.h"
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 

@@ -8,7 +8,6 @@
 
 #import "SidebarViewController.h"
 #import "SWRevealViewController.h"
-#import "PhotoViewController.h"
 
 @interface SidebarViewController ()
 
@@ -31,7 +30,7 @@
 {
     [super viewDidLoad];
 
-    menuItems = @[@"title", @"news", @"comments", @"map", @"calendar", @"wishlist", @"bookmark", @"tag"];
+    menuItems = @[@"title"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,6 +55,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"Pindex is: %d",[indexPath length]);
     NSString *CellIdentifier = [menuItems objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
@@ -69,7 +69,7 @@
     UINavigationController *destViewController = (UINavigationController*)segue.destinationViewController;
     destViewController.title = [[menuItems objectAtIndex:indexPath.row] capitalizedString];
     
-    // Set the photo if it navigates to the PhotoView
+    /* Set the photo if it navigates to the PhotoView
     if ([segue.identifier isEqualToString:@"showPhoto"]) {
         PhotoViewController *photoController = (PhotoViewController*)segue.destinationViewController;
         NSString *photoFilename = [NSString stringWithFormat:@"%@_photo.jpg", [menuItems objectAtIndex:indexPath.row]];
@@ -87,7 +87,7 @@
         };
         
     }
-    
+    */
 }
 
 @end

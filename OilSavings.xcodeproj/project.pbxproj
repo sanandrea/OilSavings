@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1C262EE98A284CE2B1B1D0E0 /* libPods-OilSavings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FF496F4C7FD48D99EAA02C5 /* libPods-OilSavings.a */; };
+		A94392CE19328DF000439E89 /* SidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A94392CC19328DF000439E89 /* SidebarViewController.m */; };
 		A98D0874192FDC33000DB81D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98D0873192FDC33000DB81D /* Foundation.framework */; };
 		A98D0876192FDC33000DB81D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98D0875192FDC33000DB81D /* CoreGraphics.framework */; };
 		A98D0878192FDC33000DB81D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98D0877192FDC33000DB81D /* UIKit.framework */; };
@@ -18,8 +19,6 @@
 		A98D0889192FDC33000DB81D /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A98D0887192FDC33000DB81D /* Main_iPhone.storyboard */; };
 		A98D088C192FDC33000DB81D /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A98D088A192FDC33000DB81D /* Main_iPad.storyboard */; };
 		A98D088F192FDC33000DB81D /* OilSavings.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A98D088D192FDC33000DB81D /* OilSavings.xcdatamodeld */; };
-		A98D0892192FDC33000DB81D /* APMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98D0891192FDC33000DB81D /* APMasterViewController.m */; };
-		A98D0895192FDC33000DB81D /* APDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98D0894192FDC33000DB81D /* APDetailViewController.m */; };
 		A98D0897192FDC33000DB81D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A98D0896192FDC33000DB81D /* Images.xcassets */; };
 		A98D089E192FDC33000DB81D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98D089D192FDC33000DB81D /* XCTest.framework */; };
 		A98D089F192FDC33000DB81D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98D0873192FDC33000DB81D /* Foundation.framework */; };
@@ -54,6 +53,8 @@
 
 /* Begin PBXFileReference section */
 		8FF496F4C7FD48D99EAA02C5 /* libPods-OilSavings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OilSavings.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A94392CC19328DF000439E89 /* SidebarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarViewController.m; sourceTree = "<group>"; };
+		A94392CD19328DF000439E89 /* SidebarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarViewController.h; sourceTree = "<group>"; };
 		A98D0870192FDC33000DB81D /* OilSavings.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OilSavings.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98D0873192FDC33000DB81D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A98D0875192FDC33000DB81D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -68,10 +69,6 @@
 		A98D0888192FDC33000DB81D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		A98D088B192FDC33000DB81D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		A98D088E192FDC33000DB81D /* OilSavings.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OilSavings.xcdatamodel; sourceTree = "<group>"; };
-		A98D0890192FDC33000DB81D /* APMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APMasterViewController.h; sourceTree = "<group>"; };
-		A98D0891192FDC33000DB81D /* APMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APMasterViewController.m; sourceTree = "<group>"; };
-		A98D0893192FDC33000DB81D /* APDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APDetailViewController.h; sourceTree = "<group>"; };
-		A98D0894192FDC33000DB81D /* APDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APDetailViewController.m; sourceTree = "<group>"; };
 		A98D0896192FDC33000DB81D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A98D089C192FDC33000DB81D /* OilSavingsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OilSavingsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98D089D192FDC33000DB81D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -174,12 +171,10 @@
 				A98D0885192FDC33000DB81D /* APAppDelegate.m */,
 				A98D0887192FDC33000DB81D /* Main_iPhone.storyboard */,
 				A98D088A192FDC33000DB81D /* Main_iPad.storyboard */,
+				A94392CD19328DF000439E89 /* SidebarViewController.h */,
+				A94392CC19328DF000439E89 /* SidebarViewController.m */,
 				A99FCCDE19327CA300B26D6A /* APMapViewController.h */,
 				A99FCCDF19327CA400B26D6A /* APMapViewController.m */,
-				A98D0890192FDC33000DB81D /* APMasterViewController.h */,
-				A98D0891192FDC33000DB81D /* APMasterViewController.m */,
-				A98D0893192FDC33000DB81D /* APDetailViewController.h */,
-				A98D0894192FDC33000DB81D /* APDetailViewController.m */,
 				A98D0896192FDC33000DB81D /* Images.xcassets */,
 				A98D088D192FDC33000DB81D /* OilSavings.xcdatamodeld */,
 				A98D087C192FDC33000DB81D /* Supporting Files */,
@@ -391,7 +386,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A98D0895192FDC33000DB81D /* APDetailViewController.m in Sources */,
+				A94392CE19328DF000439E89 /* SidebarViewController.m in Sources */,
 				A9C71175193229A300E8EEF9 /* APConstants.m in Sources */,
 				A9C7117919322BD200E8EEF9 /* APGaeApiClient.m in Sources */,
 				A98D0882192FDC33000DB81D /* main.m in Sources */,
@@ -400,7 +395,6 @@
 				A99FCCDB19327AE300B26D6A /* SWRevealViewController.m in Sources */,
 				A9C711711932284B00E8EEF9 /* APCar.m in Sources */,
 				A98D088F192FDC33000DB81D /* OilSavings.xcdatamodeld in Sources */,
-				A98D0892192FDC33000DB81D /* APMasterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
