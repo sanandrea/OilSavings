@@ -10,4 +10,6 @@
 
 @interface SidebarViewController : UITableViewController
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addCarButton;
+
 @end
