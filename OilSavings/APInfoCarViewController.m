@@ -235,25 +235,28 @@
     
     if ([[segue identifier] isEqualToString:@"EditSelectedItem"]) {
         
-        /* TODO
+        
         APEditCarViewController *editController = (APEditCarViewController *)[segue destinationViewController];
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         editController.editedObject = self.car;
         switch (indexPath.row) {
             case 0: {
-                editController.editedFieldKey = @"title";
-                editController.editedFieldName = NSLocalizedString(@"title", @"display name for title");
+                editController.editedFieldKey = @"brand";
+                editController.type = kBrandEdit;
+                editController.editedFieldName = NSLocalizedString(@"Marca", @"display name for title");
             } break;
             case 1: {
-                editController.editedFieldKey = @"author";
-                editController.editedFieldName = NSLocalizedString(@"author", @"display name for author");
+                editController.editedFieldKey = @"model";
+                editController.type = kModelEdit;
+                editController.editedFieldName = NSLocalizedString(@"Modello", @"display name for author");
             } break;
             case 2: {
-                editController.editedFieldKey = @"copyright";
-                editController.editedFieldName = NSLocalizedString(@"copyright", @"display name for copyright");
+                editController.editedFieldKey = @"friendlyName";
+                editController.type = kFriendlyNameEdit;
+                editController.editedFieldName = NSLocalizedString(@"Nome", @"display name for copyright");
             } break;
         }
-        */
+        
     }
 }
 
