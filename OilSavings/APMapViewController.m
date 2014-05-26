@@ -8,6 +8,8 @@
 
 #import "APMapViewController.h"
 #import "SWRevealViewController.h"
+#import "APAddCarViewController.h"
+#import "APConstants.h"
 
 @interface APMapViewController ()
 
@@ -30,6 +32,20 @@
     
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    
+}
+
+- (void) viewDidAppear:(BOOL)animated{
+    //Check if there is any Car Saved.
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([[prefs objectForKey:kCarsRegistered] integerValue] == 0) {
+        //Present Add Car View controller by presenting the container View Controller
+        
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle: nil];
+        UINavigationController *controller = (UINavigationController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"addCarNavContainer"];
+        [self presentViewController:controller animated:YES completion:nil];
+    }
     
 }
 

@@ -24,7 +24,7 @@
                      @(NO),
                      [NSNumber numberWithInt:1],//DB Version
                      [NSNumber numberWithInt:1],//Resource Version
-                     [NSNumber numberWithInt:1],//Number of Cars
+                     [NSNumber numberWithInt:0],//Number of Cars
                      nil];
     NSArray* keys = [[NSArray alloc] initWithObjects:
                      kDBDowloaded,

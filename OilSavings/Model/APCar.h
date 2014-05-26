@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface APCar : NSObject
+@interface APCar : NSManagedObject
 @property (nonatomic, strong) NSString *brand;
 @property (nonatomic, strong) NSString *model;
 @property (nonatomic) NSInteger modelID;
