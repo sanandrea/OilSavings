@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APAddCarViewController.h"
 
-@interface SidebarViewController : UITableViewController
+@interface SidebarViewController : UITableViewController <NSFetchedResultsControllerDelegate, AddViewControllerDelegate>
+
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addCarButton;
 

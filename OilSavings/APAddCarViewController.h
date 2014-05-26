@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APInfoCarViewController.h"
 
-@interface APAddCarViewController : UIViewController
+@protocol AddViewControllerDelegate;
 
+@interface APAddCarViewController : APInfoCarViewController
+@property (nonatomic, weak) id <AddViewControllerDelegate> delegate;
+@property (nonatomic,strong) NSManagedObjectContext *managedObjectContext;
+
+@end
+
+@protocol AddViewControllerDelegate
+- (void)addViewController:(APAddCarViewController *)controller didFinishWithSave:(BOOL)save;
 @end

@@ -74,7 +74,7 @@
         <!--Sidebar View Controller - Le Mie Auto-->
         <scene sceneID="DtZ-jV-128">
             <objects>
-                <tableViewController id="7Zl-g8-JHl" customClass="SidebarViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MyCarsViewController" id="7Zl-g8-JHl" customClass="SidebarViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="suB-od-7Uh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -94,7 +94,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <segue destination="XL3-WR-W7p" kind="push" id="Aww-fl-qfJ"/>
+                                                <segue destination="XL3-WR-W7p" kind="push" identifier="ShowCarInfo" id="Aww-fl-qfJ"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Alfa" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zmq-Ol-Dsm">
@@ -116,10 +116,13 @@
                     <navigationItem key="navigationItem" title="Le Mie Auto" id="XuM-f0-dCF">
                         <barButtonItem key="leftBarButtonItem" title="Add" id="3WS-IH-Jgz">
                             <connections>
-                                <segue destination="ETI-87-ckD" kind="modal" identifier="addNewCar" id="KpQ-sa-Cyn"/>
+                                <segue destination="ETI-87-ckD" kind="modal" identifier="AddNewCar" id="KpQ-sa-Cyn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addCarButton" destination="3WS-IH-Jgz" id="2Gt-ni-kLZ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Cw-AF-N1S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -231,15 +234,20 @@
                     <navigationItem key="navigationItem" title="Info" id="Kad-Xm-gvh">
                         <barButtonItem key="backBarButtonItem" title="YES" id="ROC-LX-xIa"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="brandLabel" destination="wP7-Cg-76u" id="aF6-sw-DoH"/>
+                        <outlet property="freindlyNameLabel" destination="Tfl-9P-IKb" id="mmL-vx-AeT"/>
+                        <outlet property="modelLabel" destination="Nfj-ia-JNU" id="8Nh-UQ-vgd"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uc4-ij-BMe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1192" y="-519"/>
         </scene>
-        <!--Table View Controller - Aggiungi Auto-->
+        <!--Add Car View Controller - Aggiungi Auto-->
         <scene sceneID="miA-ye-8Fb">
             <objects>
-                <tableViewController id="ZSu-HK-tQz" sceneMemberID="viewController">
+                <tableViewController id="ZSu-HK-tQz" customClass="APAddCarViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Nvl-zd-u0l">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -325,16 +333,27 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Aggiungi Auto" id="7lD-ej-Bb2">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Uh4-bz-5Nc"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="4ca-sb-G3a"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Uh4-bz-5Nc">
+                            <connections>
+                                <action selector="cancel:" destination="ZSu-HK-tQz" id="cmH-6Q-emY"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="4ca-sb-G3a">
+                            <connections>
+                                <action selector="save:" destination="ZSu-HK-tQz" id="EQx-Fa-Y9I"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="brandLabel" destination="UPR-f5-Ipl" id="zGd-P4-SSj"/>
+                        <outlet property="freindlyNameLabel" destination="hhd-lv-HMZ" id="GCl-uW-0w2"/>
+                        <outlet property="modelLabel" destination="177-7v-CRe" id="UEc-lO-ma2"/>
                         <segue destination="ha6-SB-smn" kind="push" identifier="EditSelectedItem" id="mWX-Sc-xBZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n0P-CP-DfQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1187" y="152"/>
+            <point key="canvasLocation" x="1208" y="152"/>
         </scene>
         <!--Edit Car View Controller-->
         <scene sceneID="ONF-K1-LtE">

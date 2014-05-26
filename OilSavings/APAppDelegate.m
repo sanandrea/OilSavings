@@ -41,7 +41,8 @@
     //This will automatically show the network activity indicator whenever AFNetworking is performing network requests.
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     
-    /* Override point for customization after application launch.
+    //Override point for customization after application launch.
+    /*
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
         UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
@@ -51,8 +52,8 @@
         APMasterViewController *controller = (APMasterViewController *)masterNavigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
     } else {
-        UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-        APMasterViewController *controller = (APMasterViewController *)navigationController.topViewController;
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle: nil];
+        SidebarViewController *controller = (SidebarViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"MyCarsViewController"];
         controller.managedObjectContext = self.managedObjectContext;
     }
     */
