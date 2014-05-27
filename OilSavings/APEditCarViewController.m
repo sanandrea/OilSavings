@@ -7,12 +7,17 @@
 //
 
 #import "APEditCarViewController.h"
+#import <sqlite3.h>
 
 @interface APEditCarViewController ()
 
 @property (nonatomic, weak) IBOutlet UITextField *textField;
 @property (nonatomic, weak) IBOutlet UIPickerView *pickerView;
 
+@property (strong, nonatomic) NSMutableArray *pickerData;
+
+@property (strong, nonatomic) NSString *databasePath;
+@property (nonatomic) sqlite3 *carDB;
 @end
 
 @implementation APEditCarViewController
@@ -32,11 +37,97 @@
     // Do any additional setup after loading the view.
     self.title = self.editedFieldName;
     
-    _brandNames = @[@"Audi", @"BMW",
-                      @"VW", @"BENZ", @"Honda"];
+    //Root filepath
+    NSString *appDir = [[NSBundle mainBundle] resourcePath];
     
-    _modelNames = @[ @"Brabus",@"Seria 3",@"R8"];
+    _databasePath = [[NSString alloc] initWithString: [appDir stringByAppendingPathComponent:@"car.sqlite"]];
     
+    NSFileManager *filemgr = [NSFileManager defaultManager];
+    
+    if ([filemgr fileExistsAtPath: _databasePath ] == NO){
+        ALog("Error here buddy , could not find car db file");
+    }else{
+        const char *dbpath = [_databasePath UTF8String];
+        
+        if (sqlite3_open(dbpath, &_carDB) != SQLITE_OK){
+            ALog("Failed to open/create database");
+        }
+        //Load data
+        
+        
+        NSString *querySQL;
+        sqlite3_stmt    *statement;
+
+        if (self.type == kBrandEdit) {
+            querySQL = @"SELECT brand FROM brands ORDER BY brand";
+        }else{
+            querySQL = [NSString stringWithFormat:
+                      @"SELECT model FROM models WHERE brandID = (SELECT id from brands WHERE brand = '%@')",
+                      [self.editedObject valueForKeyPath:@"brand"]];
+        }
+        
+        
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(_carDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            self.pickerData = [[NSMutableArray alloc]init];
+            
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                NSString *info = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
+                [self.pickerData addObject:info];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(_carDB);
+        
+        //set field equal to the first of the list.
+        self.textField.text = self.pickerData[0];
+        
+    }
+}
+
+- (void) saveCarParamsOfModel:(NSString*)model{
+    NSString *appDir = [[NSBundle mainBundle] resourcePath];
+    
+    _databasePath = [[NSString alloc] initWithString: [appDir stringByAppendingPathComponent:@"car.sqlite"]];
+    
+    NSFileManager *filemgr = [NSFileManager defaultManager];
+    
+    if ([filemgr fileExistsAtPath: _databasePath ] == NO){
+        ALog("Error here buddy , could not find car db file");
+    }else{
+        const char *dbpath = [_databasePath UTF8String];
+        
+        if (sqlite3_open(dbpath, &_carDB) != SQLITE_OK){
+            ALog("Failed to open/create database");
+        }
+        //Load data
+        
+        
+        NSString *querySQL = querySQL = [NSString stringWithFormat:
+                    @"SELECT * FROM parameters WHERE modelID = (SELECT id from models WHERE model = '%@')",
+                    [self.editedObject valueForKeyPath:@"model"]];
+        sqlite3_stmt    *statement;
+
+        
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(_carDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            self.pickerData = [[NSMutableArray alloc]init];
+            
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                [self.editedObject setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 1)] forKeyPath:@"pA"];
+                [self.editedObject setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 2)] forKeyPath:@"pB"];
+                [self.editedObject setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 3)] forKeyPath:@"pB"];
+                [self.editedObject setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 4)] forKeyPath:@"pD"];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(_carDB);
+        
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -57,6 +148,7 @@
         self.textField.hidden = YES;
         self.pickerView.hidden = NO;
         
+        self.pickerData = self.pickerData;
     }
     self.pickerView.delegate = self;
     self.pickerView.showsSelectionIndicator = YES;
@@ -76,6 +168,11 @@
     [undoManager setActionName:[NSString stringWithFormat:@"%@", self.editedFieldName]];
     
     [self.editedObject setValue:self.textField.text forKey:self.editedFieldKey];
+    
+    //if we chose model then save all car parameters
+    if (self.type == kModelEdit) {
+        [self saveCarParamsOfModel:self.textField.text];
+    }
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -109,14 +206,14 @@
 - (NSInteger)pickerView:(UIPickerView *)pickerView
 numberOfRowsInComponent:(NSInteger)component
 {
-    return _brandNames.count;
+    return _pickerData.count;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView
              titleForRow:(NSInteger)row
             forComponent:(NSInteger)component
 {
-    return _brandNames[row];
+    return _pickerData[row];
 }
 
 #pragma mark -
@@ -124,10 +221,11 @@ numberOfRowsInComponent:(NSInteger)component
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row
       inComponent:(NSInteger)component
 {
-
-    self.textField.text = _brandNames[row];
+    self.textField.text = _pickerData[row];
 }
 
-
+- (void)dealloc{
+    sqlite3_close(_carDB);
+}
 
 @end

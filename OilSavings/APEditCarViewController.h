@@ -21,7 +21,4 @@ typedef enum{
 @property (nonatomic, strong) NSString *editedFieldName;
 @property (nonatomic) EDIT_TYPE type;
 
-@property (strong, nonatomic) NSArray *brandNames;
-@property (strong, nonatomic) NSArray *modelNames;
-
 @end

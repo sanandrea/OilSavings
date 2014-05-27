@@ -38,21 +38,8 @@
     }
     
     self.tableView.allowsSelectionDuringEditing = YES;
-    // if the local changes behind our back, we need to be notified so we can update the date
-    // format in the table view cells
-    //
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(localeChanged:)
-                                                 name:NSCurrentLocaleDidChangeNotification
-                                               object:nil];
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NSCurrentLocaleDidChangeNotification
-                                                  object:nil];
-}
 
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -214,21 +201,6 @@
 }
 
 
-#pragma mark - Date Formatter
-
-- (NSDateFormatter *)dateFormatter {
-    
-    static NSDateFormatter *dateFormatter = nil;
-    if (dateFormatter == nil) {
-        dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-        [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-    }
-    return dateFormatter;
-}
-
-
-
 #pragma mark - Segue management
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -259,16 +231,4 @@
         
     }
 }
-
-
-#pragma mark - Locale changes
-
-- (void)localeChanged:(NSNotification *)notif
-{
-    // the user changed the locale (region format) in Settings, so we are notified here to
-    // update the date format in the table view cells
-    //
-    [self updateInterface];
-}
-
 @end
