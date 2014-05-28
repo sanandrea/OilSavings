@@ -31,6 +31,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="friendlyName" destination="vmB-9C-RPs" id="eCX-NQ-g6U"/>
+                <outlet property="infoButton" destination="Kcj-RX-3yR" id="95H-no-8a2"/>
             </connections>
         </tableViewCell>
     </objects>

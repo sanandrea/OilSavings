@@ -10,8 +10,8 @@
 
 @implementation APTableViewCell
 
-@synthesize friendlyName,infoButton;
 
+/*
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -20,7 +20,7 @@
     }
     return self;
 }
-
+*/
 - (void)awakeFromNib
 {
     // Initialization code

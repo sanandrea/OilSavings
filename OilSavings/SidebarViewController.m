@@ -11,11 +11,12 @@
 #import "APInfoCarViewController.h"
 #import "APAppDelegate.h"
 #import "APCar.h"
-
+#import "APTableViewCell.h"
 
 @interface SidebarViewController ()
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic,strong) NSIndexPath* selectedPath;
 
 @end
 
@@ -52,12 +53,20 @@
     }
 }
 
+- (IBAction)startInfoPush:(UIButton*)sender{
+    ALog("Name is: ");
+    CGPoint buttonOriginInTableView = [sender convertPoint:CGPointZero toView:self.tableView];
+    self.selectedPath = [self.tableView indexPathForRowAtPoint:buttonOriginInTableView];
+    [self performSegueWithIdentifier: @"ShowCarInfo" sender: self];
+}
 #pragma mark - Table view data source methods
 
 // The data source methods are handled primarily by the fetch results controller
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     return [[self.fetchedResultsController sections] count];
+    //Only one section
+    //return 1;
 }
 
 // Customize the number of rows in the table view.
@@ -68,32 +77,37 @@
 }
 
 // Customize the appearance of table view cells.
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(APTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
     // Configure the cell to show the book's title
     APCar *car = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = car.friendlyName;
+    cell.friendlyName.text = car.friendlyName;
+    
+    //Add target for Info button press
+    [cell.infoButton addTarget:self action:@selector(startInfoPush:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    APTableViewCell *cell = (APTableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        //cell = [[APTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CarCellDesign" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
     }
     // Configure the cell.
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
-
+/*
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
     // Display the authors' names as section headings.
     return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
 }
-
+*/
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
@@ -177,7 +191,7 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self configureCell:((APTableViewCell*)[tableView cellForRowAtIndexPath:indexPath]) atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:
@@ -235,8 +249,9 @@
     
     else if ([[segue identifier] isEqualToString:@"ShowCarInfo"]) {
         
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        APCar *selectedCar = (APCar *)[[self fetchedResultsController] objectAtIndexPath:indexPath];
+//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        APCar *selectedCar = (APCar *)[[self fetchedResultsController] objectAtIndexPath:self.selectedPath];
         
         // Pass the selected car to the new view controller.
         APInfoCarViewController *infoViewController = (APInfoCarViewController *)[segue destinationViewController];

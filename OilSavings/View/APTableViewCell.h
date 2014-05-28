@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "APCar.h"
 @interface APTableViewCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *friendlyName;
 @property (nonatomic, weak) IBOutlet UIButton *infoButton;
+@property (nonatomic, strong) APCar *editedObject;
 
 @end
