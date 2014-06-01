@@ -14,6 +14,11 @@ extern NSString *const kResVersion;
 extern NSString *const kCarsRegistered;
 extern NSString *const kPreferredCar;
 
+typedef enum{
+    kEnergyGasoline,
+    kEnergyDiesel
+}ENERGY_TYPE;
+
 @interface APConstants : NSObject
 
 @end

@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString *friendlyName;
 
 @property (nonatomic, strong) NSNumber *modelID;
+@property (nonatomic, strong) NSNumber *energy;
 @property (nonatomic, strong) NSNumber *pA;
 @property (nonatomic, strong) NSNumber *pB;
 @property (nonatomic, strong) NSNumber *pC;

@@ -10,6 +10,6 @@
 
 @implementation APCar
 
-@dynamic brand,model,friendlyName,pA,pB,pC,pD,modelID;
+@dynamic brand,model,friendlyName,pA,pB,pC,pD,modelID,energy;
 
 @end

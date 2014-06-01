@@ -8,6 +8,7 @@
 
 #import "APEditCarViewController.h"
 #import <sqlite3.h>
+#import "APConstants.h"
 
 @interface APEditCarViewController ()
 
@@ -18,6 +19,7 @@
 
 @property (strong, nonatomic) NSString *databasePath;
 @property (nonatomic) sqlite3 *carDB;
+@property (nonatomic, strong) NSArray *energyTypesStrings;
 @end
 
 @implementation APEditCarViewController
@@ -28,6 +30,10 @@
     if (self) {
         // Custom initialization
     }
+    self.energyTypesStrings = [[NSArray alloc]initWithObjects:
+                  @"gasoline",
+                  @"diesel",
+                  nil];
     return self;
 }
 
@@ -62,7 +68,7 @@
             querySQL = @"SELECT brand FROM brands ORDER BY brand";
         }else{
             querySQL = [NSString stringWithFormat:
-                      @"SELECT model FROM models WHERE brandID = (SELECT id from brands WHERE brand = '%@')",
+                      @"SELECT model,energy FROM models WHERE brandID = (SELECT id from brands WHERE brand = '%@')",
                       [self.editedObject valueForKeyPath:@"brand"]];
         }
         
@@ -105,7 +111,8 @@
         //Load data
         
         
-        NSString *querySQL = querySQL = [NSString stringWithFormat:
+        NSString *querySQL;
+        querySQL = [NSString stringWithFormat:
                     @"SELECT * FROM parameters WHERE modelID = (SELECT id from models WHERE model = '%@')",
                     [self.editedObject valueForKeyPath:@"model"]];
         sqlite3_stmt    *statement;
@@ -126,6 +133,28 @@
             }
             sqlite3_finalize(statement);
         }
+        //get also type of energy supply
+        querySQL = [NSString stringWithFormat:
+                    @"SELECT energy FROM models WHERE modelID = '%d')",
+                    [[self.editedObject valueForKeyPath:@"modelID"] intValue]];
+        
+        if (sqlite3_prepare_v2(_carDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            self.pickerData = [[NSMutableArray alloc]init];
+            
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                
+                NSString* energy = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
+                
+                if ([energy isEqualToString:[self.energyTypesStrings objectAtIndex:kEnergyGasoline]]) {
+                    [self.editedObject setValue:[NSNumber numberWithInt:kEnergyGasoline] forKeyPath:@"energy"];
+                }else if ([energy isEqualToString:[self.energyTypesStrings objectAtIndex:kEnergyDiesel]]){
+                    [self.editedObject setValue:[NSNumber numberWithInt:kEnergyDiesel] forKeyPath:@"energy"];
+                }
+            }
+            sqlite3_finalize(statement);
+        }
+        
         sqlite3_close(_carDB);
         
     }
