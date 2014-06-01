@@ -106,6 +106,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="P8k-qS-1QL" kind="custom" identifier="SelectCar" customClass="SWRevealViewControllerSegue" id="Jc3-kK-eSM"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -238,7 +241,6 @@
                         <outlet property="brandLabel" destination="wP7-Cg-76u" id="aF6-sw-DoH"/>
                         <outlet property="freindlyNameLabel" destination="Tfl-9P-IKb" id="mmL-vx-AeT"/>
                         <outlet property="modelLabel" destination="Nfj-ia-JNU" id="8Nh-UQ-vgd"/>
-                        <segue destination="ha6-SB-smn" kind="push" identifier="EditSelectedItem" id="uCr-It-KsC"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uc4-ij-BMe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -443,6 +445,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="uCr-It-KsC"/>
+        <segue reference="Jc3-kK-eSM"/>
     </inferredMetricsTieBreakers>
 </document>

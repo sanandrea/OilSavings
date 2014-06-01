@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "APAddCarViewController.h"
 
-@interface SidebarViewController : UITableViewController <NSFetchedResultsControllerDelegate, AddViewControllerDelegate>
+@interface SidebarViewController : UITableViewController <NSFetchedResultsControllerDelegate, AddViewControllerDelegate, UITableViewDelegate>
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 

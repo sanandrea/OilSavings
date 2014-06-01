@@ -47,6 +47,9 @@
         [self presentViewController:controller animated:YES completion:nil];
     }
     */
+    if (self.myCar != nil) {
+        ALog("Car name is: %@", self.myCar.friendlyName);
+    }
 }
 
 - (void)didReceiveMemoryWarning

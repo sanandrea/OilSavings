@@ -10,6 +10,7 @@
 
 #import "APConstants.h"
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
+#import "SWRevealViewController.h"
 
 @implementation APAppDelegate
 
@@ -40,6 +41,15 @@
     
     //This will automatically show the network activity indicator whenever AFNetworking is performing network requests.
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([[prefs objectForKey:kCarsRegistered] integerValue] == 0) {
+        //Present Add Car View controller by presenting the container View Controller
+        
+        SWRevealViewController* rvc = (SWRevealViewController*) self.window.rootViewController;
+        [rvc revealToggleAnimated:YES];
+    }
     
     //Override point for customization after application launch.
     /*

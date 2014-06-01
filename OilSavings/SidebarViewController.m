@@ -12,7 +12,8 @@
 #import "APAppDelegate.h"
 #import "APCar.h"
 #import "APTableViewCell.h"
-
+#import "APConstants.h"
+#import "APMapViewController.h"
 @interface SidebarViewController ()
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
@@ -51,6 +52,15 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+    [self.tableView setDelegate:self];
+    
+}
+- (void) viewDidAppear:(BOOL)animated{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([[prefs objectForKey:kCarsRegistered] integerValue] == 0) {
+        [self performSegueWithIdentifier:@"AddNewCar" sender:self];
+    }
+
 }
 
 - (IBAction)startInfoPush:(UIButton*)sender{
@@ -59,6 +69,18 @@
     self.selectedPath = [self.tableView indexPathForRowAtPoint:buttonOriginInTableView];
     [self performSegueWithIdentifier: @"ShowCarInfo" sender: self];
 }
+
+
+#pragma mark - Table view Delegate for Cell Selection
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    UINavigationController* nvc = (UINavigationController*) self.revealViewController.frontViewController;
+    APMapViewController* mvc = (APMapViewController*) nvc.topViewController;
+    APCar *car = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    mvc.myCar = car;
+    [self.revealViewController revealToggleAnimated:YES];
+}
+
+
 #pragma mark - Table view data source methods
 
 // The data source methods are handled primarily by the fetch results controller
@@ -257,6 +279,12 @@
         APInfoCarViewController *infoViewController = (APInfoCarViewController *)[segue destinationViewController];
         infoViewController.car = selectedCar;
     }
+    else if ([[segue identifier] isEqualToString:@"SelectCar"]){
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        APCar *car = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        APMapViewController *mvc = (APMapViewController *)[segue destinationViewController];
+        mvc.myCar = car;
+    }
 }
 
 
@@ -292,6 +320,12 @@
              */
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
+        }
+        
+        //update the prefs
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        if ([[prefs objectForKey:kCarsRegistered] integerValue] == 0) {
+            [prefs setInteger:1 forKey:kCarsRegistered];
         }
     }
     

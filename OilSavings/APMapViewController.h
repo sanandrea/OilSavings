@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "APCar.h"
 
 @interface APMapViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
+@property (nonatomic, strong) APCar* myCar;
 
 @end
