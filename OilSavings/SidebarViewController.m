@@ -64,19 +64,34 @@
 }
 
 - (IBAction)startInfoPush:(UIButton*)sender{
-    ALog("Name is: ");
+    //info button was pressed on a row, find the point of the screen of this info button
     CGPoint buttonOriginInTableView = [sender convertPoint:CGPointZero toView:self.tableView];
+    
+    //Find the row that corresponds to this point
     self.selectedPath = [self.tableView indexPathForRowAtPoint:buttonOriginInTableView];
+    
+    //show the infoviewcontroller
     [self performSegueWithIdentifier: @"ShowCarInfo" sender: self];
 }
 
 
 #pragma mark - Table view Delegate for Cell Selection
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    //Get MapViewController
     UINavigationController* nvc = (UINavigationController*) self.revealViewController.frontViewController;
     APMapViewController* mvc = (APMapViewController*) nvc.topViewController;
+    
+    //Get selected car for this index
     APCar *car = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    //set this car to the Map ViewController
     mvc.myCar = car;
+    
+    //save in the preferences the model ID of the selected CAR
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [prefs setInteger:[car.modelID intValue] forKey:kPreferredCar];
+    
+    //close side menu
     [self.revealViewController revealToggleAnimated:YES];
 }
 
@@ -279,12 +294,6 @@
         APInfoCarViewController *infoViewController = (APInfoCarViewController *)[segue destinationViewController];
         infoViewController.car = selectedCar;
     }
-    else if ([[segue identifier] isEqualToString:@"SelectCar"]){
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        APCar *car = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        APMapViewController *mvc = (APMapViewController *)[segue destinationViewController];
-        mvc.myCar = car;
-    }
 }
 
 
@@ -299,18 +308,18 @@
         /*
          The new car is associated with the add controller's managed object context.
          This means that any edits that are made don't affect the application's main managed object context -- it's a way of keeping disjoint edits in a separate scratchpad. Saving changes to that context, though, only push changes to the fetched results controller's context. To save the changes to the persistent store, you have to save the fetch results controller's context as well.
+         NSManagedObjectContext *addingManagedObjectContext = [controller managedObjectContext];
          */
+//        if (![self.managedObjectContext save:&error]) {
+//            /*
+//             Replace this implementation with code to handle the error appropriately.
+//        
+//             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//             */
+//            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+//            abort();
+//        }
         NSError *error;
-        NSManagedObjectContext *addingManagedObjectContext = [controller managedObjectContext];
-        if (![addingManagedObjectContext save:&error]) {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-             */
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
         
         if (![[self.fetchedResultsController managedObjectContext] save:&error]) {
             /*
@@ -321,12 +330,13 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
-        
         //update the prefs
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         if ([[prefs objectForKey:kCarsRegistered] integerValue] == 0) {
             [prefs setInteger:1 forKey:kCarsRegistered];
         }
+        [prefs setInteger:[controller.car.modelID intValue] forKey:kPreferredCar];
+        [prefs synchronize];
     }
     
     // Dismiss the modal view to return to the main list

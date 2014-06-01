@@ -32,7 +32,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    ALog("Car brand is %@",self.car.brand);
+//    ALog("Car brand is %@",self.car.brand);
     if (!self.brandSet) {
         //Disable click on model
         NSIndexPath *path = [NSIndexPath indexPathForRow:1 inSection:0];

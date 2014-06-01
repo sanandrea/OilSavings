@@ -12,6 +12,7 @@ NSString *const kDBDowloaded = @"dbDownloaded";
 NSString *const kDBVersion = @"dbVersion";
 NSString *const kResVersion = @"resVersion";
 NSString *const kCarsRegistered = @"carsRegistered";
+NSString *const kPreferredCar = @"preferredCar";
 
 @implementation APConstants
 

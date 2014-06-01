@@ -12,6 +12,7 @@ extern NSString *const kDBDowloaded;
 extern NSString *const kDBVersion;
 extern NSString *const kResVersion;
 extern NSString *const kCarsRegistered;
+extern NSString *const kPreferredCar;
 
 @interface APConstants : NSObject
 

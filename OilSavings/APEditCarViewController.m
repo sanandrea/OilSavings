@@ -118,6 +118,7 @@
             self.pickerData = [[NSMutableArray alloc]init];
             
             while (sqlite3_step(statement) == SQLITE_ROW) {
+                [self.editedObject setValue:[NSNumber numberWithInt:sqlite3_column_int(statement, 0)] forKeyPath:@"modelID"];
                 [self.editedObject setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 1)] forKeyPath:@"pA"];
                 [self.editedObject setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 2)] forKeyPath:@"pB"];
                 [self.editedObject setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 3)] forKeyPath:@"pB"];
@@ -144,7 +145,6 @@
         [self.textField becomeFirstResponder];
     }
     else {
-        ALog("Editing picker view");
         self.textField.hidden = YES;
         self.pickerView.hidden = NO;
         
@@ -172,8 +172,8 @@
     //if we chose model then save all car parameters
     if (self.type == kModelEdit) {
         [self saveCarParamsOfModel:self.textField.text];
+//        ALog("After set %@", [self.editedObject valueForKeyPath:@"modelID"]);
     }
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
