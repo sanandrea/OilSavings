@@ -12,13 +12,13 @@
 #import <MapKit/MapKit.h>
 #import "APGasStationClient.h"
 
-@interface APMapViewController : UIViewController <CLLocationManagerDelegate, GasStationsHandler>
+@interface APMapViewController : UIViewController <CLLocationManagerDelegate, GasStationsHandler, MKMapViewDelegate>
 {
     CLLocationManager *locationManager;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property (nonatomic, strong) APCar* myCar;
-@property (nonatomic, weak) IBOutlet MKMapView *map;
+@property (nonatomic, weak) IBOutlet MKMapView *mapView;
 
 @end

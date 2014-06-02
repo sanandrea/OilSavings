@@ -13,6 +13,7 @@
 @interface APGasStation : NSObject
 
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *logo;
 @property (nonatomic) BOOL hasGasoline;
 @property (nonatomic) BOOL hasDiesel;
 

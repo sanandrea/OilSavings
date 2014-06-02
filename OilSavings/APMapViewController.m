@@ -13,8 +13,11 @@
 #import "APAppDelegate.h"
 #import "MKMapView+ZoomLevel.h"
 #import "APGasStation.h"
+#import "APGSAnnotation.h"
 
 #define ZOOM_LEVEL 14
+static float kAnnotationPadding = 10.0f;
+static float kCallOutHeight = 40.0f;
 
 @interface APMapViewController ()
 
@@ -77,9 +80,26 @@
     
     locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters; // 100 m
     [locationManager startUpdatingLocation];
-    self.map.showsUserLocation = YES;
+    
+    if ([locationManager location] !=nil) {
+        [self centerMapInLocation:[locationManager location]];
+    }
+    self.mapView.showsUserLocation = YES;
 }
 
+
+- (void) centerMapInLocation:(CLLocation*)loc{
+    /*
+     * old implementation
+     *
+     */
+    [self.mapView setCenterCoordinate:loc.coordinate zoomLevel:ZOOM_LEVEL animated:NO];
+    APGasStationClient *gs = [[APGasStationClient alloc] initWithRegion:self.mapView.region andFuel:@"b"];
+    gs.delegate = self;
+    [gs getStations];
+
+    
+}
 - (void) viewDidAppear:(BOOL)animated{
     ALog("Map apperaed");
     //Check if there is any Car Saved.
@@ -114,17 +134,27 @@
     
     
     NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
-    
-    /*
-     * old implementation
-     *
-     */
-    [self.map setCenterCoordinate:newLocation.coordinate zoomLevel:ZOOM_LEVEL animated:NO];
-    APGasStationClient *gs = [[APGasStationClient alloc] initWithRegion:self.map.region andFuel:@"b"];
-    gs.delegate = self;
-    [gs getStations];
+    [self centerMapInLocation:newLocation];
     
     [locationManager stopUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error     {
+    if(error.code == kCLErrorDenied) {
+        
+        // alert user
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Access to location services is disabled"
+                                                            message:@"You can turn Location Services on in Settings -> Privacy -> Location Services"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        
+    } else if(error.code == kCLErrorLocationUnknown) {
+        NSLog(@"Error: location unknown");
+    } else {
+        NSLog(@"Error retrieving location");
+    }
 }
 
 
@@ -132,16 +162,73 @@
 
 - (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations{
     if (newStations) {
-        MKPointAnnotation *annotation;
+        APGSAnnotation *annotation;
+
         for (APGasStation *gs in gsClient.gasStations) {
-            annotation = [[MKPointAnnotation alloc]init];
-            annotation.coordinate = CLLocationCoordinate2DMake(gs.position.latitude, gs.position.longitude);
-            annotation.title = gs.name;
-            [self.map addAnnotation:annotation];
+            annotation = [[APGSAnnotation alloc]initWithLocation:CLLocationCoordinate2DMake(gs.position.latitude, gs.position.longitude)];
+            annotation.gasStation = gs;
+            [self.mapView addAnnotation:annotation];
         }
     }
     
 }
+
+
+#pragma mark - Custom Annotations
+
+- (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    ALog("Here called");
+    if ([annotation isKindOfClass:[APGSAnnotation class]]){
+        APGSAnnotation *gsn = (APGSAnnotation*) annotation;
+        static NSString *GSAnnotationIdentifier = @"gasStationIdentifier";
+        
+        MKAnnotationView *markerView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:GSAnnotationIdentifier];
+        if (markerView == nil)
+        {
+            MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation
+                                                                            reuseIdentifier:GSAnnotationIdentifier];
+            annotationView.canShowCallout = YES;
+            
+            UIImage *flagImage = [UIImage imageNamed:gsn.gasStation.logo];
+            
+            // size the flag down to the appropriate size
+            CGRect resizeRect;
+            resizeRect.size = flagImage.size;
+            CGSize maxSize = CGRectInset(self.view.bounds, kAnnotationPadding, kAnnotationPadding).size;
+            
+            maxSize.height -= self.navigationController.navigationBar.frame.size.height + kCallOutHeight;
+            if (resizeRect.size.width > maxSize.width)
+                resizeRect.size = CGSizeMake(maxSize.width, resizeRect.size.height / resizeRect.size.width * maxSize.width);
+            if (resizeRect.size.height > maxSize.height)
+                resizeRect.size = CGSizeMake(resizeRect.size.width / resizeRect.size.height * maxSize.height, maxSize.height);
+            
+            resizeRect.origin = CGPointMake(0.0, 0.0);
+            UIGraphicsBeginImageContext(resizeRect.size);
+            [flagImage drawInRect:resizeRect];
+            UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
+            annotationView.image = resizedImage;
+            annotationView.opaque = NO;
+            
+            UIImageView *sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:gsn.gasStation.logo]];
+            annotationView.leftCalloutAccessoryView = sfIconView;
+            
+            // offset the flag annotation so that the flag pole rests on the map coordinate
+            annotationView.centerOffset = CGPointMake( annotationView.centerOffset.x + annotationView.image.size.width/2, annotationView.centerOffset.y - annotationView.image.size.height/2 );
+            
+            return annotationView;
+        }else
+        {
+            markerView.annotation = annotation;
+        }
+        return markerView;
+    }
+    return nil;
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

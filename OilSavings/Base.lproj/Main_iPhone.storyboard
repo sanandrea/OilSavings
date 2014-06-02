@@ -34,6 +34,9 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="uCY-br-whW">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="P8k-qS-1QL" id="0lt-Mb-yUt"/>
+                                </connections>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -44,7 +47,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="VAi-Fr-nZR"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="map" destination="uCY-br-whW" id="H6a-Y9-baF"/>
+                        <outlet property="mapView" destination="uCY-br-whW" id="VL3-dV-XeW"/>
                         <outlet property="sidebarButton" destination="uFf-jF-wgu" id="W1G-U5-lsJ"/>
                     </connections>
                 </viewController>

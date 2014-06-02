@@ -7,13 +7,16 @@
 //
 
 #import "APGasStation.h"
+static NSString *imagePrefix = @"logo_";
+static NSString *imageSuffix = @"_small.png";
 
 @implementation APGasStation
 
-- (id) initWithPosition:(APPosition*) position andName:(NSString*)name{
+- (id) initWithPosition:(APPosition*) position andName:(NSString*)nn{
     self = [super init];
     self.position = position;
-    self.name = name;
+    self.name = [APGasStation longNameDictionary:nn];
+    self.logo = [APGasStation logoPath:nn];
     return self;
 }
 
@@ -47,4 +50,99 @@
     return 0.f;
 }
 
++ (NSString*) longNameDictionary:(NSString*) key{
+    static NSDictionary* output = nil;
+    
+    if (output == nil)
+    {
+        // create dict
+        NSArray* objs = [[NSArray alloc] initWithObjects:
+                         @"AR",
+                         @"AP",
+                         @"AQ",
+                         @"AU",
+                         @"BZ",
+                         @"BE",
+                         @"CF",
+                         @"CL",
+                         @"EG",
+                         @"SP",
+                         @"EY",
+                         @"AG",
+                         @"ER",
+                         @"ES",
+                         @"F2",
+                         @"H6",
+                         @"IE",
+                         @"IN",
+                         @"IP",
+                         @"IS",
+                         @"KT",
+                         @"LT",
+                         @"MI",
+                         @"OM",
+                         @"PE",
+                         @"Q8",
+                         @"QE",
+                         @"RE",
+                         @"SM",
+                         @"T7",
+                         @"SH",
+                         @"SF",
+                         @"TA",
+                         @"T2",
+                         @"TO",
+                         @"TE",
+                         nil];
+        NSArray* keys = [[NSArray alloc] initWithObjects:
+                         @"Al Risparmio",
+                         @"Api",
+                         @"Aquila",
+                         @"Auchan",
+                         @"Benza",
+                         @"Beyfin",
+                         @"Carrefour",
+                         @"CP Oil",
+                         @"Ego",
+                         @"Energia Siciliana",
+                         @"Energyca",
+                         @"Eni",
+                         @"Erg",
+                         @"Esso",
+                         @"Fiamma 2000",
+                         @"H6",
+                         @"Ies",
+                         @"Indipendente",
+                         @"IP",
+                         @"IperStation",
+                         @"Kerotris",
+                         @"LTP",
+                         @"Mirina",
+                         @"Omv",
+                         @"Petrolchimica Sud",
+                         @"Q8",
+                         @"Q8easy",
+                         @"Repsol",
+                         @"San Marco Petroli",
+                         @"Sette",
+                         @"Shell",
+                         @"Sia Fuel",
+                         @"Tamoil",
+                         @"TE 24/24",
+                         @"Total",
+                         @"TotalErg",
+                         nil];
+        
+        output = [NSDictionary dictionaryWithObjects:objs forKeys:keys];
+        
+    }
+    
+    return output[key];
+}
++ (NSString*) logoPath:(NSString*) key{
+    NSMutableString * ret = [[NSMutableString alloc] initWithString:imagePrefix];
+    [ret appendString:key];
+    [ret appendString:imageSuffix];
+    return  ret;
+}
 @end

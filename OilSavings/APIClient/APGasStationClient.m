@@ -73,7 +73,6 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
     [manager GET:BaseURLString parameters:urlParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // Process Response Object
         NSArray *response = (NSArray *)responseObject;
-        ALog("Uraah %@",response);
         APGasStation *gs;
         for (NSDictionary *dict in response) {
             gs = [[APGasStation alloc]initWithDict:dict];
