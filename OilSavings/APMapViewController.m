@@ -12,6 +12,7 @@
 #import "APConstants.h"
 #import "APAppDelegate.h"
 #import "MKMapView+ZoomLevel.h"
+#import "APGasStation.h"
 
 #define ZOOM_LEVEL 14
 
@@ -99,11 +100,26 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     CLLocation *newLocation = [locations lastObject];
+    
+    /* 
+     * New implementation
+    static dispatch_once_t centerMapFirstTime;
+    
+	if ((newLocation.coordinate.latitude != 0.0) && (newLocation.coordinate.longitude != 0.0)) {
+		dispatch_once(&centerMapFirstTime, ^{
+			[self.map setCenterCoordinate:newLocation.coordinate zoomLevel:ZOOM_LEVEL animated:YES];
+		});
+	}
+     */
+    
+    
     NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
     
-
+    /*
+     * old implementation
+     *
+     */
     [self.map setCenterCoordinate:newLocation.coordinate zoomLevel:ZOOM_LEVEL animated:NO];
-    
     APGasStationClient *gs = [[APGasStationClient alloc] initWithRegion:self.map.region andFuel:@"b"];
     gs.delegate = self;
     [gs getStations];
@@ -111,6 +127,21 @@
     [locationManager stopUpdatingLocation];
 }
 
+
+#pragma mark - Gas Stations protocol
+
+- (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations{
+    if (newStations) {
+        MKPointAnnotation *annotation;
+        for (APGasStation *gs in gsClient.gasStations) {
+            annotation = [[MKPointAnnotation alloc]init];
+            annotation.coordinate = CLLocationCoordinate2DMake(gs.position.latitude, gs.position.longitude);
+            annotation.title = gs.name;
+            [self.map addAnnotation:annotation];
+        }
+    }
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

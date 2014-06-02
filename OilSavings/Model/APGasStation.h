@@ -23,5 +23,6 @@
 - (BOOL) hasEnergy:(ENERGY_TYPE)e;
 - (void) setPrice:(float) p forEnergyType:(ENERGY_TYPE)e;
 - (float) getPrice:(ENERGY_TYPE)e;
+- (id) initWithDict:(NSDictionary*) dict;
 
 @end

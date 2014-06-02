@@ -21,8 +21,10 @@
 @property (nonatomic) double maxLong;
 
 @property (nonatomic, strong) NSString *fuel;
+@property (nonatomic, strong) NSMutableArray* gasStations;
 
 @property (nonatomic, weak) id <GasStationsHandler> delegate;
+
 
 - (id) initWithRegion:(MKCoordinateRegion) region andFuel:(NSString*) fuel;
 - (void)getStations;

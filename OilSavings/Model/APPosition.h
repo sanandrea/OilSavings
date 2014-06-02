@@ -11,4 +11,6 @@
 @interface APPosition : NSObject
 @property (nonatomic) double latitude;
 @property (nonatomic) double longitude;
+
+- (id) initWithLat:(double)lat andLong:(double)aLong;
 @end

@@ -8,10 +8,12 @@
 
 #import "APGasStationClient.h"
 #import "AFNetworking.h"
+#import "APGasStation.h"
 
 static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/tech/handlers/search_handler.php";
 
 @interface APGasStationClient ()
+
 
 @end
 
@@ -29,6 +31,8 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
     self.maxLong = region.center.longitude + region.span.longitudeDelta;
     
     self.fuel = fuel;
+    
+    self.gasStations = [[NSMutableArray alloc]init];
 
     return self;
 }
@@ -68,19 +72,19 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
     
     [manager GET:BaseURLString parameters:urlParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // Process Response Object
-        NSDictionary *response = (NSDictionary *)responseObject;
+        NSArray *response = (NSArray *)responseObject;
         ALog("Uraah %@",response);
-        
+        APGasStation *gs;
+        for (NSDictionary *dict in response) {
+            gs = [[APGasStation alloc]initWithDict:dict];
+            [self.gasStations addObject:gs];
+        }
+        [self .delegate gasStation:self didFinishWithStations:YES];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         // Handle Error
-        ALog("Very bad");
+        [self .delegate gasStation:self didFinishWithStations:NO];
     }];
-    
-    
-    
-
-    
 }
 
 

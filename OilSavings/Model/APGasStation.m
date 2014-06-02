@@ -17,6 +17,12 @@
     return self;
 }
 
+- (id) initWithDict:(NSDictionary*) dict{
+    APPosition *p = [[APPosition alloc] initWithLat:[dict[@"lat"] doubleValue] andLong:[dict[@"lng"] doubleValue]];
+    self = [self initWithPosition:p andName:dict[@"brand"]];
+    return self;
+}
+
 - (BOOL) hasEnergy:(ENERGY_TYPE)e{
     if (e == kEnergyDiesel) {
         return self.hasDiesel;
