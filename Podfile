@@ -5,6 +5,7 @@ target "OilSavings" do
 
 pod 'AFNetworking', '2.2.4'
 #pod 'MMDrawerController', '~> 0.5.3'
+pod 'AFNetworkActivityLogger', '2.0.2'
 
 end
 

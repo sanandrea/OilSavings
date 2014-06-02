@@ -39,9 +39,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="tL6-3j-vWQ">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" image="menu.png" id="uFf-jF-wgu"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="VAi-Fr-nZR"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="map" destination="uCY-br-whW" id="H6a-Y9-baF"/>
                         <outlet property="sidebarButton" destination="uFf-jF-wgu" id="W1G-U5-lsJ"/>
                     </connections>
                 </viewController>
@@ -106,9 +109,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="P8k-qS-1QL" kind="custom" identifier="SelectCar" customClass="SWRevealViewControllerSegue" id="Jc3-kK-eSM"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -444,7 +444,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="Jc3-kK-eSM"/>
-    </inferredMetricsTieBreakers>
 </document>

@@ -15,6 +15,7 @@
 		A9014621193BCFA5003B826D /* APStep.m in Sources */ = {isa = PBXBuildFile; fileRef = A9014620193BCFA5003B826D /* APStep.m */; };
 		A9014624193BD486003B826D /* APPath.m in Sources */ = {isa = PBXBuildFile; fileRef = A9014623193BD486003B826D /* APPath.m */; };
 		A9014627193BE7AD003B826D /* APGasStation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9014626193BE7AD003B826D /* APGasStation.m */; };
+		A901462B193BEE1C003B826D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A901462A193BEE1C003B826D /* CoreLocation.framework */; };
 		A919D0EC1932B7200052A47F /* APEditCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A919D0EB1932B7200052A47F /* APEditCarViewController.m */; };
 		A919D0EF1932B8120052A47F /* APAddCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A919D0EE1932B8120052A47F /* APAddCarViewController.m */; };
 		A919D0F21932BD900052A47F /* APInfoCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A919D0F11932BD900052A47F /* APInfoCarViewController.m */; };
@@ -51,6 +52,9 @@
 		A9C71176193229A300E8EEF9 /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C71174193229A300E8EEF9 /* APConstants.m */; };
 		A9C7117919322BD200E8EEF9 /* APGaeApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C7117819322BD200E8EEF9 /* APGaeApiClient.m */; };
 		A9C7117A19322BD200E8EEF9 /* APGaeApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C7117819322BD200E8EEF9 /* APGaeApiClient.m */; };
+		A9FC5057193C70D900C883B7 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC5056193C70D900C883B7 /* MKMapView+ZoomLevel.m */; };
+		A9FC505A193C745800C883B7 /* center_location.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FC5059193C745800C883B7 /* center_location.png */; };
+		A9FC505D193C786800C883B7 /* APGasStationClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC505C193C786800C883B7 /* APGasStationClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +83,7 @@
 		A9014623193BD486003B826D /* APPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPath.m; sourceTree = "<group>"; };
 		A9014625193BE7AD003B826D /* APGasStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGasStation.h; sourceTree = "<group>"; };
 		A9014626193BE7AD003B826D /* APGasStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGasStation.m; sourceTree = "<group>"; };
+		A901462A193BEE1C003B826D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A919D0EA1932B7200052A47F /* APEditCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APEditCarViewController.h; sourceTree = "<group>"; };
 		A919D0EB1932B7200052A47F /* APEditCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APEditCarViewController.m; sourceTree = "<group>"; };
 		A919D0ED1932B8120052A47F /* APAddCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAddCarViewController.h; sourceTree = "<group>"; };
@@ -126,6 +131,11 @@
 		A9C71174193229A300E8EEF9 /* APConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APConstants.m; sourceTree = "<group>"; };
 		A9C7117719322BD200E8EEF9 /* APGaeApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGaeApiClient.h; sourceTree = "<group>"; };
 		A9C7117819322BD200E8EEF9 /* APGaeApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGaeApiClient.m; sourceTree = "<group>"; };
+		A9FC5055193C70D900C883B7 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
+		A9FC5056193C70D900C883B7 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
+		A9FC5059193C745800C883B7 /* center_location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = center_location.png; sourceTree = "<group>"; };
+		A9FC505B193C786800C883B7 /* APGasStationClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGasStationClient.h; sourceTree = "<group>"; };
+		A9FC505C193C786800C883B7 /* APGasStationClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGasStationClient.m; sourceTree = "<group>"; };
 		FAEA7545A18B4D538A596C22 /* Pods-OilSavings.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OilSavings.xcconfig"; path = "Pods/Pods-OilSavings.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,6 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A901462B193BEE1C003B826D /* CoreLocation.framework in Frameworks */,
 				A99FCCE6193284E900B26D6A /* MapKit.framework in Frameworks */,
 				A99FCCDD19327C7E00B26D6A /* libsqlite3.0.dylib in Frameworks */,
 				A98D0876192FDC33000DB81D /* CoreGraphics.framework in Frameworks */,
@@ -161,6 +172,8 @@
 		A9014629193BEB45003B826D /* APIClient */ = {
 			isa = PBXGroup;
 			children = (
+				A9FC505B193C786800C883B7 /* APGasStationClient.h */,
+				A9FC505C193C786800C883B7 /* APGasStationClient.m */,
 			);
 			path = APIClient;
 			sourceTree = "<group>";
@@ -171,6 +184,8 @@
 				A93D9F881935500F008B530A /* APTableViewCell.h */,
 				A93D9F891935500F008B530A /* APTableViewCell.m */,
 				A93D9F8D193550E0008B530A /* CarCellDesign.xib */,
+				A9FC5055193C70D900C883B7 /* MKMapView+ZoomLevel.h */,
+				A9FC5056193C70D900C883B7 /* MKMapView+ZoomLevel.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -198,6 +213,7 @@
 		A98D0872192FDC33000DB81D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A901462A193BEE1C003B826D /* CoreLocation.framework */,
 				A99FCCE5193284E900B26D6A /* MapKit.framework */,
 				A99FCCDC19327C7E00B26D6A /* libsqlite3.0.dylib */,
 				A99FCCD1193246C300B26D6A /* libsqlite3.dylib */,
@@ -214,6 +230,7 @@
 		A98D087B192FDC33000DB81D /* OilSavings */ = {
 			isa = PBXGroup;
 			children = (
+				A9FC5058193C745800C883B7 /* Images */,
 				A9014629193BEB45003B826D /* APIClient */,
 				A93D9F8719354FDE008B530A /* View */,
 				A99FCCD819327AE300B26D6A /* SideViewC */,
@@ -323,6 +340,14 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		A9FC5058193C745800C883B7 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				A9FC5059193C745800C883B7 /* center_location.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -406,6 +431,7 @@
 				A99FCCE41932823500B26D6A /* menu@2x.png in Resources */,
 				A93D9F8E193550E0008B530A /* CarCellDesign.xib in Resources */,
 				A98D0897192FDC33000DB81D /* Images.xcassets in Resources */,
+				A9FC505A193C745800C883B7 /* center_location.png in Resources */,
 				A99FCCE31932823500B26D6A /* menu.png in Resources */,
 				A98D0889192FDC33000DB81D /* Main_iPhone.storyboard in Resources */,
 				A99FCCD7193248DF00B26D6A /* car.sqlite in Resources */,
@@ -468,6 +494,8 @@
 				A919D0F21932BD900052A47F /* APInfoCarViewController.m in Sources */,
 				A9C71175193229A300E8EEF9 /* APConstants.m in Sources */,
 				A901461E193BCE36003B826D /* APLine.m in Sources */,
+				A9FC5057193C70D900C883B7 /* MKMapView+ZoomLevel.m in Sources */,
+				A9FC505D193C786800C883B7 /* APGasStationClient.m in Sources */,
 				A9014618193BCC00003B826D /* APDistance.m in Sources */,
 				A9C7117919322BD200E8EEF9 /* APGaeApiClient.m in Sources */,
 				A9014612193BCA66003B826D /* APDuration.m in Sources */,

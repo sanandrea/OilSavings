@@ -10,6 +10,7 @@
 
 #import "APConstants.h"
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
+#import <AFNetworkActivityLogger.h>
 #import "SWRevealViewController.h"
 
 @implementation APAppDelegate
@@ -43,6 +44,10 @@
     
     //This will automatically show the network activity indicator whenever AFNetworking is performing network requests.
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    
+    //Enable Network Logging
+//    [[AFNetworkActivityLogger sharedLogger] startLogging];
+//    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
     
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];

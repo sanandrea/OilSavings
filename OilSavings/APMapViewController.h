@@ -7,11 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import "APCar.h"
+#import <MapKit/MapKit.h>
+#import "APGasStationClient.h"
 
-@interface APMapViewController : UIViewController
+@interface APMapViewController : UIViewController <CLLocationManagerDelegate, GasStationsHandler>
+{
+    CLLocationManager *locationManager;
+}
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property (nonatomic, strong) APCar* myCar;
+@property (nonatomic, weak) IBOutlet MKMapView *map;
 
 @end

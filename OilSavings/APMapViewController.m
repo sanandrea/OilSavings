@@ -11,6 +11,9 @@
 #import "APAddCarViewController.h"
 #import "APConstants.h"
 #import "APAppDelegate.h"
+#import "MKMapView+ZoomLevel.h"
+
+#define ZOOM_LEVEL 14
 
 @interface APMapViewController ()
 
@@ -68,6 +71,12 @@
         self.myCar = [array objectAtIndex:0];
     }
     
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    
+    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters; // 100 m
+    [locationManager startUpdatingLocation];
+    self.map.showsUserLocation = YES;
 }
 
 - (void) viewDidAppear:(BOOL)animated{
@@ -86,6 +95,20 @@
     if (self.myCar != nil) {
         ALog("Car name is: %@", self.myCar.friendlyName);
     }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    CLLocation *newLocation = [locations lastObject];
+    NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+    
+
+    [self.map setCenterCoordinate:newLocation.coordinate zoomLevel:ZOOM_LEVEL animated:NO];
+    
+    APGasStationClient *gs = [[APGasStationClient alloc] initWithRegion:self.map.region andFuel:@"b"];
+    gs.delegate = self;
+    [gs getStations];
+    
+    [locationManager stopUpdatingLocation];
 }
 
 - (void)didReceiveMemoryWarning
