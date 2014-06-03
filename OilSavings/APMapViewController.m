@@ -158,6 +158,10 @@ static float kLogoHeightPadding = 6.0f;
     }
 }
 
+- (IBAction)options:(id)sender{
+    [self performSegueWithIdentifier: @"OptionsSegue" sender: self];
+}
+
 
 #pragma mark - Gas Stations protocol
 

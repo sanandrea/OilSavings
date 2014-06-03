@@ -52,6 +52,8 @@
 		A9C71176193229A300E8EEF9 /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C71174193229A300E8EEF9 /* APConstants.m */; };
 		A9C7117919322BD200E8EEF9 /* APGaeApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C7117819322BD200E8EEF9 /* APGaeApiClient.m */; };
 		A9C7117A19322BD200E8EEF9 /* APGaeApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C7117819322BD200E8EEF9 /* APGaeApiClient.m */; };
+		A9CFA2ED193E844100ACCEC5 /* opzioni@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9CFA2EC193E844100ACCEC5 /* opzioni@2x.png */; };
+		A9CFA2F0193E87FC00ACCEC5 /* APOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9CFA2EF193E87FC00ACCEC5 /* APOptionsViewController.m */; };
 		A9F7C44C193E5F960092FCA2 /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F7C44B193E5F960092FCA2 /* marker@2x.png */; };
 		A9F7C473193E614F0092FCA2 /* logo_ag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F7C44F193E614F0092FCA2 /* logo_ag@2x.png */; };
 		A9F7C474193E614F0092FCA2 /* logo_ap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F7C450193E614F0092FCA2 /* logo_ap@2x.png */; };
@@ -169,6 +171,9 @@
 		A9C71174193229A300E8EEF9 /* APConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APConstants.m; sourceTree = "<group>"; };
 		A9C7117719322BD200E8EEF9 /* APGaeApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGaeApiClient.h; sourceTree = "<group>"; };
 		A9C7117819322BD200E8EEF9 /* APGaeApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGaeApiClient.m; sourceTree = "<group>"; };
+		A9CFA2EC193E844100ACCEC5 /* opzioni@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "opzioni@2x.png"; sourceTree = "<group>"; };
+		A9CFA2EE193E87FC00ACCEC5 /* APOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APOptionsViewController.h; sourceTree = "<group>"; };
+		A9CFA2EF193E87FC00ACCEC5 /* APOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APOptionsViewController.m; sourceTree = "<group>"; };
 		A9F7C44B193E5F960092FCA2 /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@2x.png"; sourceTree = "<group>"; };
 		A9F7C44F193E614F0092FCA2 /* logo_ag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_ag@2x.png"; sourceTree = "<group>"; };
 		A9F7C450193E614F0092FCA2 /* logo_ap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_ap@2x.png"; sourceTree = "<group>"; };
@@ -321,6 +326,8 @@
 				A98D0885192FDC33000DB81D /* APAppDelegate.m */,
 				A98D0887192FDC33000DB81D /* Main_iPhone.storyboard */,
 				A98D088A192FDC33000DB81D /* Main_iPad.storyboard */,
+				A9CFA2EE193E87FC00ACCEC5 /* APOptionsViewController.h */,
+				A9CFA2EF193E87FC00ACCEC5 /* APOptionsViewController.m */,
 				A919D0EA1932B7200052A47F /* APEditCarViewController.h */,
 				A919D0EB1932B7200052A47F /* APEditCarViewController.m */,
 				A919D0F01932BD900052A47F /* APInfoCarViewController.h */,
@@ -422,6 +429,7 @@
 		A9FC5058193C745800C883B7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A9CFA2EC193E844100ACCEC5 /* opzioni@2x.png */,
 				A9F7C497193E64640092FCA2 /* marker_mid@2x.png */,
 				A9F7C44F193E614F0092FCA2 /* logo_ag@2x.png */,
 				A9F7C450193E614F0092FCA2 /* logo_ap@2x.png */,
@@ -555,6 +563,7 @@
 				A9F7C488193E614F0092FCA2 /* logo_mi@2x.png in Resources */,
 				A9F7C47A193E614F0092FCA2 /* logo_cf@2x.png in Resources */,
 				A9F7C474193E614F0092FCA2 /* logo_ap@2x.png in Resources */,
+				A9CFA2ED193E844100ACCEC5 /* opzioni@2x.png in Resources */,
 				A9F7C492193E614F0092FCA2 /* logo_t2@2x.png in Resources */,
 				A9F7C496193E614F0092FCA2 /* logo_to@2x.png in Resources */,
 				A9F7C485193E614F0092FCA2 /* logo_is@2x.png in Resources */,
@@ -640,6 +649,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9CFA2F0193E87FC00ACCEC5 /* APOptionsViewController.m in Sources */,
 				A9014621193BCFA5003B826D /* APStep.m in Sources */,
 				A94392CE19328DF000439E89 /* SidebarViewController.m in Sources */,
 				A93D9F8A1935500F008B530A /* APTableViewCell.m in Sources */,
