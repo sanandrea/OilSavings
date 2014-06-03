@@ -14,9 +14,11 @@ static NSString *imageSuffix = @"_small.png";
 
 - (id) initWithPosition:(APPosition*) position andName:(NSString*)nn{
     self = [super init];
-    self.position = position;
-    self.name = [APGasStation longNameDictionary:nn];
-    self.logo = [APGasStation logoPath:nn];
+    if (self) {
+        self.position = position;
+        self.name = nn;
+        self.logo = [APGasStation logoPath:nn];
+    }
     return self;
 }
 
@@ -50,49 +52,49 @@ static NSString *imageSuffix = @"_small.png";
     return 0.f;
 }
 
-+ (NSString*) longNameDictionary:(NSString*) key{
++ (NSDictionary*) longNameDictionary{
     static NSDictionary* output = nil;
     
     if (output == nil)
     {
         // create dict
         NSArray* objs = [[NSArray alloc] initWithObjects:
-                         @"AR",
-                         @"AP",
-                         @"AQ",
-                         @"AU",
-                         @"BZ",
-                         @"BE",
-                         @"CF",
-                         @"CL",
-                         @"EG",
-                         @"SP",
-                         @"EY",
-                         @"AG",
-                         @"ER",
-                         @"ES",
-                         @"F2",
-                         @"H6",
-                         @"IE",
-                         @"IN",
-                         @"IP",
-                         @"IS",
-                         @"KT",
-                         @"LT",
-                         @"MI",
-                         @"OM",
-                         @"PE",
-                         @"Q8",
-                         @"QE",
-                         @"RE",
-                         @"SM",
-                         @"T7",
-                         @"SH",
-                         @"SF",
-                         @"TA",
-                         @"T2",
-                         @"TO",
-                         @"TE",
+                         @"ar",
+                         @"ap",
+                         @"aq",
+                         @"au",
+                         @"bz",
+                         @"be",
+                         @"cf",
+                         @"cl",
+                         @"eg",
+                         @"sp",
+                         @"ey",
+                         @"ag",
+                         @"er",
+                         @"es",
+                         @"f2",
+                         @"h6",
+                         @"ie",
+                         @"in",
+                         @"ip",
+                         @"is",
+                         @"kt",
+                         @"lt",
+                         @"mi",
+                         @"om",
+                         @"pe",
+                         @"q8",
+                         @"qe",
+                         @"re",
+                         @"sm",
+                         @"t7",
+                         @"sh",
+                         @"sf",
+                         @"ta",
+                         @"t2",
+                         @"to",
+                         @"te",
                          nil];
         NSArray* keys = [[NSArray alloc] initWithObjects:
                          @"Al Risparmio",
@@ -137,12 +139,11 @@ static NSString *imageSuffix = @"_small.png";
         
     }
     
-    return output[key];
+    return output;
 }
 + (NSString*) logoPath:(NSString*) key{
     NSMutableString * ret = [[NSMutableString alloc] initWithString:imagePrefix];
-    [ret appendString:key];
-    [ret appendString:imageSuffix];
+    [ret appendString:[key lowercaseString]];
     return  ret;
 }
 @end

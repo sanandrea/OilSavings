@@ -18,6 +18,7 @@
 #define ZOOM_LEVEL 14
 static float kAnnotationPadding = 10.0f;
 static float kCallOutHeight = 40.0f;
+static float kLogoHeightPadding = 6.0f;
 
 @interface APMapViewController ()
 
@@ -169,16 +170,29 @@ static float kCallOutHeight = 40.0f;
             annotation.gasStation = gs;
             [self.mapView addAnnotation:annotation];
         }
+        
     }
     
 }
 
 
 #pragma mark - Custom Annotations
+// user tapped the disclosure button in the callout
+//
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    // here we illustrate how to detect which annotation type was clicked on for its callout
+    id <MKAnnotation> annotation = [view annotation];
+    if ([annotation isKindOfClass:[APGSAnnotation class]])
+    {
+        NSLog(@"clicked Annotation");
+    }
+    
+//    [self.navigationController pushViewController:self.detailViewController animated:YES];
+}
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    ALog("Here called");
     if ([annotation isKindOfClass:[APGSAnnotation class]]){
         APGSAnnotation *gsn = (APGSAnnotation*) annotation;
         static NSString *GSAnnotationIdentifier = @"gasStationIdentifier";
@@ -190,22 +204,36 @@ static float kCallOutHeight = 40.0f;
                                                                             reuseIdentifier:GSAnnotationIdentifier];
             annotationView.canShowCallout = YES;
             
-            UIImage *flagImage = [UIImage imageNamed:gsn.gasStation.logo];
-            
+            UIImage *markerImage = [UIImage imageNamed:@"marker_mid.png"];
+            UIImage *logoImage = [UIImage imageNamed:gsn.gasStation.logo];
             // size the flag down to the appropriate size
             CGRect resizeRect;
-            resizeRect.size = flagImage.size;
+            resizeRect.size = markerImage.size;
             CGSize maxSize = CGRectInset(self.view.bounds, kAnnotationPadding, kAnnotationPadding).size;
             
             maxSize.height -= self.navigationController.navigationBar.frame.size.height + kCallOutHeight;
+            
             if (resizeRect.size.width > maxSize.width)
                 resizeRect.size = CGSizeMake(maxSize.width, resizeRect.size.height / resizeRect.size.width * maxSize.width);
+            
             if (resizeRect.size.height > maxSize.height)
                 resizeRect.size = CGSizeMake(resizeRect.size.width / resizeRect.size.height * maxSize.height, maxSize.height);
             
             resizeRect.origin = CGPointMake(0.0, 0.0);
-            UIGraphicsBeginImageContext(resizeRect.size);
-            [flagImage drawInRect:resizeRect];
+            float initialWidth = resizeRect.size.width;
+            
+            UIGraphicsBeginImageContextWithOptions(resizeRect.size, NO, 0.0f);
+            [markerImage drawInRect:resizeRect];
+
+            
+            resizeRect.size.width = resizeRect.size.width/1.75;
+            resizeRect.size.height = resizeRect.size.height/1.75;
+            
+            resizeRect.origin.x = resizeRect.origin.x + (initialWidth - resizeRect.size.width)/2;
+            resizeRect.origin.y = resizeRect.origin.y + kLogoHeightPadding;
+            
+            [logoImage drawInRect:resizeRect];
+            
             UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             
@@ -217,6 +245,17 @@ static float kCallOutHeight = 40.0f;
             
             // offset the flag annotation so that the flag pole rests on the map coordinate
             annotationView.centerOffset = CGPointMake( annotationView.centerOffset.x + annotationView.image.size.width/2, annotationView.centerOffset.y - annotationView.image.size.height/2 );
+            
+            // add a detail disclosure button to the callout which will open a new view controller page
+            //
+            // note: when the detail disclosure button is tapped, we respond to it via:
+            //       calloutAccessoryControlTapped delegate method
+            //
+            // by using "calloutAccessoryControlTapped", it's a convenient way to find out which annotation was tapped
+            //
+            UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            [rightButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+            annotationView.rightCalloutAccessoryView = rightButton;
             
             return annotationView;
         }else

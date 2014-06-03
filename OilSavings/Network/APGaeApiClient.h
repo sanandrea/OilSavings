@@ -14,7 +14,7 @@ extern NSString * const kGaeBaseURLString;
 
 @interface APGaeApiClient : AFHTTPSessionManager
 
-
+/*
 + (APGaeApiClient *)sharedClient;
 
 - (void)getVersionsOnsuccess:(void(^)(NSURLSessionDataTask *task, id responseObject))success
@@ -25,7 +25,7 @@ extern NSString * const kGaeBaseURLString;
 
 - (void)getResourcesOnsuccess:(void(^)(NSURLSessionDataTask *task, id responseObject))success
                       failure:(void(^)(NSURLSessionDataTask *task, NSError *error))failure;
-
+*/
 
 
 @end
