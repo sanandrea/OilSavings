@@ -7,8 +7,6 @@
 //
 
 #import "APAppDelegate.h"
-
-#import "APConstants.h"
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 #import <AFNetworkActivityLogger.h>
 #import "SWRevealViewController.h"

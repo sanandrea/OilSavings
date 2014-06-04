@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TRAutocompleteView.h"
 
-@interface APOptionsViewController : UIViewController
+@interface APOptionsViewController : UIViewController{
+    IBOutlet UITextField *_textField;
+    TRAutocompleteView *_autocompleteView;
+}
 
 @end

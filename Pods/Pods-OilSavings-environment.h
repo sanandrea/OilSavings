@@ -54,3 +54,9 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 2
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 4
 
+// TRAutocompleteView
+#define COCOAPODS_POD_AVAILABLE_TRAutocompleteView
+#define COCOAPODS_VERSION_MAJOR_TRAutocompleteView 1
+#define COCOAPODS_VERSION_MINOR_TRAutocompleteView 1
+#define COCOAPODS_VERSION_PATCH_TRAutocompleteView 0
+

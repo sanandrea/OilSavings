@@ -7,6 +7,8 @@
 //
 
 #import "APOptionsViewController.h"
+#import "TRGoogleMapsAutocompleteItemsSource.h"
+#import "TRGoogleMapsAutocompletionCellFactory.h"
 static int kSearchFieldTAG = 99;
 @interface APOptionsViewController ()
 
@@ -27,6 +29,10 @@ static int kSearchFieldTAG = 99;
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _autocompleteView = [TRAutocompleteView autocompleteViewBindedTo:_textField
+                                                         usingSource:[[TRGoogleMapsAutocompleteItemsSource alloc] initWithMinimumCharactersToTrigger:2 apiKey:GOOGLE_API_KEY]
+                                                         cellFactory:[[TRGoogleMapsAutocompletionCellFactory alloc] initWithCellForegroundColor:[UIColor lightGrayColor] fontSize:14]
+                                                        presentingIn:self];
 }
 
 - (void)didReceiveMemoryWarning

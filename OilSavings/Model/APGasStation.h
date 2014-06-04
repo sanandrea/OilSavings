@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "APConstants.h"
 #import "APPosition.h"
 
 @interface APGasStation : NSObject

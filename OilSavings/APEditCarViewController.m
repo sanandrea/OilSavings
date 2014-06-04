@@ -8,7 +8,6 @@
 
 #import "APEditCarViewController.h"
 #import <sqlite3.h>
-#import "APConstants.h"
 
 @interface APEditCarViewController ()
 

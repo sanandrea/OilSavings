@@ -13,6 +13,7 @@ extern NSString *const kDBVersion;
 extern NSString *const kResVersion;
 extern NSString *const kCarsRegistered;
 extern NSString *const kPreferredCar;
+extern NSString *const GOOGLE_API_KEY;
 
 typedef enum{
     kEnergyGasoline,

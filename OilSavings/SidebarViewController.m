@@ -12,7 +12,6 @@
 #import "APAppDelegate.h"
 #import "APCar.h"
 #import "APTableViewCell.h"
-#import "APConstants.h"
 #import "APMapViewController.h"
 @interface SidebarViewController ()
 

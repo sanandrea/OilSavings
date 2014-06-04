@@ -13,6 +13,7 @@ NSString *const kDBVersion = @"dbVersion";
 NSString *const kResVersion = @"resVersion";
 NSString *const kCarsRegistered = @"carsRegistered";
 NSString *const kPreferredCar = @"preferredCar";
+NSString *const GOOGLE_API_KEY = @"AIzaSyDk2W4Au5SlQC5WPpcFFEpy8I7PTnZtvno";
 
 @implementation APConstants
 
