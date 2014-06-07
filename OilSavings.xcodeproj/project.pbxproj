@@ -276,6 +276,21 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A94F66E71942689000D8453A /* CarManage */ = {
+			isa = PBXGroup;
+			children = (
+				A919D0EA1932B7200052A47F /* APEditCarViewController.h */,
+				A919D0EB1932B7200052A47F /* APEditCarViewController.m */,
+				A919D0F01932BD900052A47F /* APInfoCarViewController.h */,
+				A919D0F11932BD900052A47F /* APInfoCarViewController.m */,
+				A919D0ED1932B8120052A47F /* APAddCarViewController.h */,
+				A919D0EE1932B8120052A47F /* APAddCarViewController.m */,
+				A94392CD19328DF000439E89 /* SidebarViewController.h */,
+				A94392CC19328DF000439E89 /* SidebarViewController.m */,
+			);
+			name = CarManage;
+			sourceTree = "<group>";
+		};
 		A98D0867192FDC33000DB81D = {
 			isa = PBXGroup;
 			children = (
@@ -330,16 +345,9 @@
 				A98D088A192FDC33000DB81D /* Main_iPad.storyboard */,
 				A9CFA2EE193E87FC00ACCEC5 /* APOptionsViewController.h */,
 				A9CFA2EF193E87FC00ACCEC5 /* APOptionsViewController.m */,
-				A919D0EA1932B7200052A47F /* APEditCarViewController.h */,
-				A919D0EB1932B7200052A47F /* APEditCarViewController.m */,
-				A919D0F01932BD900052A47F /* APInfoCarViewController.h */,
-				A919D0F11932BD900052A47F /* APInfoCarViewController.m */,
-				A919D0ED1932B8120052A47F /* APAddCarViewController.h */,
-				A919D0EE1932B8120052A47F /* APAddCarViewController.m */,
-				A94392CD19328DF000439E89 /* SidebarViewController.h */,
-				A94392CC19328DF000439E89 /* SidebarViewController.m */,
 				A99FCCDE19327CA300B26D6A /* APMapViewController.h */,
 				A99FCCDF19327CA400B26D6A /* APMapViewController.m */,
+				A94F66E71942689000D8453A /* CarManage */,
 				A98D0896192FDC33000DB81D /* Images.xcassets */,
 				A98D088D192FDC33000DB81D /* OilSavings.xcdatamodeld */,
 				A98D087C192FDC33000DB81D /* Supporting Files */,

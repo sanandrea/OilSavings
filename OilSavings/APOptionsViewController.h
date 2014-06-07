@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "TRAutocompleteView.h"
 
-@interface APOptionsViewController : UIViewController{
+@interface APOptionsViewController : UIViewController<UISearchBarDelegate>{
     IBOutlet UITextField *_textField;
-    TRAutocompleteView *_autocompleteView;
+    TRAutocompleteView *_autocompleteSrc;
+    TRAutocompleteView *_autocompleteDst;
 }
 
 @end
