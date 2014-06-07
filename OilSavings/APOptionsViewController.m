@@ -13,12 +13,17 @@ static int kSRCSearchFieldTAG = 98;
 static int kDSTSearchFieldTAG = 99;
 static float kLeftSearchBarPadding = 31;
 
+static int MIN_AMOUNT = 5;
+static int MAX_AMOUNT = 50;
+static int INC_STEP = 5;
+
 @interface APOptionsViewController ()
 
 @property IBOutlet UISearchBar *src;
 @property IBOutlet UISearchBar *dst;
 @property (nonatomic, strong) UISearchBar *selected;
-
+@property (weak, nonatomic) IBOutlet UISlider* cashSliderControl;
+@property (weak, nonatomic) IBOutlet UILabel* cashLabel;
 
 @end
 
@@ -37,6 +42,10 @@ static float kLeftSearchBarPadding = 31;
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [self.cashSliderControl setMinimumValue:0];
+    [self.cashSliderControl setMaximumValue:(MAX_AMOUNT - MIN_AMOUNT)/INC_STEP + 2];
+    
     
     self.src.placeholder = NSLocalizedString(@"Indirizzo di partenza", @"indirizzo di partenza");
     self.dst.placeholder = NSLocalizedString(@"Indirizzo di destinazione", @"indirizzo di destinazione");
@@ -87,11 +96,24 @@ static float kLeftSearchBarPadding = 31;
     }
 }
 
+-(IBAction)cashSlider:(id)sender{
+    int linearMax = 40;
+    int endLinearIndex = (linearMax - MIN_AMOUNT) / INC_STEP;
+    NSUInteger index = (NSUInteger)(self.cashSliderControl.value + 0.5); // Round the number.
+    [self.cashSliderControl setValue:index animated:NO];
+    
+    int value = (MIN_AMOUNT + index * INC_STEP);
+    if (value <= linearMax) {
+        [self.cashLabel setText:[NSString stringWithFormat:@"%u",(MIN_AMOUNT + index * INC_STEP)]];
+    }else{
+        int inc = linearMax + 2 * INC_STEP * (index - endLinearIndex);
+        [self.cashLabel setText:[NSString stringWithFormat:@"%u",inc]];
+    }
+}
+
 
 #pragma mark - Search bar delegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    CGPoint p = [_dst convertPoint:_dst.bounds.origin fromView:nil];
-    ALog("p.x : %f and p.y: %f", p.x, p.y);
     if ([searchText length] == 0) {
         if (searchBar == self.src){
             [_autocompleteSrc hidesuggestions];
