@@ -19,7 +19,7 @@ static NSString * const GEOCODE_URL = @"https://maps.googleapis.com/maps/api/geo
 
 @implementation APGeocodeClient
 
-+ (void) convertAddress:(NSString*)addr ofType:(ADDRESS_TYPE)type inDelegate:(id<ConvertAddressToCoord>)delegate{
++ (void) convertAddress:(NSString*)addr ofType:(ADDRESS_TYPE)type inDelegate:(id<APNetworkAPI>)delegate{
     addr = [addr stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
@@ -57,7 +57,7 @@ static NSString * const GEOCODE_URL = @"https://maps.googleapis.com/maps/api/geo
     
     
 }
-+ (void) convertCoordinate:(CLLocationCoordinate2D)coord ofType:(ADDRESS_TYPE)type inDelegate:(id<ConvertAddressToCoord>)delegate{
++ (void) convertCoordinate:(CLLocationCoordinate2D)coord ofType:(ADDRESS_TYPE)type inDelegate:(id<APNetworkAPI>)delegate{
     NSString *latlng = [NSString stringWithFormat:@"%f,%f",coord.latitude,coord.longitude];
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];

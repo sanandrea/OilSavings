@@ -13,7 +13,7 @@
 @protocol OptimizationOptions;
 
 
-@interface APOptionsViewController : UIViewController<UISearchBarDelegate, ConvertAddressToCoord>{
+@interface APOptionsViewController : UIViewController<UISearchBarDelegate>{
     IBOutlet UITextField *_textField;
     TRAutocompleteView *_autocompleteSrc;
     TRAutocompleteView *_autocompleteDst;

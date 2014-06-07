@@ -223,7 +223,7 @@
 		A9FC507B193CDC4E00C883B7 /* APGSAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGSAnnotation.m; sourceTree = "<group>"; };
 		A9FC965A19432C780067875B /* APGeocodeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGeocodeClient.h; sourceTree = "<group>"; };
 		A9FC965B19432C780067875B /* APGeocodeClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGeocodeClient.m; sourceTree = "<group>"; };
-		A9FC965E194342CF0067875B /* APNetworkAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APNetworkAPI.h; sourceTree = "<group>"; };
+		A9FC965F194343730067875B /* APNetworkAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APNetworkAPI.h; sourceTree = "<group>"; };
 		FAEA7545A18B4D538A596C22 /* Pods-OilSavings.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OilSavings.xcconfig"; path = "Pods/Pods-OilSavings.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -260,7 +260,7 @@
 		A9014629193BEB45003B826D /* APIClient */ = {
 			isa = PBXGroup;
 			children = (
-				A9FC965E194342CF0067875B /* APNetworkAPI.h */,
+				A9FC965F194343730067875B /* APNetworkAPI.h */,
 				A9FC505B193C786800C883B7 /* APGasStationClient.h */,
 				A9FC505C193C786800C883B7 /* APGasStationClient.m */,
 				A9FC965A19432C780067875B /* APGeocodeClient.h */,

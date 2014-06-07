@@ -9,6 +9,7 @@
 #import "APGasStationClient.h"
 #import "AFNetworking.h"
 #import "APGasStation.h"
+#import "APNetworkAPI.h"
 
 static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/tech/handlers/search_handler.php";
 

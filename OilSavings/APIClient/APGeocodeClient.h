@@ -8,20 +8,11 @@
 
 
 #import <MapKit/MapKit.h>
-
-@protocol ConvertAddressToCoord;
+#import "APNetworkAPI.h"
 
 @interface APGeocodeClient : NSObject
 
-+ (void) convertAddress:(NSString*)addr ofType:(ADDRESS_TYPE)type inDelegate:(id<ConvertAddressToCoord>)delegate;
-+ (void) convertCoordinate:(CLLocationCoordinate2D)coord ofType:(ADDRESS_TYPE)type inDelegate:(id<ConvertAddressToCoord>)delegate;
-
-@end
-
-
-@protocol ConvertAddressToCoord
-@optional
-- (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord;
-- (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address;
++ (void) convertAddress:(NSString*)addr ofType:(ADDRESS_TYPE)type inDelegate:(id<APNetworkAPI>)delegate;
++ (void) convertCoordinate:(CLLocationCoordinate2D)coord ofType:(ADDRESS_TYPE)type inDelegate:(id<APNetworkAPI>)delegate;
 
 @end

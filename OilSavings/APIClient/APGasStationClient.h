@@ -10,8 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
-
-@protocol GasStationsHandler;
+@protocol APNetworkAPI;
 
 @interface APGasStationClient : NSObject
 
@@ -23,16 +22,10 @@
 @property (nonatomic, strong) NSString *fuel;
 @property (nonatomic, strong) NSMutableArray* gasStations;
 
-@property (nonatomic, weak) id <GasStationsHandler> delegate;
+@property (nonatomic, weak) id <APNetworkAPI> delegate;
 
 
 - (id) initWithRegion:(MKCoordinateRegion) region andFuel:(NSString*) fuel;
 - (void)getStations;
-
-@end
-
-@protocol GasStationsHandler
-
-- (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations;
 
 @end

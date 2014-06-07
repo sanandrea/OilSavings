@@ -103,6 +103,9 @@ static float kLogoHeightPadding = 6.0f;
     APGasStationClient *gs = [[APGasStationClient alloc] initWithRegion:self.mapView.region andFuel:@"b"];
     gs.delegate = self;
     [gs getStations];
+    
+    //convert the address
+    [APGeocodeClient convertCoordinate:loc.coordinate ofType:kAddressSrc inDelegate:self];
 
     
 }
@@ -167,8 +170,9 @@ static float kLogoHeightPadding = 6.0f;
     [self performSegueWithIdentifier: @"OptionsSegue" sender: self];
 }
 
+#pragma mark - Network APIs
 
-#pragma mark - Gas Stations protocol
+#pragma mark - Gas Stations
 
 - (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations{
     if (newStations) {
@@ -183,6 +187,19 @@ static float kLogoHeightPadding = 6.0f;
     }
     
 }
+
+#pragma mark - Geocoding Convertions Protocol
+
+- (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord{
+    
+}
+
+- (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address{
+    if (type == kAddressSrc) {
+        self.srcAddress = address;
+    }
+}
+
 
 #pragma mark - Options Protocol
 - (void)optionsController:(APOptionsViewController*) controller didfinishWithSave:(BOOL)save{
@@ -297,10 +314,8 @@ static float kLogoHeightPadding = 6.0f;
         optController.delegate = self;
         
         //check if we have a valid current location
-        if ([locationManager location] !=nil) {
-            [APGeocodeClient convertCoordinate:[locationManager location].coordinate
-                                        ofType:kAddressSrc
-                                    inDelegate:optController];
+        if (self.srcAddress != nil){
+            optController.srcAddr = self.srcAddress;
         }
         
         

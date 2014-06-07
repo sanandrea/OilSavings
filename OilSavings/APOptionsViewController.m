@@ -46,8 +46,12 @@ static int INC_STEP = 5;
     [self.cashSliderControl setMinimumValue:0];
     [self.cashSliderControl setMaximumValue:(MAX_AMOUNT - MIN_AMOUNT)/INC_STEP + 2];
     
-    
-    self.src.placeholder = NSLocalizedString(@"Indirizzo di partenza", @"indirizzo di partenza");
+    if (self.srcAddr != nil) {
+        self.src.placeholder = self.srcAddr;
+    }else{
+        self.src.placeholder = NSLocalizedString(@"Indirizzo di partenza", @"indirizzo di partenza");
+    }
+
     self.dst.placeholder = NSLocalizedString(@"Indirizzo di destinazione", @"indirizzo di destinazione");
     self.src.delegate = self;
     self.dst.delegate = self;
@@ -147,18 +151,6 @@ static int INC_STEP = 5;
     }
 }
 
-
-#pragma mark - Geocoding Convertions Protocol
-
-- (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord{
-    
-}
-
-- (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address{
-    if (type == kAddressSrc) {
-        self.src.placeholder = address;
-    }
-}
 /*
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
     ALog("Begin search");
