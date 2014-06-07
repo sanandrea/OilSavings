@@ -23,6 +23,10 @@ static float kLogoHeightPadding = 6.0f;
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
+@property (nonatomic, strong) NSString *srcAddress;
+@property (nonatomic, strong) NSString *dstAddress;
+@property (nonatomic) NSInteger cashAmount;
+
 @end
 
 @implementation APMapViewController
@@ -178,6 +182,18 @@ static float kLogoHeightPadding = 6.0f;
     
 }
 
+#pragma mark - Options Protocol
+- (void)optionsController:(APOptionsViewController*) controller didfinishWithSave:(BOOL)save{
+    if (save) {
+        self.srcAddress = controller.srcAddr;
+        self.dstAddress = controller.dstAddr;
+        self.cashAmount = controller.cashAmount;
+        ALog("Saved options!");
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 #pragma mark - Custom Annotations
 // user tapped the disclosure button in the callout
@@ -270,6 +286,15 @@ static float kLogoHeightPadding = 6.0f;
     return nil;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"OptionsSegue"]) {
+        
+        APOptionsViewController *navController = (APOptionsViewController *)[segue destinationViewController];
+        //APOptionsViewController *optionsController = (APOptionsViewController *)[navController topViewController];
+        navController.delegate = self;
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {

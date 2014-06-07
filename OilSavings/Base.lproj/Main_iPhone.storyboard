@@ -121,8 +121,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="IG8-5h-sHl">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="nE5-Ib-Un6"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="9Ww-qX-SZO"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="nE5-Ib-Un6">
+                            <connections>
+                                <action selector="cancel:" destination="rHi-go-ngW" id="akv-zj-2iP"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="9Ww-qX-SZO">
+                            <connections>
+                                <action selector="save:" destination="rHi-go-ngW" id="eer-Fb-rhE"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cashLabel" destination="alk-e9-Zio" id="yhE-Xo-w4J"/>

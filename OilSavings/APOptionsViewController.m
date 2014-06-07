@@ -110,26 +110,43 @@ static int INC_STEP = 5;
         [self.cashLabel setText:[NSString stringWithFormat:@"%u",inc]];
     }
 }
+- (IBAction)save:(id)sender{
+    self.srcAddr = self.src.text;
+    self.dstAddr = self.dst.text;
+    self.cashAmount = [self.cashLabel.text integerValue];
+    
+    [self.delegate optionsController:self didfinishWithSave:YES];
+}
 
 
+- (IBAction)cancel:(id)sender{
+    [self.delegate optionsController:self didfinishWithSave:NO];
+}
 #pragma mark - Search bar delegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    
     if ([searchText length] == 0) {
+        ALog("Canceled");
         if (searchBar == self.src){
             [_autocompleteSrc hidesuggestions];
+            [_src endEditing:YES];
         }else{
             [_autocompleteDst hidesuggestions];
+            [_src endEditing:YES];
         }
     }
 }
+
+
+/*
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
     ALog("Begin search");
     if (self.selected != nil && searchBar != self.selected) {
-        
-//        [_autocompleteView hidesuggestions];
+        [self.selected endEditing:YES];
     }
     self.selected = searchBar;
 }
+*/
 /*
 #pragma mark - Navigation
 
