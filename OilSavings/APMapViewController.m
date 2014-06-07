@@ -26,6 +26,10 @@ static float kLogoHeightPadding = 6.0f;
 
 @property (nonatomic, strong) NSString *srcAddress;
 @property (nonatomic, strong) NSString *dstAddress;
+
+@property (nonatomic) CLLocationCoordinate2D srcCoord;
+@property (nonatomic) CLLocationCoordinate2D dstCoord;
+
 @property (nonatomic) NSInteger cashAmount;
 @property (nonatomic, strong) NSArray *gasStations;
 
@@ -88,26 +92,26 @@ static float kLogoHeightPadding = 6.0f;
     [locationManager startUpdatingLocation];
     
     if ([locationManager location] !=nil) {
-        [self centerMapInLocation:[locationManager location]];
+        [self centerMapInLocation:[locationManager location].coordinate];
     }
     self.mapView.showsUserLocation = YES;
 }
 
 
-- (void) centerMapInLocation:(CLLocation*)loc{
+- (void) centerMapInLocation:(CLLocationCoordinate2D)loc{
     /*
      * old implementation
      *
      */
-    [self.mapView setCenterCoordinate:loc.coordinate zoomLevel:ZOOM_LEVEL animated:NO];
+    [self.mapView setCenterCoordinate:loc zoomLevel:ZOOM_LEVEL animated:NO];
     APGasStationClient *gs = [[APGasStationClient alloc] initWithRegion:self.mapView.region andFuel:@"b"];
     gs.delegate = self;
     [gs getStations];
     
     //convert the address
-    [APGeocodeClient convertCoordinate:loc.coordinate ofType:kAddressSrc inDelegate:self];
-
+    [APGeocodeClient convertCoordinate:loc ofType:kAddressSrc inDelegate:self];
     
+    self.srcCoord = loc;
 }
 - (void) viewDidAppear:(BOOL)animated{
     ALog("Map apperaed");
@@ -143,7 +147,7 @@ static float kLogoHeightPadding = 6.0f;
     
     
     NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
-    [self centerMapInLocation:newLocation];
+    [self centerMapInLocation:newLocation.coordinate];
     
     [locationManager stopUpdatingLocation];
 }
@@ -192,6 +196,13 @@ static float kLogoHeightPadding = 6.0f;
 
 - (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord{
     
+    if (type == kAddressSrc) {
+        self.srcCoord = coord;
+        [self centerMapInLocation:coord];
+    }else{
+        self.dstCoord = coord;
+    }
+    
 }
 
 - (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address{
@@ -204,10 +215,19 @@ static float kLogoHeightPadding = 6.0f;
 #pragma mark - Options Protocol
 - (void)optionsController:(APOptionsViewController*) controller didfinishWithSave:(BOOL)save{
     if (save) {
-        self.srcAddress = controller.srcAddr;
-        self.dstAddress = controller.dstAddr;
+        
+        if (([controller.srcAddr length] > 0) && ![controller.srcAddr isEqualToString:self.srcAddress]) {
+            self.srcAddress = controller.srcAddr;
+            [APGeocodeClient convertAddress:self.srcAddress ofType:kAddressSrc inDelegate:self];
+        }
+        
+        if (([controller.dstAddr length] > 0) && ![self.dstAddress isEqualToString:controller.dstAddr]) {
+            self.dstAddress = controller.dstAddr;
+            [APGeocodeClient convertAddress:self.srcAddress ofType:kAddressSrc inDelegate:self];
+        }
+       
+        
         self.cashAmount = controller.cashAmount;
-        ALog("Saved options!");
     }
     
     [self.navigationController popViewControllerAnimated:YES];

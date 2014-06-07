@@ -37,10 +37,11 @@ static NSString * const GEOCODE_URL = @"https://maps.googleapis.com/maps/api/geo
         NSDictionary *response = (NSDictionary *)responseObject;
         NSLog(@"Geocode response: %@",response);
         if ([response[@"status"] isEqualToString:@"OK"]) {
+            NSArray* results = (NSArray*) response[@"results"];
+            NSDictionary *contents = [results objectAtIndex:0];
             
-            
-            CGFloat lat = [response[@"result"][@"geometry"][@"location"][@"lat"] floatValue];
-            CGFloat lng = [response[@"result"][@"geometry"][@"location"][@"lng"] floatValue];
+            CGFloat lat = [contents[@"geometry"][@"location"][@"lat"] floatValue];
+            CGFloat lng = [contents[@"geometry"][@"location"][@"lng"] floatValue];
             
             CLLocationCoordinate2D coord;
             coord.latitude = lat;
