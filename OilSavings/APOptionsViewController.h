@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "TRAutocompleteView.h"
+#import "APGeocodeClient.h"
 
 @protocol OptimizationOptions;
 
 
-@interface APOptionsViewController : UIViewController<UISearchBarDelegate>{
+@interface APOptionsViewController : UIViewController<UISearchBarDelegate, ConvertAddressToCoord>{
     IBOutlet UITextField *_textField;
     TRAutocompleteView *_autocompleteSrc;
     TRAutocompleteView *_autocompleteDst;

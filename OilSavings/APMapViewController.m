@@ -13,6 +13,7 @@
 #import "MKMapView+ZoomLevel.h"
 #import "APGasStation.h"
 #import "APGSAnnotation.h"
+#import "APGeocodeClient.h"
 
 #define ZOOM_LEVEL 14
 static float kAnnotationPadding = 10.0f;
@@ -26,6 +27,7 @@ static float kLogoHeightPadding = 6.0f;
 @property (nonatomic, strong) NSString *srcAddress;
 @property (nonatomic, strong) NSString *dstAddress;
 @property (nonatomic) NSInteger cashAmount;
+@property (nonatomic, strong) NSArray *gasStations;
 
 @end
 
@@ -171,12 +173,12 @@ static float kLogoHeightPadding = 6.0f;
 - (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations{
     if (newStations) {
         APGSAnnotation *annotation;
-
         for (APGasStation *gs in gsClient.gasStations) {
             annotation = [[APGSAnnotation alloc]initWithLocation:CLLocationCoordinate2DMake(gs.position.latitude, gs.position.longitude)];
             annotation.gasStation = gs;
             [self.mapView addAnnotation:annotation];
         }
+        self.gasStations = gsClient.gasStations;
         
     }
     
@@ -286,13 +288,22 @@ static float kLogoHeightPadding = 6.0f;
     return nil;
 }
 
+#pragma mark - Segues
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"OptionsSegue"]) {
         
-        APOptionsViewController *navController = (APOptionsViewController *)[segue destinationViewController];
-        //APOptionsViewController *optionsController = (APOptionsViewController *)[navController topViewController];
-        navController.delegate = self;
+        APOptionsViewController *optController = (APOptionsViewController *)[segue destinationViewController];
+        optController.delegate = self;
+        
+        //check if we have a valid current location
+        if ([locationManager location] !=nil) {
+            [APGeocodeClient convertCoordinate:[locationManager location].coordinate
+                                        ofType:kAddressSrc
+                                    inDelegate:optController];
+        }
+        
+        
     }
 }
 

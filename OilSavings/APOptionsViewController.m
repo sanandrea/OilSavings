@@ -122,6 +122,8 @@ static int INC_STEP = 5;
 - (IBAction)cancel:(id)sender{
     [self.delegate optionsController:self didfinishWithSave:NO];
 }
+
+
 #pragma mark - Search bar delegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     
@@ -137,7 +139,26 @@ static int INC_STEP = 5;
     }
 }
 
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    if (searchBar == self.src) {
+        ALog("Source is set");
+    }else{
+        ALog("Destination is set");
+    }
+}
 
+
+#pragma mark - Geocoding Convertions Protocol
+
+- (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord{
+    
+}
+
+- (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address{
+    if (type == kAddressSrc) {
+        self.src.placeholder = address;
+    }
+}
 /*
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
     ALog("Begin search");

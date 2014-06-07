@@ -20,6 +20,13 @@ typedef enum{
     kEnergyDiesel
 }ENERGY_TYPE;
 
+typedef enum{
+    kAddressSrc,
+    kAddressDst
+}ADDRESS_TYPE;
+
 @interface APConstants : NSObject
+
+
 
 @end
