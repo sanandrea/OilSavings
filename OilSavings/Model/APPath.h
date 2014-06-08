@@ -30,7 +30,7 @@
 - (id) initWith:(CLLocationCoordinate2D)source andGasStation:(APGasStation*)gs;
 - (id) initWith:(CLLocationCoordinate2D)source and:(CLLocationCoordinate2D)destination andGasStation:(APGasStation*)gs;
 
-- (void) constructMKPolyLine;
+- (void) constructMKPolyLines;
 
 - (NSComparisonResult)compareAir:(APPath*)inObject;
 - (NSComparisonResult)comparePath:(APPath*)inObject;

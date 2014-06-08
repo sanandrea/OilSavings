@@ -9,7 +9,7 @@
 #import "APDirectionsClient.h"
 #import "AFNetworking.h"
 
-static NSString * const DIRECTIONS_URL = @"http://maps.googleapis.com/maps/api/directions/json";
+static NSString * const DIRECTIONS_URL = @"https://maps.googleapis.com/maps/api/directions/json";
 
 @implementation APDirectionsClient
 
@@ -36,6 +36,7 @@ static NSString * const DIRECTIONS_URL = @"http://maps.googleapis.com/maps/api/d
         
     }
     [params setObject:latlngDst forKey:@"destination"];
+//    ALog("Origin %@ and destination %@",latlngSrc , latlngDst);
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -53,21 +54,22 @@ static NSString * const DIRECTIONS_URL = @"http://maps.googleapis.com/maps/api/d
                 NSArray *legs = routeDict[@"legs"];
                 APLine *line;
                 for (NSDictionary *legDict in legs) {
-                    APDistance *distance = [[APDistance alloc] initWithdistance:[legDict[@"distance"] integerValue]];
-                    APDuration *duration = [[APDuration alloc] initWithDuration:[legDict[@"duration"] integerValue]];
-                    CLLocationCoordinate2D legSrc = CLLocationCoordinate2DMake([legDict[@"start_location"][@"latitude"] doubleValue], [legDict[@"start_location"][@"latitude"] doubleValue]);
-                    CLLocationCoordinate2D legDst = CLLocationCoordinate2DMake([legDict[@"end_location"][@"latitude"] doubleValue], [legDict[@"end_location"][@"latitude"] doubleValue]);
+                    NSLog(@"Leg dictionary: %@",legDict);
+                    APDistance *distance = [[APDistance alloc] initWithdistance:[legDict[@"distance"][@"value"] integerValue]];
+                    APDuration *duration = [[APDuration alloc] initWithDuration:[legDict[@"duration"][@"value"] integerValue]];
+                    CLLocationCoordinate2D legSrc = CLLocationCoordinate2DMake([legDict[@"start_location"][@"lat"] doubleValue], [legDict[@"start_location"][@"lng"] doubleValue]);
+                    CLLocationCoordinate2D legDst = CLLocationCoordinate2DMake([legDict[@"end_location"][@"lat"] doubleValue], [legDict[@"end_location"][@"lng"] doubleValue]);
                     
                     line = [[APLine alloc] initWithDistance:distance andDuration:duration andSrc:legSrc andDst:legDst];
-                    
+                    ALog("lat is %f and lng is %f",legSrc.longitude,legSrc.longitude);
                     NSArray *steps = legDict[@"steps"];
                     APStep *step;
                     
                     for (NSDictionary *stepDict in steps) {
-                        APDistance *stepDist = [[APDistance alloc] initWithdistance:[stepDict[@"distance"] integerValue]];
-                        APDuration *stepDura = [[APDuration alloc] initWithDuration:[stepDict[@"duration"] integerValue]];
-                        CLLocationCoordinate2D stepSrc = CLLocationCoordinate2DMake([stepDict[@"start_location"][@"latitude"] doubleValue], [stepDict[@"start_location"][@"latitude"] doubleValue]);
-                        CLLocationCoordinate2D stepDst = CLLocationCoordinate2DMake([stepDict[@"end_location"][@"latitude"] doubleValue], [stepDict[@"end_location"][@"latitude"] doubleValue]);
+                        APDistance *stepDist = [[APDistance alloc] initWithdistance:[stepDict[@"distance"][@"value"] integerValue]];
+                        APDuration *stepDura = [[APDuration alloc] initWithDuration:[stepDict[@"duration"][@"value"] integerValue]];
+                        CLLocationCoordinate2D stepSrc = CLLocationCoordinate2DMake([stepDict[@"start_location"][@"lat"] doubleValue], [stepDict[@"start_location"][@"lng"] doubleValue]);
+                        CLLocationCoordinate2D stepDst = CLLocationCoordinate2DMake([stepDict[@"end_location"][@"lat"] doubleValue], [stepDict[@"end_location"][@"lng"] doubleValue]);
                         
                         step = [[APStep alloc] initWithDistance:stepDist andDuration:stepDura andSrcPos:stepSrc andDstPos:stepDst andPoly:stepDict[@"polyline"]];
                         [line addStep:step];
@@ -75,6 +77,7 @@ static NSString * const DIRECTIONS_URL = @"http://maps.googleapis.com/maps/api/d
                     [path addLine:line];
                 }
             }
+            //[path constructMKPolyLines];
             [delegate foundPath:path withIndex:index];
         }else if ([response[@"status"] isEqualToString:@"OVER_QUERY_LIMIT"]){
             ALog("OVER QUERY LIMIT reached in index %d",index);
@@ -83,7 +86,7 @@ static NSString * const DIRECTIONS_URL = @"http://maps.googleapis.com/maps/api/d
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         // Handle Error
-        
+        ALog("Error here");
     }];
     
 }

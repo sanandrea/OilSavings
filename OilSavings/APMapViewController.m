@@ -14,6 +14,7 @@
 #import "APGasStation.h"
 #import "APGSAnnotation.h"
 #import "APGeocodeClient.h"
+#import "APPathOptimizer.h"
 
 #define ZOOM_LEVEL 14
 static float kAnnotationPadding = 10.0f;
@@ -33,6 +34,8 @@ static float kLogoHeightPadding = 6.0f;
 @property (nonatomic) NSInteger cashAmount;
 @property (nonatomic, strong) NSArray *gasStations;
 
+@property (nonatomic, strong) APPathOptimizer *optimizer;
+
 @end
 
 @implementation APMapViewController
@@ -42,6 +45,7 @@ static float kLogoHeightPadding = 6.0f;
     [super viewDidLoad];
     
     self.title = @"Mappa";
+    [self.mapView setDelegate:self];
     
     // Change button color
     _sidebarButton.tintColor = [UIColor colorWithWhite:0.1f alpha:0.9f];
@@ -110,7 +114,6 @@ static float kLogoHeightPadding = 6.0f;
     
     //convert the address
     [APGeocodeClient convertCoordinate:loc ofType:kAddressSrc inDelegate:self];
-    
     self.srcCoord = loc;
 }
 - (void) viewDidAppear:(BOOL)animated{
@@ -188,6 +191,9 @@ static float kLogoHeightPadding = 6.0f;
         }
         self.gasStations = gsClient.gasStations;
         
+        self.optimizer = [[APPathOptimizer alloc] initWithCar:self.myCar andDelegate:self];
+        [self.optimizer optimizeRouteFrom:self.srcCoord to:self.dstCoord hasDestination:NO withGasStations:self.gasStations];
+        
     }
     
 }
@@ -213,7 +219,11 @@ static float kLogoHeightPadding = 6.0f;
 
 #pragma mark - Path Available
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
-    
+    ALog("Found path in map is called");
+    [path constructMKPolyLines];
+    APLine *line = [path.lines objectAtIndex:0];
+
+    [self.mapView addOverlay:line.polyline];
 }
 
 
@@ -328,6 +338,15 @@ static float kLogoHeightPadding = 6.0f;
         return markerView;
     }
     return nil;
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {
+    ALog("Here");
+    MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
+    polylineView.strokeColor = [UIColor redColor];
+    polylineView.lineWidth = 1.0;
+    
+    return polylineView;
 }
 
 #pragma mark - Segues

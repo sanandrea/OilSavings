@@ -24,10 +24,12 @@
     self = [super init];
     
     if (self) {
+        ALog("initing");
         self.lines = [[NSMutableArray alloc] init];
         self.src = source;
         self.hasDestination = NO;
         self.gasStation = gs;
+        self.dst = gs.position;
         self.haversineDistance = [APConstants haversineDistance:self.src.latitude :gs.position.latitude :self.src.longitude :gs.position.longitude];
     }
     return self;
@@ -54,6 +56,7 @@
         
         for (APStep *step in line.steps) {
             coords[index++] = step.srcPos;
+            ALog("lat is %f and lng is %f",step.srcPos.latitude,step.srcPos.longitude);
         }
         coords[index++] = line.dstPos;
         line.polyline = [MKPolyline polylineWithCoordinates:coords count:index];

@@ -35,18 +35,18 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
     //init paths
     self.src = src;
     self.dst = dst;
-    self.hasDest = hasDest;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self initPathsWithGasStations:gasStations];
+        [self initPathsWithGasStations:gasStations hasDest:hasDest];
     });
 
 }
 
 
-- (void) initPathsWithGasStations:(NSArray*)gs{
+- (void) initPathsWithGasStations:(NSArray*)gs hasDest:(BOOL)hd{
+
     APPath *path;
     for (APGasStation* g in gs) {
-        if (self.hasDest) {
+        if (!hd) {
             path = [[APPath alloc]initWith:self.src andGasStation:g];
         }else{
             path = [[APPath alloc]initWith:self.src and:self.dst andGasStation:g];
@@ -55,18 +55,19 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
     }
     //sort
     [self.paths sortUsingSelector:@selector(compareAir:)];
-    
+
     //now we are on global queue and have all paths sorted by air distance
     
     int counter = 1,index = 0;
     
     while (counter < [self.paths count] / REQUEST_BUNDLE + 1) {
+//        ALog("External while: counter is %d and index is %d",counter, index);
         
         //save in what batch are;
-        self.currentBatch = MAX(counter * REQUEST_BUNDLE, [self.paths count]);
+        self.currentBatch = MIN(counter * REQUEST_BUNDLE, [self.paths count]);
         
         while (index < counter * REQUEST_BUNDLE && index < [self.paths count]) {
-            
+//            ALog("Internal while: counter is %d and index is %d",counter, index);
             [APDirectionsClient findDirectionsOfPath:[self.paths objectAtIndex:index] indexOfRequest:index delegateTo:self];
             index++;
         }
@@ -78,12 +79,14 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
     BOOL bestFound = NO;
     
+//    ALog("Found path in optimizer is called with index %d but %d",index, self.currentBatch);
     if ((index == 0) || ([path comparePath:self.bestPath] == NSOrderedAscending)){
         self.bestPath = path;
         bestFound = YES;
     }
     
-    if ((index == self.currentBatch - 1) && bestFound) {
+    if (index == self.currentBatch - 1) {
+//        ALog("REporting to map");
         // go on main thread now
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.delegate foundPath:self.bestPath withIndex:0];
