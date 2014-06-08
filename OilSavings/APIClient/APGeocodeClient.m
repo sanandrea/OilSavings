@@ -35,7 +35,7 @@ static NSString * const GEOCODE_URL = @"https://maps.googleapis.com/maps/api/geo
     [manager GET:GEOCODE_URL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // Process Response Object
         NSDictionary *response = (NSDictionary *)responseObject;
-        NSLog(@"Geocode response: %@",response);
+//        NSLog(@"Geocode response: %@",response);
         if ([response[@"status"] isEqualToString:@"OK"]) {
             NSArray* results = (NSArray*) response[@"results"];
             NSDictionary *contents = [results objectAtIndex:0];

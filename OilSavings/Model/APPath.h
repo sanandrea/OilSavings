@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "APPosition.h"
+#import <MapKit/MapKit.h>
 #import "APLine.h"
 @interface APPath : NSObject
 
-@property (nonatomic, strong) APPosition *northEast;
-@property (nonatomic, strong) APPosition *southWest;
+@property (nonatomic) CLLocationCoordinate2D northEast;
+@property (nonatomic) CLLocationCoordinate2D southWest;
 
 @property (nonatomic, strong) NSMutableArray *lines;
 
 - (void) addLine:(APLine*) line;
-- (APPosition*) getNorthEastBorder;
-- (APPosition*) getsouthWestBorder;
+- (CLLocationCoordinate2D) getNorthEastBorder;
+- (CLLocationCoordinate2D) getsouthWestBorder;
 - (int) getDistance;
 
 @end

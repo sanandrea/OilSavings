@@ -10,7 +10,6 @@
 		1C262EE98A284CE2B1B1D0E0 /* libPods-OilSavings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FF496F4C7FD48D99EAA02C5 /* libPods-OilSavings.a */; };
 		A9014612193BCA66003B826D /* APDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = A9014611193BCA66003B826D /* APDuration.m */; };
 		A9014618193BCC00003B826D /* APDistance.m in Sources */ = {isa = PBXBuildFile; fileRef = A9014617193BCC00003B826D /* APDistance.m */; };
-		A901461B193BCCF5003B826D /* APPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = A901461A193BCCF5003B826D /* APPosition.m */; };
 		A901461E193BCE36003B826D /* APLine.m in Sources */ = {isa = PBXBuildFile; fileRef = A901461D193BCE36003B826D /* APLine.m */; };
 		A9014621193BCFA5003B826D /* APStep.m in Sources */ = {isa = PBXBuildFile; fileRef = A9014620193BCFA5003B826D /* APStep.m */; };
 		A9014624193BD486003B826D /* APPath.m in Sources */ = {isa = PBXBuildFile; fileRef = A9014623193BD486003B826D /* APPath.m */; };
@@ -97,6 +96,8 @@
 		A9FC505D193C786800C883B7 /* APGasStationClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC505C193C786800C883B7 /* APGasStationClient.m */; };
 		A9FC507C193CDC4E00C883B7 /* APGSAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC507B193CDC4E00C883B7 /* APGSAnnotation.m */; };
 		A9FC965C19432C780067875B /* APGeocodeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC965B19432C780067875B /* APGeocodeClient.m */; };
+		A9FC966219434EC40067875B /* APDirectionsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC966119434EC40067875B /* APDirectionsClient.m */; };
+		A9FC966519434FD80067875B /* APPathOptimizer.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC966419434FD80067875B /* APPathOptimizer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,8 +116,6 @@
 		A9014611193BCA66003B826D /* APDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDuration.m; sourceTree = "<group>"; };
 		A9014616193BCC00003B826D /* APDistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDistance.h; sourceTree = "<group>"; };
 		A9014617193BCC00003B826D /* APDistance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDistance.m; sourceTree = "<group>"; };
-		A9014619193BCCF5003B826D /* APPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPosition.h; sourceTree = "<group>"; };
-		A901461A193BCCF5003B826D /* APPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPosition.m; sourceTree = "<group>"; };
 		A901461C193BCE36003B826D /* APLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLine.h; sourceTree = "<group>"; };
 		A901461D193BCE36003B826D /* APLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLine.m; sourceTree = "<group>"; };
 		A901461F193BCFA5003B826D /* APStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APStep.h; sourceTree = "<group>"; };
@@ -224,6 +223,10 @@
 		A9FC965A19432C780067875B /* APGeocodeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGeocodeClient.h; sourceTree = "<group>"; };
 		A9FC965B19432C780067875B /* APGeocodeClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGeocodeClient.m; sourceTree = "<group>"; };
 		A9FC965F194343730067875B /* APNetworkAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APNetworkAPI.h; sourceTree = "<group>"; };
+		A9FC966019434EC40067875B /* APDirectionsClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDirectionsClient.h; sourceTree = "<group>"; };
+		A9FC966119434EC40067875B /* APDirectionsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDirectionsClient.m; sourceTree = "<group>"; };
+		A9FC966319434FD80067875B /* APPathOptimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPathOptimizer.h; sourceTree = "<group>"; };
+		A9FC966419434FD80067875B /* APPathOptimizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPathOptimizer.m; sourceTree = "<group>"; };
 		FAEA7545A18B4D538A596C22 /* Pods-OilSavings.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OilSavings.xcconfig"; path = "Pods/Pods-OilSavings.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -265,6 +268,8 @@
 				A9FC505C193C786800C883B7 /* APGasStationClient.m */,
 				A9FC965A19432C780067875B /* APGeocodeClient.h */,
 				A9FC965B19432C780067875B /* APGeocodeClient.m */,
+				A9FC966019434EC40067875B /* APDirectionsClient.h */,
+				A9FC966119434EC40067875B /* APDirectionsClient.m */,
 			);
 			path = APIClient;
 			sourceTree = "<group>";
@@ -421,15 +426,15 @@
 				A9014616193BCC00003B826D /* APDistance.h */,
 				A9014617193BCC00003B826D /* APDistance.m */,
 				A901461C193BCE36003B826D /* APLine.h */,
+				A901461D193BCE36003B826D /* APLine.m */,
 				A9014622193BD486003B826D /* APPath.h */,
 				A9014623193BD486003B826D /* APPath.m */,
-				A901461D193BCE36003B826D /* APLine.m */,
-				A9014619193BCCF5003B826D /* APPosition.h */,
-				A901461A193BCCF5003B826D /* APPosition.m */,
 				A901461F193BCFA5003B826D /* APStep.h */,
 				A9014620193BCFA5003B826D /* APStep.m */,
 				A9014625193BE7AD003B826D /* APGasStation.h */,
 				A9014626193BE7AD003B826D /* APGasStation.m */,
+				A9FC966319434FD80067875B /* APPathOptimizer.h */,
+				A9FC966419434FD80067875B /* APPathOptimizer.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -675,6 +680,7 @@
 				A919D0EF1932B8120052A47F /* APAddCarViewController.m in Sources */,
 				A919D0F21932BD900052A47F /* APInfoCarViewController.m in Sources */,
 				A9C71175193229A300E8EEF9 /* APConstants.m in Sources */,
+				A9FC966219434EC40067875B /* APDirectionsClient.m in Sources */,
 				A901461E193BCE36003B826D /* APLine.m in Sources */,
 				A9FC5057193C70D900C883B7 /* MKMapView+ZoomLevel.m in Sources */,
 				A9FC507C193CDC4E00C883B7 /* APGSAnnotation.m in Sources */,
@@ -689,7 +695,7 @@
 				A98D0886192FDC33000DB81D /* APAppDelegate.m in Sources */,
 				A919D0EC1932B7200052A47F /* APEditCarViewController.m in Sources */,
 				A99FCCDB19327AE300B26D6A /* SWRevealViewController.m in Sources */,
-				A901461B193BCCF5003B826D /* APPosition.m in Sources */,
+				A9FC966519434FD80067875B /* APPathOptimizer.m in Sources */,
 				A9C711711932284B00E8EEF9 /* APCar.m in Sources */,
 				A9014624193BD486003B826D /* APPath.m in Sources */,
 				A98D088F192FDC33000DB81D /* OilSavings.xcdatamodeld in Sources */,

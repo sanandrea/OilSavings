@@ -7,17 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 #import "APDistance.h"
 #import "APDuration.h"
-#import "APPosition.h"
 
 @interface APStep : NSObject
 
 @property (nonatomic, strong) APDuration *stepDuration;
 @property (nonatomic, strong) APDistance *stepDistance;
 
-@property (nonatomic, strong) APPosition *srcPos;
-@property (nonatomic, strong) APPosition *dstPos;
+@property (nonatomic) CLLocationCoordinate2D srcPos;
+@property (nonatomic) CLLocationCoordinate2D dstPos;
 
 @property (nonatomic, strong) NSString *polyline;
 

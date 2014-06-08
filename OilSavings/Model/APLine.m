@@ -11,7 +11,7 @@
 @implementation APLine
 
 
-- (id) initWithDistance:(APDistance*) d andDuration:(APDuration*) t andSrc:(APPosition*) src andDst:(APPosition*)dst andSrcA:(NSString*) srcA andDstA:(NSString*) dstA{
+- (id) initWithDistance:(APDistance*) d andDuration:(APDuration*) t andSrc:(CLLocationCoordinate2D) src andDst:(CLLocationCoordinate2D)dst andSrcA:(NSString*) srcA andDstA:(NSString*) dstA{
     
     self = [super init];
     

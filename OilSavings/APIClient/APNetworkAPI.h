@@ -8,12 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "APGasStationClient.h"
+#import "APPath.h"
 
 @protocol APNetworkAPI <NSObject>
 
 @optional
 - (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord;
 - (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address;
+
+- (void) foundPath:(APPath*)path;
 
 - (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations;
 

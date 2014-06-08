@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
+
 #import "APDistance.h"
 #import "APDuration.h"
-#import "APPosition.h"
 #import "APStep.h"
 
 @interface APLine : NSObject
@@ -17,8 +18,8 @@
 @property (nonatomic, strong) APDuration *duration;
 @property (nonatomic, strong) APDistance *distance;
 
-@property (nonatomic, strong) APPosition *srcPos;
-@property (nonatomic, strong) APPosition *dstPos;
+@property (nonatomic) CLLocationCoordinate2D srcPos;
+@property (nonatomic) CLLocationCoordinate2D dstPos;
 
 @property (nonatomic, strong) NSString *srcAddress;
 @property (nonatomic, strong) NSString *dstAddress;

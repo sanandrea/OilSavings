@@ -12,7 +12,7 @@ static NSString *imageSuffix = @"_small.png";
 
 @implementation APGasStation
 
-- (id) initWithPosition:(APPosition*) position andName:(NSString*)nn{
+- (id) initWithPosition:(CLLocationCoordinate2D) position andName:(NSString*)nn{
     self = [super init];
     if (self) {
         self.position = position;
@@ -23,7 +23,9 @@ static NSString *imageSuffix = @"_small.png";
 }
 
 - (id) initWithDict:(NSDictionary*) dict{
-    APPosition *p = [[APPosition alloc] initWithLat:[dict[@"lat"] doubleValue] andLong:[dict[@"lng"] doubleValue]];
+    CLLocationCoordinate2D p;
+    p.latitude = [dict[@"lat"] doubleValue];
+    p.longitude = [dict[@"lng"] doubleValue];
     self = [self initWithPosition:p andName:dict[@"brand"]];
     return self;
 }

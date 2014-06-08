@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "APPosition.h"
+#import <MapKit/MapKit.h>
 
 @interface APGasStation : NSObject
 
@@ -18,7 +18,7 @@
 
 @property (nonatomic) float gasolinePrice;
 @property (nonatomic) float dieselPrice;
-@property (nonatomic, strong) APPosition *position;
+@property (nonatomic) CLLocationCoordinate2D position;
 
 - (BOOL) hasEnergy:(ENERGY_TYPE)e;
 - (void) setPrice:(float) p forEnergyType:(ENERGY_TYPE)e;

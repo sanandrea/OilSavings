@@ -10,7 +10,7 @@
 
 @implementation APPath
 
-- (id) initWithNEBorder:(APPosition*)ne andSWBorder:(APPosition*)sw{
+- (id) initWithNEBorder:(CLLocationCoordinate2D)ne andSWBorder:(CLLocationCoordinate2D)sw{
     self = [super init];
     
     self.southWest = sw;
@@ -24,10 +24,10 @@
     [self.lines addObject:line];
 }
 
-- (APPosition*) getNorthEastBorder{
+- (CLLocationCoordinate2D) getNorthEastBorder{
     return self.northEast;
 }
-- (APPosition*) getsouthWestBorder{
+- (CLLocationCoordinate2D) getsouthWestBorder{
     return self.southWest;
 }
 - (int) getDistance{

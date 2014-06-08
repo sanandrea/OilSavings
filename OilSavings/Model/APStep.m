@@ -10,7 +10,7 @@
 
 @implementation APStep
 
-- (id) initWithDistance:(APDistance*) d andDuration:(APDuration*) t andSrcPos:(APPosition*)src andDstPos:(APPosition*) dst andPoly:(NSString*) poly{
+- (id) initWithDistance:(APDistance*) d andDuration:(APDuration*) t andSrcPos:(CLLocationCoordinate2D)src andDstPos:(CLLocationCoordinate2D) dst andPoly:(NSString*) poly{
     self = [super init];
     
     self.stepDuration = t;
