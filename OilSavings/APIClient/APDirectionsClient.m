@@ -7,6 +7,7 @@
 //
 
 #import "APDirectionsClient.h"
+#import "AFNetworking.h"
 
 static NSString * const DIRECTIONS_URL = @"http://maps.googleapis.com/maps/api/directions/json";
 
@@ -16,7 +17,130 @@ static NSString * const DIRECTIONS_URL = @"http://maps.googleapis.com/maps/api/d
                indexOfRequest:(NSInteger)index
                    delegateTo:(id<APNetworkAPI>)delegate{
     
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:GOOGLE_API_KEY forKey:@"key"];
+    [params setObject:@"it" forKey:@"region"];
+    
+    NSString *latlngSrc = [NSString stringWithFormat:@"%f,%f",path.src.latitude,path.src.longitude];
+    [params setObject:latlngSrc forKey:@"origin"];
+    
+    NSString *latlngDst;
+    NSString *latlngWay;
+    if (path.hasDestination) {
+        latlngDst = [NSString stringWithFormat:@"%f,%f",path.dst.latitude,path.dst.longitude];
+        latlngWay = [NSString stringWithFormat:@"%f,%f",path.gasStation.position.latitude,path.gasStation.position.longitude];
+
+        [params setObject:latlngWay forKey:@"waypoints"];
+    }else{
+        latlngDst = [NSString stringWithFormat:@"%f,%f",path.gasStation.position.latitude,path.gasStation.position.longitude];
+        
+    }
+    [params setObject:latlngDst forKey:@"destination"];
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+    [manager GET:DIRECTIONS_URL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // Process Response Object
+        NSDictionary *response = (NSDictionary *)responseObject;
+        if ([response[@"status"] isEqualToString:@"OK"]) {
+            
+            NSArray* routes = (NSArray*) response[@"routes"];
+            for (NSDictionary *routeDict in routes) {
+                NSArray *legs = routeDict[@"legs"];
+                APLine *line;
+                for (NSDictionary *legDict in legs) {
+                    APDistance *distance = [[APDistance alloc] initWithdistance:[legDict[@"distance"] integerValue]];
+                    APDuration *duration = [[APDuration alloc] initWithDuration:[legDict[@"duration"] integerValue]];
+                    CLLocationCoordinate2D legSrc = CLLocationCoordinate2DMake([legDict[@"start_location"][@"latitude"] doubleValue], [legDict[@"start_location"][@"latitude"] doubleValue]);
+                    CLLocationCoordinate2D legDst = CLLocationCoordinate2DMake([legDict[@"end_location"][@"latitude"] doubleValue], [legDict[@"end_location"][@"latitude"] doubleValue]);
+                    
+                    line = [[APLine alloc] initWithDistance:distance andDuration:duration andSrc:legSrc andDst:legDst];
+                    
+                    NSArray *steps = legDict[@"steps"];
+                    APStep *step;
+                    
+                    for (NSDictionary *stepDict in steps) {
+                        APDistance *stepDist = [[APDistance alloc] initWithdistance:[stepDict[@"distance"] integerValue]];
+                        APDuration *stepDura = [[APDuration alloc] initWithDuration:[stepDict[@"duration"] integerValue]];
+                        CLLocationCoordinate2D stepSrc = CLLocationCoordinate2DMake([stepDict[@"start_location"][@"latitude"] doubleValue], [stepDict[@"start_location"][@"latitude"] doubleValue]);
+                        CLLocationCoordinate2D stepDst = CLLocationCoordinate2DMake([stepDict[@"end_location"][@"latitude"] doubleValue], [stepDict[@"end_location"][@"latitude"] doubleValue]);
+                        
+                        step = [[APStep alloc] initWithDistance:stepDist andDuration:stepDura andSrcPos:stepSrc andDstPos:stepDst andPoly:stepDict[@"polyline"]];
+                        [line addStep:step];
+                    }
+                    [path addLine:line];
+                }
+            }
+            [delegate foundPath:path withIndex:index];
+        }else if ([response[@"status"] isEqualToString:@"OVER_QUERY_LIMIT"]){
+            ALog("OVER QUERY LIMIT reached in index %d",index);
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        // Handle Error
+        
+    }];
+    
 }
 
-
++ (MKPolyline *)polylineWithEncodedString:(NSString *)encodedString {
+    const char *bytes = [encodedString UTF8String];
+    NSUInteger length = [encodedString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    NSUInteger idx = 0;
+    
+    NSUInteger count = length / 4;
+    CLLocationCoordinate2D *coords = calloc(count, sizeof(CLLocationCoordinate2D));
+    NSUInteger coordIdx = 0;
+    
+    float latitude = 0;
+    float longitude = 0;
+    while (idx < length) {
+        char byte = 0;
+        int res = 0;
+        char shift = 0;
+        
+        do {
+            byte = bytes[idx++] - 63;
+            res |= (byte & 0x1F) << shift;
+            shift += 5;
+        } while (byte >= 0x20);
+        
+        float deltaLat = ((res & 1) ? ~(res >> 1) : (res >> 1));
+        latitude += deltaLat;
+        
+        shift = 0;
+        res = 0;
+        
+        do {
+            byte = bytes[idx++] - 0x3F;
+            res |= (byte & 0x1F) << shift;
+            shift += 5;
+        } while (byte >= 0x20);
+        
+        float deltaLon = ((res & 1) ? ~(res >> 1) : (res >> 1));
+        longitude += deltaLon;
+        
+        float finalLat = latitude * 1E-5;
+        float finalLon = longitude * 1E-5;
+        
+        CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(finalLat, finalLon);
+        coords[coordIdx++] = coord;
+        
+        if (coordIdx == count) {
+            NSUInteger newCount = count + 10;
+            coords = realloc(coords, newCount * sizeof(CLLocationCoordinate2D));
+            count = newCount;
+        }
+    }
+    
+    MKPolyline *polyline = [MKPolyline polylineWithCoordinates:coords count:coordIdx];
+    free(coords);
+    
+    return polyline;
+}
 @end

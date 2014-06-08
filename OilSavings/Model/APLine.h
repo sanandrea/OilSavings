@@ -21,6 +21,8 @@
 @property (nonatomic) CLLocationCoordinate2D srcPos;
 @property (nonatomic) CLLocationCoordinate2D dstPos;
 
+@property (nonatomic, strong) MKPolyline *polyline;
+
 @property (nonatomic, strong) NSString *srcAddress;
 @property (nonatomic, strong) NSString *dstAddress;
 
@@ -28,4 +30,5 @@
 
 - (void) addStep:(APStep*) step;
 - (float) getVelocity;
+- (id) initWithDistance:(APDistance*) d andDuration:(APDuration*) t andSrc:(CLLocationCoordinate2D) src andDst:(CLLocationCoordinate2D)dst;
 @end

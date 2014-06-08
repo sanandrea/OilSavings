@@ -13,12 +13,13 @@
 - (id) initWithDistance:(APDistance*) d andDuration:(APDuration*) t andSrcPos:(CLLocationCoordinate2D)src andDstPos:(CLLocationCoordinate2D) dst andPoly:(NSString*) poly{
     self = [super init];
     
-    self.stepDuration = t;
-    self.stepDistance = d;
-    self.srcPos = src;
-    self.dstPos = dst;
-    self.polyline = poly;
-    
+    if (self) {
+        self.stepDuration = t;
+        self.stepDistance = d;
+        self.srcPos = src;
+        self.dstPos = dst;
+        self.polyline = poly;
+    }
     return self;
 }
 @end

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface APDuration : NSObject
-@property (nonatomic) int duration;
+@property (nonatomic) NSInteger duration;
 @property (nonatomic, strong) NSString *text;
+- (id) initWithDuration:(NSInteger) d;
 @end

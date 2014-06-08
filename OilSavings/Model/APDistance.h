@@ -11,4 +11,5 @@
 @interface APDistance : NSObject
 @property (nonatomic) int distance;
 @property (nonatomic, strong) NSString *text;
+- (id) initWithdistance:(NSInteger) d;
 @end

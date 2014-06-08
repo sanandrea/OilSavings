@@ -21,4 +21,6 @@
 
 @property (nonatomic, strong) NSString *polyline;
 
+
+- (id) initWithDistance:(APDistance*) d andDuration:(APDuration*) t andSrcPos:(CLLocationCoordinate2D)src andDstPos:(CLLocationCoordinate2D) dst andPoly:(NSString*) poly;
 @end

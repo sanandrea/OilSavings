@@ -10,10 +10,9 @@
 
 @implementation APDistance
 
-- (id) initWithdistance:(int) d andText:(NSString*) someText{
+- (id) initWithdistance:(NSInteger) d{
     self = [super init];
     self.distance = d;
-    self.text = someText;    
     return self;
 }
 

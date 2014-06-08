@@ -45,6 +45,24 @@
     return distance;
 }
 
+- (void) constructMKPolyLines{
+    for (APLine *line in self.lines) {
+        
+        //add all src positions of steps then add the destination position
+        CLLocationCoordinate2D *coords = calloc([line.steps count] + 1, sizeof(CLLocationCoordinate2D));
+        int index = 0;
+        
+        for (APStep *step in line.steps) {
+            coords[index++] = step.srcPos;
+        }
+        coords[index++] = line.dstPos;
+        line.polyline = [MKPolyline polylineWithCoordinates:coords count:index];
+        
+        //don't forget to free
+        free(coords);
+    }
+}
+
 - (NSComparisonResult)compareAir:(APPath*)inObject{
     if (self.haversineDistance < inObject.haversineDistance) {
         return NSOrderedAscending;
@@ -57,6 +75,8 @@
 
 - (NSComparisonResult)comparePath:(APPath*)inObject{
     //TODO
-    return NSOrderedDescending;
+    return NSOrderedSame;
 }
+
+
 @end

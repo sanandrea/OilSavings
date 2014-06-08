@@ -11,10 +11,9 @@
 
 @implementation APDuration
 
-- (id) initWithDuration:(int) t andText:(NSString*) someText{
+- (id) initWithDuration:(NSInteger) d;{
     self = [super init];
-    self.duration = t;
-    self.text = someText;
+    self.duration = d;
     return self;
 }
 

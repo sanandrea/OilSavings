@@ -11,7 +11,7 @@
 @implementation APLine
 
 
-- (id) initWithDistance:(APDistance*) d andDuration:(APDuration*) t andSrc:(CLLocationCoordinate2D) src andDst:(CLLocationCoordinate2D)dst andSrcA:(NSString*) srcA andDstA:(NSString*) dstA{
+- (id) initWithDistance:(APDistance*) d andDuration:(APDuration*) t andSrc:(CLLocationCoordinate2D) src andDst:(CLLocationCoordinate2D)dst{
     
     self = [super init];
     
@@ -20,9 +20,6 @@
     
     self.srcPos = src;
     self.dstPos = dst;
-    
-    self.srcAddress = srcA;
-    self.dstAddress = dstA;
     
     self.steps = [[NSMutableArray alloc]init];
     
