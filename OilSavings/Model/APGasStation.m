@@ -54,6 +54,7 @@ static NSString *imageSuffix = @"_small.png";
     return 0.f;
 }
 
+
 + (NSDictionary*) longNameDictionary{
     static NSDictionary* output = nil;
     

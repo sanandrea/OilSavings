@@ -103,12 +103,12 @@ static int INC_STEP = 5;
 -(IBAction)cashSlider:(id)sender{
     int linearMax = 40;
     int endLinearIndex = (linearMax - MIN_AMOUNT) / INC_STEP;
-    NSUInteger index = (NSUInteger)(self.cashSliderControl.value + 0.5); // Round the number.
+    int index = (int)(self.cashSliderControl.value + 0.5); // Round the number.
     [self.cashSliderControl setValue:index animated:NO];
     
     int value = (MIN_AMOUNT + index * INC_STEP);
     if (value <= linearMax) {
-        [self.cashLabel setText:[NSString stringWithFormat:@"%u",(MIN_AMOUNT + index * INC_STEP)]];
+        [self.cashLabel setText:[NSString stringWithFormat:@"%d",(MIN_AMOUNT + index * INC_STEP)]];
     }else{
         int inc = linearMax + 2 * INC_STEP * (index - endLinearIndex);
         [self.cashLabel setText:[NSString stringWithFormat:@"%u",inc]];

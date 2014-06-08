@@ -12,10 +12,8 @@
 @interface APDirectionsClient : NSObject
 
 
-- (void) findDirectionsFrom:(CLLocationCoordinate2D)src
-                         to:(CLLocationCoordinate2D)dst
-             passingThrough:(CLLocationCoordinate2D)waypoint
-                 delegateTo:(id<APNetworkAPI>)delegate;
-
++ (void) findDirectionsOfPath:(APPath*) path
+               indexOfRequest:(NSInteger)index
+                   delegateTo:(id<APNetworkAPI>)delegate;
 
 @end

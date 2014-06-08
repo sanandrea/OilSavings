@@ -27,6 +27,6 @@ typedef enum{
 
 @interface APConstants : NSObject
 
-
++ (float) haversineDistance:(float)latA :(float)latB :(float)longA :(float)longB;
 
 @end

@@ -10,13 +10,26 @@
 
 @implementation APPath
 
-- (id) initWithNEBorder:(CLLocationCoordinate2D)ne andSWBorder:(CLLocationCoordinate2D)sw{
+- (id) initWith:(CLLocationCoordinate2D)source and:(CLLocationCoordinate2D)destination andGasStation:(APGasStation*)gs{
+    self = [self initWith:source andGasStation:gs];
+    
+    if (self) {
+        self.dst = destination;
+        self .hasDestination = YES;
+        self.haversineDistance += [APConstants haversineDistance:self.dst.latitude :gs.position.latitude :self.dst.longitude :gs.position.longitude];
+    }
+    return self;
+}
+- (id) initWith:(CLLocationCoordinate2D)source andGasStation:(APGasStation*)gs{
     self = [super init];
     
-    self.southWest = sw;
-    self.northEast = ne;
-    self.lines = [[NSMutableArray alloc] init];
-    
+    if (self) {
+        self.lines = [[NSMutableArray alloc] init];
+        self.src = source;
+        self.hasDestination = NO;
+        self.gasStation = gs;
+        self.haversineDistance = [APConstants haversineDistance:self.src.latitude :gs.position.latitude :self.src.longitude :gs.position.longitude];
+    }
     return self;
 }
 
@@ -24,12 +37,6 @@
     [self.lines addObject:line];
 }
 
-- (CLLocationCoordinate2D) getNorthEastBorder{
-    return self.northEast;
-}
-- (CLLocationCoordinate2D) getsouthWestBorder{
-    return self.southWest;
-}
 - (int) getDistance{
     int distance = 0;
     for (APLine* ll in self.lines) {
@@ -38,4 +45,18 @@
     return distance;
 }
 
+- (NSComparisonResult)compareAir:(APPath*)inObject{
+    if (self.haversineDistance < inObject.haversineDistance) {
+        return NSOrderedAscending;
+    }else if (self.haversineDistance > inObject.haversineDistance){
+        return NSOrderedDescending;
+    }else{
+        return NSOrderedSame;
+    }
+}
+
+- (NSComparisonResult)comparePath:(APPath*)inObject{
+    //TODO
+    return NSOrderedDescending;
+}
 @end

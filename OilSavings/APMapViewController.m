@@ -211,6 +211,11 @@ static float kLogoHeightPadding = 6.0f;
     }
 }
 
+#pragma mark - Path Available
+- (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
+    
+}
+
 
 #pragma mark - Options Protocol
 - (void)optionsController:(APOptionsViewController*) controller didfinishWithSave:(BOOL)save{

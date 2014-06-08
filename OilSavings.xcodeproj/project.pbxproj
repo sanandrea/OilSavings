@@ -49,8 +49,6 @@
 		A9C711721932284B00E8EEF9 /* APCar.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C711701932284B00E8EEF9 /* APCar.m */; };
 		A9C71175193229A300E8EEF9 /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C71174193229A300E8EEF9 /* APConstants.m */; };
 		A9C71176193229A300E8EEF9 /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C71174193229A300E8EEF9 /* APConstants.m */; };
-		A9C7117919322BD200E8EEF9 /* APGaeApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C7117819322BD200E8EEF9 /* APGaeApiClient.m */; };
-		A9C7117A19322BD200E8EEF9 /* APGaeApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C7117819322BD200E8EEF9 /* APGaeApiClient.m */; };
 		A9CFA2ED193E844100ACCEC5 /* opzioni@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9CFA2EC193E844100ACCEC5 /* opzioni@2x.png */; };
 		A9CFA2F0193E87FC00ACCEC5 /* APOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9CFA2EF193E87FC00ACCEC5 /* APOptionsViewController.m */; };
 		A9CFA2F2193E8B0200ACCEC5 /* carIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9CFA2F1193E8B0200ACCEC5 /* carIcon@2x.png */; };
@@ -170,8 +168,6 @@
 		A9C711701932284B00E8EEF9 /* APCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCar.m; sourceTree = "<group>"; };
 		A9C71173193229A300E8EEF9 /* APConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APConstants.h; sourceTree = "<group>"; };
 		A9C71174193229A300E8EEF9 /* APConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APConstants.m; sourceTree = "<group>"; };
-		A9C7117719322BD200E8EEF9 /* APGaeApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGaeApiClient.h; sourceTree = "<group>"; };
-		A9C7117819322BD200E8EEF9 /* APGaeApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGaeApiClient.m; sourceTree = "<group>"; };
 		A9CFA2EC193E844100ACCEC5 /* opzioni@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "opzioni@2x.png"; sourceTree = "<group>"; };
 		A9CFA2EE193E87FC00ACCEC5 /* APOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APOptionsViewController.h; sourceTree = "<group>"; };
 		A9CFA2EF193E87FC00ACCEC5 /* APOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APOptionsViewController.m; sourceTree = "<group>"; };
@@ -350,7 +346,6 @@
 				A99FCCD6193248DF00B26D6A /* car.sqlite */,
 				A9C7116C1932282000E8EEF9 /* Resources */,
 				A9C7116D1932282000E8EEF9 /* Model */,
-				A9C7116E1932282000E8EEF9 /* Network */,
 				A98D0884192FDC33000DB81D /* APAppDelegate.h */,
 				A98D0885192FDC33000DB81D /* APAppDelegate.m */,
 				A98D0887192FDC33000DB81D /* Main_iPhone.storyboard */,
@@ -437,15 +432,6 @@
 				A9FC966419434FD80067875B /* APPathOptimizer.m */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		A9C7116E1932282000E8EEF9 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				A9C7117719322BD200E8EEF9 /* APGaeApiClient.h */,
-				A9C7117819322BD200E8EEF9 /* APGaeApiClient.m */,
-			);
-			path = Network;
 			sourceTree = "<group>";
 		};
 		A9FC5058193C745800C883B7 /* Images */ = {
@@ -686,7 +672,6 @@
 				A9FC507C193CDC4E00C883B7 /* APGSAnnotation.m in Sources */,
 				A9FC505D193C786800C883B7 /* APGasStationClient.m in Sources */,
 				A9014618193BCC00003B826D /* APDistance.m in Sources */,
-				A9C7117919322BD200E8EEF9 /* APGaeApiClient.m in Sources */,
 				A9014612193BCA66003B826D /* APDuration.m in Sources */,
 				A98D0882192FDC33000DB81D /* main.m in Sources */,
 				A9FC965C19432C780067875B /* APGeocodeClient.m in Sources */,
@@ -708,7 +693,6 @@
 			files = (
 				A9C71176193229A300E8EEF9 /* APConstants.m in Sources */,
 				A98D08AB192FDC33000DB81D /* OilSavingsTests.m in Sources */,
-				A9C7117A19322BD200E8EEF9 /* APGaeApiClient.m in Sources */,
 				A9C711721932284B00E8EEF9 /* APCar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

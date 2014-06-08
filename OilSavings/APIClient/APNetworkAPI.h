@@ -16,7 +16,7 @@
 - (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord;
 - (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address;
 
-- (void) foundPath:(APPath*)path;
+- (void) foundPath:(APPath*)path withIndex:(NSInteger)index;
 
 - (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations;
 
