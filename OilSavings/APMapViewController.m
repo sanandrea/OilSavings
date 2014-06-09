@@ -317,7 +317,10 @@ static float kLogoHeightPadding = 6.0f;
             annotationView.leftCalloutAccessoryView = sfIconView;
             
             // offset the flag annotation so that the flag pole rests on the map coordinate
-            annotationView.centerOffset = CGPointMake( annotationView.centerOffset.x + annotationView.image.size.width/2, annotationView.centerOffset.y - annotationView.image.size.height/2 );
+            //annotationView.centerOffset = CGPointMake( annotationView.centerOffset.x + annotationView.image.size.width/2, annotationView.centerOffset.y - annotationView.image.size.height/2 );
+            
+            // http://stackoverflow.com/questions/8165262/mkannotation-image-offset-with-custom-pin-image
+            annotationView.centerOffset = CGPointMake(0,-annotationView.image.size.height/2);
             
             // add a detail disclosure button to the callout which will open a new view controller page
             //
@@ -341,10 +344,10 @@ static float kLogoHeightPadding = 6.0f;
 }
 
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {
-    ALog("Here");
     MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
-    polylineView.strokeColor = [UIColor redColor];
-    polylineView.lineWidth = 1.0;
+    polylineView.strokeColor = [UIColor blueColor];
+    polylineView.lineWidth = 5.0;
+    polylineView.lineCap = kCGLineCapRound;
     
     return polylineView;
 }
