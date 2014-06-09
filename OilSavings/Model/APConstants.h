@@ -16,7 +16,7 @@ extern NSString *const kPreferredCar;
 extern NSString *const GOOGLE_API_KEY;
 
 typedef enum{
-    kEnergyGasoline,
+    kEnergyGasoline = 0,
     kEnergyDiesel
 }ENERGY_TYPE;
 
@@ -28,5 +28,6 @@ typedef enum{
 @interface APConstants : NSObject
 
 + (float) haversineDistance:(float)latA :(float)latB :(float)longA :(float)longB;
++ (NSString *) getEnergyStringForType:(ENERGY_TYPE)t;
 
 @end

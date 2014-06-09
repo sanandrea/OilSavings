@@ -51,17 +51,17 @@ static NSString * const DIRECTIONS_URL = @"https://maps.googleapis.com/maps/api/
             
             NSArray* routes = (NSArray*) response[@"routes"];
             for (NSDictionary *routeDict in routes) {
+//                NSLog(@"Route dictionary: %@",routeDict);
                 NSArray *legs = routeDict[@"legs"];
                 APLine *line;
                 for (NSDictionary *legDict in legs) {
-                    NSLog(@"Leg dictionary: %@",legDict);
                     APDistance *distance = [[APDistance alloc] initWithdistance:[legDict[@"distance"][@"value"] integerValue]];
                     APDuration *duration = [[APDuration alloc] initWithDuration:[legDict[@"duration"][@"value"] integerValue]];
                     CLLocationCoordinate2D legSrc = CLLocationCoordinate2DMake([legDict[@"start_location"][@"lat"] doubleValue], [legDict[@"start_location"][@"lng"] doubleValue]);
                     CLLocationCoordinate2D legDst = CLLocationCoordinate2DMake([legDict[@"end_location"][@"lat"] doubleValue], [legDict[@"end_location"][@"lng"] doubleValue]);
                     
                     line = [[APLine alloc] initWithDistance:distance andDuration:duration andSrc:legSrc andDst:legDst];
-                    ALog("lat is %f and lng is %f",legSrc.longitude,legSrc.longitude);
+//                    ALog("lat is %f and lng is %f",legSrc.longitude,legSrc.longitude);
                     NSArray *steps = legDict[@"steps"];
                     APStep *step;
                     
@@ -76,6 +76,8 @@ static NSString * const DIRECTIONS_URL = @"https://maps.googleapis.com/maps/api/
                     }
                     [path addLine:line];
                 }
+                //ALog("polyline is %@", routeDict[@"overview_polyline"][@"points"]);
+                path.overallPolyline = [APDirectionsClient polylineWithEncodedString:routeDict[@"overview_polyline"][@"points"]];
             }
             //[path constructMKPolyLines];
             [delegate foundPath:path withIndex:index];

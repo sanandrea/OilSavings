@@ -108,7 +108,7 @@ static float kLogoHeightPadding = 6.0f;
      *
      */
     [self.mapView setCenterCoordinate:loc zoomLevel:ZOOM_LEVEL animated:NO];
-    APGasStationClient *gs = [[APGasStationClient alloc] initWithRegion:self.mapView.region andFuel:@"b"];
+    APGasStationClient *gs = [[APGasStationClient alloc] initWithRegion:self.mapView.region andFuel:[self.myCar.energy integerValue]];
     gs.delegate = self;
     [gs getStations];
     
@@ -220,10 +220,10 @@ static float kLogoHeightPadding = 6.0f;
 #pragma mark - Path Available
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
     ALog("Found path in map is called");
-    [path constructMKPolyLines];
-    APLine *line = [path.lines objectAtIndex:0];
+//    [path constructMKPolyLines];
+//    APLine *line = [path.lines objectAtIndex:0];
 
-    [self.mapView addOverlay:line.polyline];
+    [self.mapView addOverlay:path.overallPolyline];
 }
 
 

@@ -33,4 +33,17 @@ NSString *const GOOGLE_API_KEY = @"AIzaSyDk2W4Au5SlQC5WPpcFFEpy8I7PTnZtvno";
     return 2 * EARTH_RADIUS * asin( sqrtf(h));
 }
 
++ (NSString *) getEnergyStringForType:(ENERGY_TYPE)t{
+    switch (t) {
+        case kEnergyGasoline:
+            return @"b";
+            break;
+        case kEnergyDiesel:
+            return @"d";
+            break;
+        default:
+            return @"b";
+            break;
+    }
+}
 @end

@@ -67,9 +67,9 @@
 }
 
 - (NSComparisonResult)compareAir:(APPath*)inObject{
-    if (self.haversineDistance < inObject.haversineDistance) {
+    if (self.haversineDistance * [self.gasStation getPrice] < inObject.haversineDistance * [inObject.gasStation getPrice]) {
         return NSOrderedAscending;
-    }else if (self.haversineDistance > inObject.haversineDistance){
+    }else if (self.haversineDistance * [self.gasStation getPrice]> inObject.haversineDistance * [inObject.gasStation getPrice]){
         return NSOrderedDescending;
     }else{
         return NSOrderedSame;

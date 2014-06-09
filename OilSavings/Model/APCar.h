@@ -21,5 +21,5 @@
 @property (nonatomic, strong) NSNumber *pC;
 @property (nonatomic, strong) NSNumber *pD;
 
-
+- (ENERGY_TYPE) getEnergyType;
 @end

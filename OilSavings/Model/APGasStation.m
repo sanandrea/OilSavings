@@ -26,6 +26,13 @@ static NSString *imageSuffix = @"_small.png";
     CLLocationCoordinate2D p;
     p.latitude = [dict[@"lat"] doubleValue];
     p.longitude = [dict[@"lng"] doubleValue];
+
+    if (self.type == kEnergyGasoline) {
+        self.gasolinePrice = [dict[@"price"] floatValue];
+    }else if (self.type == kEnergyDiesel){
+        self.dieselPrice = [dict[@"price"] floatValue];
+    }
+    
     self = [self initWithPosition:p andName:dict[@"brand"]];
     return self;
 }
@@ -53,7 +60,14 @@ static NSString *imageSuffix = @"_small.png";
     }
     return 0.f;
 }
-
+- (float) getPrice{
+    if (self.type == kEnergyDiesel) {
+        return self.dieselPrice;
+    }else if (self.type == kEnergyGasoline){
+        return self.gasolinePrice;
+    }
+    return 0.f;
+}
 
 + (NSDictionary*) longNameDictionary{
     static NSDictionary* output = nil;

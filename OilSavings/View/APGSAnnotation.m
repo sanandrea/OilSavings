@@ -21,7 +21,7 @@
 }
 
 - (NSString *)subtitle{
-    return @"1,730";
+    return [NSString stringWithFormat:@"%4.3f",self.gasStation.getPrice];
 }
 - (NSString *)title{
     return self.gasStation.name;

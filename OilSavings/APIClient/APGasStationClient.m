@@ -21,7 +21,7 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
 @implementation APGasStationClient
 
 
-- (id) initWithRegion:(MKCoordinateRegion) region andFuel:(NSString*) fuel{
+- (id) initWithRegion:(MKCoordinateRegion) region andFuel:(ENERGY_TYPE) fuel{
     self = [super init];
     
     //a region double in size that that of the map
@@ -53,7 +53,7 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
                      [NSNumber numberWithDouble:self.minLong],
                      [NSNumber numberWithDouble:self.maxLat],
                      [NSNumber numberWithDouble:self.maxLong],
-                     self.fuel,
+                     [APConstants getEnergyStringForType:self.fuel],
                      [NSNumber numberWithInt:1],
                      @"",
                      @"getStations",
@@ -76,7 +76,9 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
         NSArray *response = (NSArray *)responseObject;
         APGasStation *gs;
         for (NSDictionary *dict in response) {
+            ALog("dict is %@",dict);
             gs = [[APGasStation alloc]initWithDict:dict];
+            gs.type = self.fuel;
             [self.gasStations addObject:gs];
         }
         [self .delegate gasStation:self didFinishWithStations:YES];

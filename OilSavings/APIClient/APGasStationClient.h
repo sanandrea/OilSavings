@@ -19,13 +19,13 @@
 @property (nonatomic) double minLong;
 @property (nonatomic) double maxLong;
 
-@property (nonatomic, strong) NSString *fuel;
+@property (nonatomic) ENERGY_TYPE fuel;
 @property (nonatomic, strong) NSMutableArray* gasStations;
 
 @property (nonatomic, weak) id <APNetworkAPI> delegate;
 
 
-- (id) initWithRegion:(MKCoordinateRegion) region andFuel:(NSString*) fuel;
+- (id) initWithRegion:(MKCoordinateRegion) region andFuel:(ENERGY_TYPE) fuel;
 - (void)getStations;
 
 @end

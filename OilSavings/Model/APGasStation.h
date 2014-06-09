@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString *logo;
 @property (nonatomic) BOOL hasGasoline;
 @property (nonatomic) BOOL hasDiesel;
+@property (nonatomic) ENERGY_TYPE type;
 
 @property (nonatomic) float gasolinePrice;
 @property (nonatomic) float dieselPrice;
@@ -23,6 +24,7 @@
 - (BOOL) hasEnergy:(ENERGY_TYPE)e;
 - (void) setPrice:(float) p forEnergyType:(ENERGY_TYPE)e;
 - (float) getPrice:(ENERGY_TYPE)e;
+- (float) getPrice;
 - (id) initWithDict:(NSDictionary*) dict;
 
 @end

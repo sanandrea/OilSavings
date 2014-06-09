@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSMutableArray *lines;
 @property (nonatomic, strong) APGasStation *gasStation;
 @property (nonatomic) BOOL hasDestination;
+@property (nonatomic, strong) MKPolyline *overallPolyline;
 
 //Distance of GasStation from Source plus Distance of GasStation to Destination
 @property (nonatomic) float haversineDistance;
