@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSMutableArray *paths;
 @property (nonatomic, strong) APCar *car;
 @property (nonatomic, weak) id<APNetworkAPI> delegate;
+@property (nonatomic) NSInteger cashAmount;
 
 @property (nonatomic) CLLocationCoordinate2D src;
 @property (nonatomic) CLLocationCoordinate2D dst;
@@ -24,7 +25,7 @@
 @property (nonatomic) NSInteger currentBatch;
 @property (nonatomic) APPath *bestPath;
 
-- (id) initWithCar:(APCar*) mycar andDelegate:(id<APNetworkAPI>)dele;
+- (id) initWithCar:(APCar*) mycar cash:(NSInteger)import andDelegate:(id<APNetworkAPI>)dele;
 
 - (void) optimizeRouteFrom:(CLLocationCoordinate2D)src
                         to:(CLLocationCoordinate2D)dst

@@ -10,6 +10,7 @@
 #import <MapKit/MapKit.h>
 #import "APGasStation.h"
 #import "APLine.h"
+#import "APCar.h"
 
 @interface APPath : NSObject
 
@@ -32,7 +33,8 @@
 - (id) initWith:(CLLocationCoordinate2D)source and:(CLLocationCoordinate2D)destination andGasStation:(APGasStation*)gs;
 
 - (void) constructMKPolyLines;
+- (void) calculatePathValueWithCar:(APCar*)car;
 
 - (NSComparisonResult)compareAir:(APPath*)inObject;
-- (NSComparisonResult)comparePath:(APPath*)inObject;
+- (NSComparisonResult)comparePath:(APPath*)inObject andImport:(NSInteger)import;
 @end

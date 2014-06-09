@@ -15,12 +15,13 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
 
 @implementation APPathOptimizer
 
-- (id) initWithCar:(APCar*) mycar andDelegate:(id<APNetworkAPI>)dele{
+- (id) initWithCar:(APCar*) mycar cash:(NSInteger)import andDelegate:(id<APNetworkAPI>)dele{
     self = [super init];
     
     if (self) {
         self.car = mycar;
         self.delegate = dele;
+        self.cashAmount = import;
         self.paths = [[NSMutableArray alloc]init];
     }
     
@@ -80,7 +81,7 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
     BOOL bestFound = NO;
     
 //    ALog("Found path in optimizer is called with index %d but %d",index, self.currentBatch);
-    if ((index == 0) || ([path comparePath:self.bestPath] == NSOrderedAscending)){
+    if ((index == 0) || ([path comparePath:self.bestPath andImport:self.cashAmount] == NSOrderedAscending)){
         self.bestPath = path;
         bestFound = YES;
     }

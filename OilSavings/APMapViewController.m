@@ -191,7 +191,7 @@ static float kLogoHeightPadding = 6.0f;
         }
         self.gasStations = gsClient.gasStations;
         
-        self.optimizer = [[APPathOptimizer alloc] initWithCar:self.myCar andDelegate:self];
+        self.optimizer = [[APPathOptimizer alloc] initWithCar:self.myCar cash:20 andDelegate:self];
         [self.optimizer optimizeRouteFrom:self.srcCoord to:self.dstCoord hasDestination:NO withGasStations:self.gasStations];
         
     }

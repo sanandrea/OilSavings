@@ -22,4 +22,8 @@
     }
     return self;
 }
+
+- (float) getVelocity{
+    return self.stepDistance.distance / self.stepDuration.duration;
+}
 @end

@@ -76,7 +76,7 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
         NSArray *response = (NSArray *)responseObject;
         APGasStation *gs;
         for (NSDictionary *dict in response) {
-            ALog("dict is %@",dict);
+//            ALog("dict is %@",dict);
             gs = [[APGasStation alloc]initWithDict:dict];
             gs.type = self.fuel;
             [self.gasStations addObject:gs];

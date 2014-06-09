@@ -23,4 +23,6 @@
 
 
 - (id) initWithDistance:(APDistance*) d andDuration:(APDuration*) t andSrcPos:(CLLocationCoordinate2D)src andDstPos:(CLLocationCoordinate2D) dst andPoly:(NSString*) poly;
+
+- (float) getVelocity;
 @end
