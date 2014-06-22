@@ -55,7 +55,7 @@ static NSString * const DIRECTIONS_URL = @"https://maps.googleapis.com/maps/api/
                 NSArray *legs = routeDict[@"legs"];
                 APLine *line;
                 for (NSDictionary *legDict in legs) {
-                    APDistance *distance = [[APDistance alloc] initWithdistance:[legDict[@"distance"][@"value"] integerValue]];
+                    APDistance *distance = [[APDistance alloc] initWithdistance:[legDict[@"distance"][@"value"] intValue]];
                     APDuration *duration = [[APDuration alloc] initWithDuration:[legDict[@"duration"][@"value"] integerValue]];
                     CLLocationCoordinate2D legSrc = CLLocationCoordinate2DMake([legDict[@"start_location"][@"lat"] doubleValue], [legDict[@"start_location"][@"lng"] doubleValue]);
                     CLLocationCoordinate2D legDst = CLLocationCoordinate2DMake([legDict[@"end_location"][@"lat"] doubleValue], [legDict[@"end_location"][@"lng"] doubleValue]);
@@ -66,7 +66,7 @@ static NSString * const DIRECTIONS_URL = @"https://maps.googleapis.com/maps/api/
                     APStep *step;
                     
                     for (NSDictionary *stepDict in steps) {
-                        APDistance *stepDist = [[APDistance alloc] initWithdistance:[stepDict[@"distance"][@"value"] integerValue]];
+                        APDistance *stepDist = [[APDistance alloc] initWithdistance:[stepDict[@"distance"][@"value"] intValue]];
                         APDuration *stepDura = [[APDuration alloc] initWithDuration:[stepDict[@"duration"][@"value"] integerValue]];
                         CLLocationCoordinate2D stepSrc = CLLocationCoordinate2DMake([stepDict[@"start_location"][@"lat"] doubleValue], [stepDict[@"start_location"][@"lng"] doubleValue]);
                         CLLocationCoordinate2D stepDst = CLLocationCoordinate2DMake([stepDict[@"end_location"][@"lat"] doubleValue], [stepDict[@"end_location"][@"lng"] doubleValue]);
@@ -82,7 +82,7 @@ static NSString * const DIRECTIONS_URL = @"https://maps.googleapis.com/maps/api/
             //[path constructMKPolyLines];
             [delegate foundPath:path withIndex:index];
         }else if ([response[@"status"] isEqualToString:@"OVER_QUERY_LIMIT"]){
-            ALog("OVER QUERY LIMIT reached in index %d",index);
+            ALog("OVER QUERY LIMIT reached in index %ld",(long)index);
         }
         
         

@@ -13,7 +13,7 @@
 @dynamic brand,model,friendlyName,pA,pB,pC,pD,modelID,energy;
 
 - (ENERGY_TYPE) getEnergyType{
-    return [self.energy integerValue];
+    return [self.energy intValue];
 }
 
 @end

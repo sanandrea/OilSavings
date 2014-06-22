@@ -64,6 +64,8 @@ static float kLogoHeightPadding = 6.0f;
     //get user prefs for the preferred car model id
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     int modelID = [[prefs objectForKey:kPreferredCar] intValue];
+    self.cashAmount = [[prefs objectForKey:kCashAmount] integerValue];
+    
     
     if ( modelID >= 0) {
         //get from core data the car by model ID
@@ -108,7 +110,7 @@ static float kLogoHeightPadding = 6.0f;
      *
      */
     [self.mapView setCenterCoordinate:loc zoomLevel:ZOOM_LEVEL animated:NO];
-    APGasStationClient *gs = [[APGasStationClient alloc] initWithRegion:self.mapView.region andFuel:[self.myCar.energy integerValue]];
+    APGasStationClient *gs = [[APGasStationClient alloc] initWithRegion:self.mapView.region andFuel:[self.myCar.energy intValue]];
     gs.delegate = self;
     [gs getStations];
     
@@ -117,7 +119,7 @@ static float kLogoHeightPadding = 6.0f;
     self.srcCoord = loc;
 }
 - (void) viewDidAppear:(BOOL)animated{
-    ALog("Map apperaed");
+    ALog("Map appeared");
     //Check if there is any Car Saved.
     /*
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -191,7 +193,7 @@ static float kLogoHeightPadding = 6.0f;
         }
         self.gasStations = gsClient.gasStations;
         
-        self.optimizer = [[APPathOptimizer alloc] initWithCar:self.myCar cash:20 andDelegate:self];
+        self.optimizer = [[APPathOptimizer alloc] initWithCar:self.myCar cash:5 andDelegate:self];
         [self.optimizer optimizeRouteFrom:self.srcCoord to:self.dstCoord hasDestination:NO withGasStations:self.gasStations];
         
     }
@@ -359,6 +361,7 @@ static float kLogoHeightPadding = 6.0f;
         
         APOptionsViewController *optController = (APOptionsViewController *)[segue destinationViewController];
         optController.delegate = self;
+        optController.cashAmount = self.cashAmount;
         
         //check if we have a valid current location
         if (self.srcAddress != nil){

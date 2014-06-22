@@ -81,7 +81,7 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
     BOOL bestFound = NO;
     
 //    ALog("Found path in optimizer is called with index %d but %d",index, self.currentBatch);
-    if ((index == 0) || ([path comparePath:self.bestPath andImport:self.cashAmount] == NSOrderedAscending)){
+    if ((index == 0) || ([path comparePath:self.bestPath andImport:self.cashAmount] == NSOrderedDescending)){
         self.bestPath = path;
         bestFound = YES;
     }

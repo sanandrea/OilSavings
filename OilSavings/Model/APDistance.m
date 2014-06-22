@@ -10,7 +10,7 @@
 
 @implementation APDistance
 
-- (id) initWithdistance:(NSInteger) d{
+- (id) initWithdistance:(int) d{
     self = [super init];
     self.distance = d;
     return self;

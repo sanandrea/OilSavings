@@ -16,6 +16,7 @@ static float kLeftSearchBarPadding = 31;
 static int MIN_AMOUNT = 5;
 static int MAX_AMOUNT = 50;
 static int INC_STEP = 5;
+static int MAX_LINEAR = 40;
 
 @interface APOptionsViewController ()
 
@@ -45,6 +46,9 @@ static int INC_STEP = 5;
     
     [self.cashSliderControl setMinimumValue:0];
     [self.cashSliderControl setMaximumValue:(MAX_AMOUNT - MIN_AMOUNT)/INC_STEP + 2];
+    
+    [self.cashSliderControl setValue:[self convertAmount2Index:self.cashAmount]];
+    [self.cashLabel setText:[NSString stringWithFormat:@"%ld",(long)self.cashAmount]];
     
     if (self.srcAddr != nil) {
         self.src.placeholder = self.srcAddr;
@@ -101,7 +105,7 @@ static int INC_STEP = 5;
 }
 
 -(IBAction)cashSlider:(id)sender{
-    int linearMax = 40;
+    int linearMax = MAX_LINEAR;
     int endLinearIndex = (linearMax - MIN_AMOUNT) / INC_STEP;
     int index = (int)(self.cashSliderControl.value + 0.5); // Round the number.
     [self.cashSliderControl setValue:index animated:NO];
@@ -113,6 +117,18 @@ static int INC_STEP = 5;
         int inc = linearMax + 2 * INC_STEP * (index - endLinearIndex);
         [self.cashLabel setText:[NSString stringWithFormat:@"%u",inc]];
     }
+}
+- (NSInteger) convertAmount2Index:(NSInteger)amount{
+    NSInteger index = 0;
+    if (amount < MAX_LINEAR){
+        index = (int)(amount - MIN_AMOUNT)/INC_STEP;
+    }else{
+        index += (int)(MAX_LINEAR - MIN_AMOUNT)/INC_STEP;
+        index += (int)(amount - MAX_LINEAR) / (2 * INC_STEP);
+    }
+    
+    
+    return index;
 }
 - (IBAction)save:(id)sender{
     self.srcAddr = self.src.text;

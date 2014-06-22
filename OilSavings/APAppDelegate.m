@@ -26,6 +26,7 @@
                      [NSNumber numberWithInt:1],//Resource Version
                      [NSNumber numberWithInt:0],//Number of Cars
                      [NSNumber numberWithInt:-1],//Preferred Car Model ID
+                     [NSNumber numberWithInt:20],//Default Cash Amount
                      nil];
     NSArray* keys = [[NSArray alloc] initWithObjects:
                      kDBDowloaded,
@@ -33,6 +34,7 @@
                      kResVersion,
                      kCarsRegistered,
                      kPreferredCar,
+                     kCashAmount,
                      nil];
     
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObjects:objs forKeys:keys];
