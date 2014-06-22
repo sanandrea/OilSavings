@@ -74,6 +74,7 @@
     float expense = 0;
     for (APLine *line in self.lines) {
         for (APStep *step in line.steps) {
+            
             expense += [self calculateExpense:[step getVelocity] forDistance:step.stepDistance withCar:car];
         }
     }
@@ -87,8 +88,11 @@
     }
     
     float velocityKmPH = velocity * 3.6f;
-    float distanceIn100Km = distance.distance / 100000;
-    float expenseIn100Km = [car.pA integerValue]/ velocityKmPH + [car.pB integerValue] + [car.pC integerValue] * velocityKmPH + [car.pD integerValue] * velocityKmPH * velocityKmPH;
+    float distanceIn100Km = (float)distance.distance / 100000;
+    float expenseIn100Km = (float)[car.pA integerValue]/ velocityKmPH + [car.pB integerValue] + [car.pC integerValue] * velocityKmPH + [car.pD integerValue] * velocityKmPH * velocityKmPH;
+//    ALog("Expense in 100Km is: %f",expenseIn100Km);
+//    ALog("Distance in 100Km is: %f",distanceIn100Km);
+    
     return expenseIn100Km * distanceIn100Km;
 }
 
@@ -102,7 +106,11 @@
     }
 }
 
-- (NSComparisonResult)comparePath:(APPath*)inObject andImport:(NSInteger)import{
+- (NSComparisonResult)comparePath:(APPath*)inObject andImport:(NSInteger)import andWithCar:(APCar*)car{
+    //calculate expenses with current car
+    [self calculatePathValueWithCar:car];
+    [inObject calculatePathValueWithCar:car];
+    
     float myRemaining = import/self.gasStation.getPrice - self.pathFuelExpense;
     float otherRemaining = import/inObject.gasStation.getPrice - inObject.pathFuelExpense;
     

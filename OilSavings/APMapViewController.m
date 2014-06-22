@@ -270,7 +270,7 @@ static float kLogoHeightPadding = 6.0f;
 {
     if ([annotation isKindOfClass:[APGSAnnotation class]]){
         APGSAnnotation *gsn = (APGSAnnotation*) annotation;
-        static NSString *GSAnnotationIdentifier = @"gasStationIdentifier";
+        NSString *GSAnnotationIdentifier = [NSString stringWithFormat:@"gasStationIdentifier_%@", gsn.gasStation.name];
         
         MKAnnotationView *markerView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:GSAnnotationIdentifier];
         if (markerView == nil)
@@ -339,6 +339,7 @@ static float kLogoHeightPadding = 6.0f;
         }else
         {
             markerView.annotation = annotation;
+            //TODO change logo
         }
         return markerView;
     }

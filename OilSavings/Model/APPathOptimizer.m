@@ -34,6 +34,7 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
            withGasStations:(NSArray*)gasStations{
     
     //init paths
+//    ALog("Optimize is called");
     self.src = src;
     self.dst = dst;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -44,7 +45,7 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
 
 
 - (void) initPathsWithGasStations:(NSArray*)gs hasDest:(BOOL)hd{
-
+//    ALog("Dispatched Job for Gas Stations in optimizer");
     APPath *path;
     for (APGasStation* g in gs) {
         if (!hd) {
@@ -61,7 +62,7 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
     
     int counter = 1,index = 0;
     
-    while (counter < [self.paths count] / REQUEST_BUNDLE + 1) {
+    while (counter <= [self.paths count] / REQUEST_BUNDLE + 1) {
 //        ALog("External while: counter is %d and index is %d",counter, index);
         
         //save in what batch are;
@@ -81,7 +82,7 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
     BOOL bestFound = NO;
     
 //    ALog("Found path in optimizer is called with index %d but %d",index, self.currentBatch);
-    if ((index == 0) || ([path comparePath:self.bestPath andImport:self.cashAmount] == NSOrderedDescending)){
+    if ((index == 0) || ([path comparePath:self.bestPath andImport:self.cashAmount andWithCar:self.car] == NSOrderedAscending)){
         self.bestPath = path;
         bestFound = YES;
     }

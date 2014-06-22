@@ -36,5 +36,5 @@
 - (void) calculatePathValueWithCar:(APCar*)car;
 
 - (NSComparisonResult)compareAir:(APPath*)inObject;
-- (NSComparisonResult)comparePath:(APPath*)inObject andImport:(NSInteger)import;
+- (NSComparisonResult)comparePath:(APPath*)inObject andImport:(NSInteger)import andWithCar:(APCar*)car;
 @end

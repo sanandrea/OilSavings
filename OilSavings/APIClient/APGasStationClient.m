@@ -28,8 +28,8 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
     self.minLat = region.center.latitude - region.span.latitudeDelta;
     self.maxLat = region.center.latitude + region.span.latitudeDelta;
     
-    self.minLong = region.center.longitude - region.span.longitudeDelta;
-    self.maxLong = region.center.longitude + region.span.longitudeDelta;
+    self.minLong = region.center.longitude - 2 * region.span.longitudeDelta;
+    self.maxLong = region.center.longitude + 2 * region.span.longitudeDelta;
     
     self.fuel = fuel;
     
@@ -70,13 +70,18 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
                      nil];
     
     NSDictionary *urlParams = [NSDictionary dictionaryWithObjects:objs forKeys:keys];
+    ALog("Query dict %@",urlParams);
     
     [manager GET:BaseURLString parameters:urlParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // Process Response Object
         NSArray *response = (NSArray *)responseObject;
         APGasStation *gs;
         for (NSDictionary *dict in response) {
-//            ALog("dict is %@",dict);
+            ALog("%@",dict[@"price"]);
+            if ([[dict objectForKey:@"price" ] length] == 0){
+                continue;
+            }
+            ALog("dict is %@",dict);
             gs = [[APGasStation alloc]initWithDict:dict];
             gs.type = self.fuel;
             [self.gasStations addObject:gs];
