@@ -19,7 +19,7 @@
 #define ZOOM_LEVEL 14
 static float kAnnotationPadding = 10.0f;
 static float kCallOutHeight = 40.0f;
-static float kLogoHeightPadding = 6.0f;
+static float kLogoHeightPadding = 14.0f;
 
 @interface APMapViewController ()
 
@@ -185,6 +185,9 @@ static float kLogoHeightPadding = 6.0f;
 
 - (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations{
     if (newStations) {
+        //remove any existing pin.
+        [self removeAllPinsButUserLocation];
+        
         APGSAnnotation *annotation;
         for (APGasStation *gs in gsClient.gasStations) {
             annotation = [[APGSAnnotation alloc]initWithLocation:CLLocationCoordinate2DMake(gs.position.latitude, gs.position.longitude)];
@@ -225,6 +228,13 @@ static float kLogoHeightPadding = 6.0f;
 //    [path constructMKPolyLines];
 //    APLine *line = [path.lines objectAtIndex:0];
 
+    //remove existing overlay if any
+    NSArray *pointsArray = [self.mapView overlays];
+    if ([pointsArray count] > 0) {
+        [self.mapView removeOverlays:pointsArray];
+    }
+    
+    //Add new polyline
     [self.mapView addOverlay:path.overallPolyline];
 }
 
@@ -279,7 +289,7 @@ static float kLogoHeightPadding = 6.0f;
                                                                             reuseIdentifier:GSAnnotationIdentifier];
             annotationView.canShowCallout = YES;
             
-            UIImage *markerImage = [UIImage imageNamed:@"marker_mid.png"];
+            UIImage *markerImage = [UIImage imageNamed:@"marker_blue.png"];
             UIImage *logoImage = [UIImage imageNamed:gsn.gasStation.logo];
             // size the flag down to the appropriate size
             CGRect resizeRect;
@@ -299,21 +309,37 @@ static float kLogoHeightPadding = 6.0f;
             
             UIGraphicsBeginImageContextWithOptions(resizeRect.size, NO, 0.0f);
             [markerImage drawInRect:resizeRect];
-
-            
-            resizeRect.size.width = resizeRect.size.width/1.75;
-            resizeRect.size.height = resizeRect.size.height/1.75;
+            resizeRect.size.width = resizeRect.size.width/2;
+            resizeRect.size.height = resizeRect.size.height/2;
             
             resizeRect.origin.x = resizeRect.origin.x + (initialWidth - resizeRect.size.width)/2;
             resizeRect.origin.y = resizeRect.origin.y + kLogoHeightPadding;
             
             [logoImage drawInRect:resizeRect];
+
+            
+            // Create string drawing context
+            UIFont *font = [UIFont fontWithName:@"DBLCDTempBlack" size:12.0];
+            NSString * num = [NSString stringWithFormat:@"%4.3f",[gsn.gasStation getPrice]];
+            NSDictionary *textAttributes = @{NSFontAttributeName: font,
+                                             NSForegroundColorAttributeName: [UIColor whiteColor]};
+            
+            
+            NSStringDrawingContext *drawingContext = [[NSStringDrawingContext alloc] init];
+            resizeRect.origin.x += 1;
+            resizeRect.origin.y -= 10;
+            [num drawWithRect:resizeRect
+                      options:NSStringDrawingUsesLineFragmentOrigin
+                   attributes:textAttributes
+                      context:drawingContext];
             
             UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             
             annotationView.image = resizedImage;
             annotationView.opaque = NO;
+            
+            
             
             UIImageView *sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:gsn.gasStation.logo]];
             annotationView.leftCalloutAccessoryView = sfIconView;
@@ -324,6 +350,8 @@ static float kLogoHeightPadding = 6.0f;
             // http://stackoverflow.com/questions/8165262/mkannotation-image-offset-with-custom-pin-image
             annotationView.centerOffset = CGPointMake(0,-annotationView.image.size.height/2);
             
+            
+
             // add a detail disclosure button to the callout which will open a new view controller page
             //
             // note: when the detail disclosure button is tapped, we respond to it via:
@@ -353,6 +381,18 @@ static float kLogoHeightPadding = 6.0f;
     polylineView.lineCap = kCGLineCapRound;
     
     return polylineView;
+}
+
+//removes all aanotations except user location
+- (void)removeAllPinsButUserLocation
+{
+    id userLocation = [self.mapView userLocation];
+    NSMutableArray *pins = [[NSMutableArray alloc] initWithArray:[self.mapView annotations]];
+    if ( userLocation != nil ) {
+        [pins removeObject:userLocation]; // avoid removing user location off the map
+    }
+    
+    [self.mapView removeAnnotations:pins];
 }
 
 #pragma mark - Segues

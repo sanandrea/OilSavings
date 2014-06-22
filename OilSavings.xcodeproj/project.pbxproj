@@ -52,6 +52,7 @@
 		A9CFA2ED193E844100ACCEC5 /* opzioni@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9CFA2EC193E844100ACCEC5 /* opzioni@2x.png */; };
 		A9CFA2F0193E87FC00ACCEC5 /* APOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9CFA2EF193E87FC00ACCEC5 /* APOptionsViewController.m */; };
 		A9CFA2F2193E8B0200ACCEC5 /* carIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9CFA2F1193E8B0200ACCEC5 /* carIcon@2x.png */; };
+		A9EA15C419577A6300CF4446 /* marker_blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9EA15C319577A6300CF4446 /* marker_blue@2x.png */; };
 		A9F7C44C193E5F960092FCA2 /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F7C44B193E5F960092FCA2 /* marker@2x.png */; };
 		A9F7C473193E614F0092FCA2 /* logo_ag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F7C44F193E614F0092FCA2 /* logo_ag@2x.png */; };
 		A9F7C474193E614F0092FCA2 /* logo_ap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F7C450193E614F0092FCA2 /* logo_ap@2x.png */; };
@@ -172,6 +173,7 @@
 		A9CFA2EE193E87FC00ACCEC5 /* APOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APOptionsViewController.h; sourceTree = "<group>"; };
 		A9CFA2EF193E87FC00ACCEC5 /* APOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APOptionsViewController.m; sourceTree = "<group>"; };
 		A9CFA2F1193E8B0200ACCEC5 /* carIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "carIcon@2x.png"; sourceTree = "<group>"; };
+		A9EA15C319577A6300CF4446 /* marker_blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker_blue@2x.png"; sourceTree = "<group>"; };
 		A9F7C44B193E5F960092FCA2 /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@2x.png"; sourceTree = "<group>"; };
 		A9F7C44F193E614F0092FCA2 /* logo_ag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_ag@2x.png"; sourceTree = "<group>"; };
 		A9F7C450193E614F0092FCA2 /* logo_ap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_ap@2x.png"; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 		A9FC5058193C745800C883B7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A9EA15C319577A6300CF4446 /* marker_blue@2x.png */,
 				A9CFA2F1193E8B0200ACCEC5 /* carIcon@2x.png */,
 				A9CFA2EC193E844100ACCEC5 /* opzioni@2x.png */,
 				A9F7C497193E64640092FCA2 /* marker_mid@2x.png */,
@@ -589,6 +592,7 @@
 				A9F7C47F193E614F0092FCA2 /* logo_ey@2x.png in Resources */,
 				A9F7C48F193E614F0092FCA2 /* logo_sh@2x.png in Resources */,
 				A9F7C48D193E614F0092FCA2 /* logo_re@2x.png in Resources */,
+				A9EA15C419577A6300CF4446 /* marker_blue@2x.png in Resources */,
 				A9F7C479193E614F0092FCA2 /* logo_bz@2x.png in Resources */,
 				A9F7C478193E614F0092FCA2 /* logo_be@2x.png in Resources */,
 				A93D9F8E193550E0008B530A /* CarCellDesign.xib in Resources */,
