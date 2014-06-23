@@ -22,6 +22,9 @@ MKMapViewDelegate, OptimizationOptions>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
+- (IBAction) gotoCurrentLocation:(id)sender;
+- (IBAction) showGasStationList:(id)sender;
+- (IBAction) optimizeAgain:(id)sender;
 
 @property (nonatomic, strong) APCar* myCar;
 

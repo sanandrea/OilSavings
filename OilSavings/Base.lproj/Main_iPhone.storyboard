@@ -48,27 +48,41 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems>
-                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="nDW-j1-iE6"/>
-                        <barButtonItem image="location.png" id="HE4-3z-QNe"/>
+                        <barButtonItem width="32" style="plain" systemItem="fixedSpace" id="nDW-j1-iE6"/>
+                        <barButtonItem image="location.png" id="HE4-3z-QNe">
+                            <connections>
+                                <action selector="gotoCurrentLocation:" destination="P8k-qS-1QL" id="0Oa-cL-ETu"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="cWJ-Fh-6Hg"/>
                         <barButtonItem image="list_gas_stations.png" id="vZr-15-qpf">
                             <connections>
-                                <segue destination="912-rm-fvw" kind="modal" id="2Ol-NF-DGF"/>
+                                <action selector="showGasStationList:" destination="P8k-qS-1QL" id="JTX-d4-lbG"/>
+                                <segue destination="912-rm-fvw" kind="push" identifier="showGSTable" id="2Ol-NF-DGF"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="JNX-AV-sfM"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="wzv-xE-S6c"/>
+                        <barButtonItem image="route.png" id="kmX-NU-2bO">
+                            <connections>
+                                <action selector="optimizeAgain:" destination="P8k-qS-1QL" id="tH8-VT-Ec1"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem width="32" style="plain" systemItem="fixedSpace" id="JNX-AV-sfM"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="tL6-3j-vWQ">
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" image="carIcon.png" id="uFf-jF-wgu"/>
                         <barButtonItem key="rightBarButtonItem" image="opzioni.png" id="V7Q-EK-lQF">
                             <connections>
-                                <action selector="options:" destination="P8k-qS-1QL" id="QcK-CE-G8u"/>
+                                <action selector="options:" destination="P8k-qS-1QL" id="W5d-qc-id0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="centerMap" destination="HE4-3z-QNe" id="ZHV-DG-Gzk"/>
                         <outlet property="mapView" destination="uCY-br-whW" id="VL3-dV-XeW"/>
+                        <outlet property="recalculate" destination="kmX-NU-2bO" id="pKc-I7-1gN"/>
+                        <outlet property="showGSButton" destination="vZr-15-qpf" id="6qX-6x-QIl"/>
                         <outlet property="sidebarButton" destination="uFf-jF-wgu" id="W1G-U5-lsJ"/>
                         <segue destination="rHi-go-ngW" kind="push" identifier="OptionsSegue" id="aqP-dL-QcQ"/>
                     </connections>
@@ -77,19 +91,19 @@
             </objects>
             <point key="canvasLocation" x="681" y="836"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Gas Stations TableVC-->
         <scene sceneID="jos-gf-vbZ">
             <objects>
-                <tableViewController id="912-rm-fvw" sceneMemberID="viewController">
+                <tableViewController id="912-rm-fvw" customClass="APGasStationsTableVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hP6-cO-N6b">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="r4c-om-S4v">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="pgF-8k-BDr">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="r4c-om-S4v" id="nBD-aL-0um">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pgF-8k-BDr" id="Jhe-en-5VQ">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
@@ -101,7 +115,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="Awg-H1-xqo"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dPj-pt-B7a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -579,6 +592,7 @@
         <image name="list_gas_stations.png" width="25" height="25"/>
         <image name="location.png" width="25" height="25"/>
         <image name="opzioni.png" width="26" height="26"/>
+        <image name="route.png" width="25" height="25"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

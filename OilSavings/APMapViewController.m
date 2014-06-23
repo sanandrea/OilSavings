@@ -15,12 +15,16 @@
 #import "APGSAnnotation.h"
 #import "APGeocodeClient.h"
 #import "APPathOptimizer.h"
+#import "APGasStationsTableVC.h"
 
 #define ZOOM_LEVEL 14
 static float kAnnotationPadding = 10.0f;
 static float kCallOutHeight = 40.0f;
 static float kLogoHeightPadding = 14.0f;
 static float kTextPadding = 10.0f;
+
+static const CLLocationDegrees emptyLocation = -1000.0;
+static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, emptyLocation};
 
 @interface APMapViewController ()
 
@@ -31,11 +35,16 @@ static float kTextPadding = 10.0f;
 
 @property (nonatomic) CLLocationCoordinate2D srcCoord;
 @property (nonatomic) CLLocationCoordinate2D dstCoord;
+@property (nonatomic) CLLocationCoordinate2D myLocation;
 
 @property (nonatomic) NSInteger cashAmount;
 @property (nonatomic, strong) NSArray *gasStations;
+@property (nonatomic, strong) NSMutableArray *paths;
 
 @property (nonatomic, strong) APPathOptimizer *optimizer;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *centerMap;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *showGSButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *recalculate;
 
 @end
 
@@ -48,8 +57,19 @@ static float kTextPadding = 10.0f;
     self.title = @"Mappa";
     [self.mapView setDelegate:self];
     
+    //Set all coordinates to invalid locations
+    self.myLocation = emptyLocationCoordinate;
+    self.srcCoord = emptyLocationCoordinate;
+    self.dstCoord = emptyLocationCoordinate;
+    
+    
+    //Disable Gas Stations List
+    if ([self.gasStations count] == 0) {
+        self.showGSButton.enabled = NO;
+    }
+    
     // Change button color
-    _sidebarButton.tintColor = [UIColor colorWithWhite:0.1f alpha:0.9f];
+//    _sidebarButton.tintColor = [UIColor colorWithWhite:0.1f alpha:0.9f];
     
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.
     _sidebarButton.target = self.revealViewController;
@@ -67,6 +87,9 @@ static float kTextPadding = 10.0f;
     int modelID = [[prefs objectForKey:kPreferredCar] intValue];
     self.cashAmount = [[prefs objectForKey:kCashAmount] integerValue];
     
+    
+    //Alloc paths array
+    self.paths = [[NSMutableArray alloc] init];
     
     if ( modelID >= 0) {
         //get from core data the car by model ID
@@ -99,25 +122,24 @@ static float kTextPadding = 10.0f;
     [locationManager startUpdatingLocation];
     
     if ([locationManager location] !=nil) {
-        [self centerMapInLocation:[locationManager location].coordinate];
+        [self centerMapInLocation:[locationManager location].coordinate animated:NO];
     }
     self.mapView.showsUserLocation = YES;
 }
 
 
-- (void) centerMapInLocation:(CLLocationCoordinate2D)loc{
+- (void) centerMapInLocation:(CLLocationCoordinate2D)loc animated:(BOOL)anime{
     /*
      * old implementation
      *
      */
-    [self.mapView setCenterCoordinate:loc zoomLevel:ZOOM_LEVEL animated:NO];
+    [self.mapView setCenterCoordinate:loc zoomLevel:ZOOM_LEVEL animated:anime];
     APGasStationClient *gs = [[APGasStationClient alloc] initWithRegion:self.mapView.region andFuel:[self.myCar.energy intValue]];
     gs.delegate = self;
     [gs getStations];
     
-    //convert the address
+    //convert the address so the user has the address in the options VC
     [APGeocodeClient convertCoordinate:loc ofType:kAddressSrc inDelegate:self];
-    self.srcCoord = loc;
 }
 - (void) viewDidAppear:(BOOL)animated{
     ALog("Map appeared");
@@ -153,7 +175,8 @@ static float kTextPadding = 10.0f;
     
     
     NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
-    [self centerMapInLocation:newLocation.coordinate];
+    self.myLocation = newLocation.coordinate;
+    [self centerMapInLocation:self.myLocation animated:NO];
     
     [locationManager stopUpdatingLocation];
 }
@@ -176,8 +199,24 @@ static float kTextPadding = 10.0f;
     }
 }
 
+
+#pragma mark - UI Actions
 - (IBAction)options:(id)sender{
     [self performSegueWithIdentifier: @"OptionsSegue" sender: self];
+}
+
+- (IBAction) gotoCurrentLocation:(id)sender{
+    if (CLLocationCoordinate2DIsValid(self.myLocation)) {
+        [self centerMapInLocation: self.myLocation animated:YES];
+    }
+}
+
+- (IBAction) showGasStationList:(id)sender{
+    
+}
+
+- (IBAction) optimizeAgain:(id)sender{
+    
 }
 
 #pragma mark - Network APIs
@@ -186,6 +225,9 @@ static float kTextPadding = 10.0f;
 
 - (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations{
     if (newStations) {
+        //Enable Gas Stations List
+        self.showGSButton.enabled = YES;
+        
         //remove any existing pin.
         [self removeAllPinsButUserLocation];
         
@@ -198,7 +240,9 @@ static float kTextPadding = 10.0f;
         self.gasStations = gsClient.gasStations;
         
         self.optimizer = [[APPathOptimizer alloc] initWithCar:self.myCar cash:5 andDelegate:self];
-        [self.optimizer optimizeRouteFrom:self.srcCoord to:self.dstCoord hasDestination:NO withGasStations:self.gasStations];
+        CLLocationCoordinate2D origin = CLLocationCoordinate2DIsValid(self.srcCoord) ? self.srcCoord : self.myLocation;
+        
+        [self.optimizer optimizeRouteFrom:origin to:self.dstCoord hasDestination:NO withGasStations:self.gasStations];
         
     }
     
@@ -210,7 +254,7 @@ static float kTextPadding = 10.0f;
     
     if (type == kAddressSrc) {
         self.srcCoord = coord;
-        [self centerMapInLocation:coord];
+        [self centerMapInLocation:coord animated:YES];
     }else{
         self.dstCoord = coord;
     }
@@ -226,8 +270,9 @@ static float kTextPadding = 10.0f;
 #pragma mark - Path Available
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
     ALog("Found path in map is called");
-//    [path constructMKPolyLines];
-//    APLine *line = [path.lines objectAtIndex:0];
+    
+    //Add to path array
+    [self.paths addObject:path];
 
     //remove existing overlay if any
     NSArray *pointsArray = [self.mapView overlays];
@@ -417,7 +462,9 @@ static float kTextPadding = 10.0f;
         if (self.srcAddress != nil){
             optController.srcAddr = self.srcAddress;
         }
-        
+    }else if ([[segue identifier] isEqualToString:@"showGSTable"]){
+        APGasStationsTableVC *tableGS = (APGasStationsTableVC *)[segue destinationViewController];
+        tableGS.gasStations = self.paths;
         
     }
 }
