@@ -7,10 +7,16 @@
         <!--Navigation Controller-->
         <scene sceneID="cUi-kZ-frf">
             <objects>
-                <navigationController storyboardIdentifier="Navigation" id="rS3-R9-Ivy" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Navigation" toolbarHidden="NO" id="rS3-R9-Ivy" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="yXu-0R-QUA">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="6z7-aP-GgZ">
+                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="P8k-qS-1QL" kind="relationship" relationship="rootViewController" id="X6W-ma-Bbf"/>
                     </connections>
@@ -28,11 +34,11 @@
                         <viewControllerLayoutGuide type="bottom" id="YXE-Kj-bJB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="45l-NV-kMs">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="uCY-br-whW">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="P8k-qS-1QL" id="0lt-Mb-yUt"/>
@@ -41,6 +47,17 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="nDW-j1-iE6"/>
+                        <barButtonItem image="location.png" id="HE4-3z-QNe"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="cWJ-Fh-6Hg"/>
+                        <barButtonItem image="list_gas_stations.png" id="vZr-15-qpf">
+                            <connections>
+                                <segue destination="912-rm-fvw" kind="modal" id="2Ol-NF-DGF"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="JNX-AV-sfM"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="tL6-3j-vWQ">
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" image="carIcon.png" id="uFf-jF-wgu"/>
@@ -60,6 +77,36 @@
             </objects>
             <point key="canvasLocation" x="681" y="836"/>
         </scene>
+        <!--Table View Controller-->
+        <scene sceneID="jos-gf-vbZ">
+            <objects>
+                <tableViewController id="912-rm-fvw" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hP6-cO-N6b">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="r4c-om-S4v">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="r4c-om-S4v" id="nBD-aL-0um">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="912-rm-fvw" id="cVg-08-aSk"/>
+                            <outlet property="delegate" destination="912-rm-fvw" id="y2f-gX-5ZK"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Awg-H1-xqo"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dPj-pt-B7a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1047" y="1454"/>
+        </scene>
         <!--Options View Controller-->
         <scene sceneID="xAt-8s-rp9">
             <objects>
@@ -69,7 +116,7 @@
                         <viewControllerLayoutGuide type="bottom" id="bZm-Qd-vx1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mIo-R6-nrA">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <searchBar tag="98" contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u6d-d3-TqR">
@@ -141,7 +188,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TyP-nm-cz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1365" y="1178"/>
+            <point key="canvasLocation" x="1463" y="836"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="xz5-Vk-zNA">
@@ -529,6 +576,8 @@
     </scenes>
     <resources>
         <image name="carIcon.png" width="25" height="23"/>
+        <image name="list_gas_stations.png" width="25" height="25"/>
+        <image name="location.png" width="25" height="25"/>
         <image name="opzioni.png" width="26" height="26"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -20,6 +20,7 @@
 static float kAnnotationPadding = 10.0f;
 static float kCallOutHeight = 40.0f;
 static float kLogoHeightPadding = 14.0f;
+static float kTextPadding = 10.0f;
 
 @interface APMapViewController ()
 
@@ -324,10 +325,18 @@ static float kLogoHeightPadding = 14.0f;
             NSDictionary *textAttributes = @{NSFontAttributeName: font,
                                              NSForegroundColorAttributeName: [UIColor whiteColor]};
             
+            CGSize textSize = [num sizeWithAttributes:textAttributes];
             
             NSStringDrawingContext *drawingContext = [[NSStringDrawingContext alloc] init];
-            resizeRect.origin.x += 1;
-            resizeRect.origin.y -= 10;
+            
+            //adjust center
+            if (resizeRect.size.width - textSize.width > 0) {
+                resizeRect.origin.x += (resizeRect.size.width - textSize.width)/2;
+            }else{
+                resizeRect.origin.x -= (resizeRect.size.width - textSize.width)/2;
+            }
+            
+            resizeRect.origin.y -= kTextPadding;
             [num drawWithRect:resizeRect
                       options:NSStringDrawingUsesLineFragmentOrigin
                    attributes:textAttributes
@@ -383,7 +392,7 @@ static float kLogoHeightPadding = 14.0f;
     return polylineView;
 }
 
-//removes all aanotations except user location
+//removes all annotations except user location
 - (void)removeAllPinsButUserLocation
 {
     id userLocation = [self.mapView userLocation];
