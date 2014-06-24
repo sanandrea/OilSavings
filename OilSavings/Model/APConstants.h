@@ -16,6 +16,8 @@ extern NSString *const kPreferredCar;
 extern NSString *const kCashAmount;
 extern NSString *const GOOGLE_API_KEY;
 
+extern const int REQUEST_BUNDLE;
+
 typedef enum{
     kEnergyGasoline = 0,
     kEnergyDiesel

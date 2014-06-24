@@ -41,6 +41,15 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
 @property (nonatomic, strong) NSArray *gasStations;
 @property (nonatomic, strong) NSMutableArray *paths;
 
+#warning Manage best path in various refreshes
+@property (nonatomic) APPath *bestPath;
+
+//how many directions requests are we making
+@property (nonatomic) int totalRequests;
+
+//how many directions requests are processed
+@property (nonatomic) int processedRequests;
+
 @property (nonatomic, strong) APPathOptimizer *optimizer;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *centerMap;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *showGSButton;
@@ -68,9 +77,11 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
         self.showGSButton.enabled = NO;
     }
     
-    // Change button color
-//    _sidebarButton.tintColor = [UIColor colorWithWhite:0.1f alpha:0.9f];
     
+#warning Manage this Counters
+    self.totalRequests = 0;
+    self.processedRequests = 0;
+
     // Set the side bar button action. When it's tapped, it'll show up the sidebar.
     _sidebarButton.target = self.revealViewController;
     _sidebarButton.action = @selector(revealToggle:);
@@ -206,9 +217,7 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
 }
 
 - (IBAction) gotoCurrentLocation:(id)sender{
-    if (CLLocationCoordinate2DIsValid(self.myLocation)) {
-        [self centerMapInLocation: self.myLocation animated:YES];
-    }
+    [locationManager startUpdatingLocation];
 }
 
 - (IBAction) showGasStationList:(id)sender{
@@ -270,18 +279,29 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
 #pragma mark - Path Available
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
     ALog("Found path in map is called");
-    
+    BOOL bestFound = NO;
     //Add to path array
     [self.paths addObject:path];
-
-    //remove existing overlay if any
-    NSArray *pointsArray = [self.mapView overlays];
-    if ([pointsArray count] > 0) {
-        [self.mapView removeOverlays:pointsArray];
-    }
     
-    //Add new polyline
-    [self.mapView addOverlay:path.overallPolyline];
+    
+    if ([path comparePath:self.bestPath andImport:self.cashAmount andWithCar:self.myCar] == NSOrderedAscending){
+        self.bestPath = path;
+        bestFound = YES;
+    }
+    self.processedRequests ++;
+
+
+    if ((self.processedRequests % REQUEST_BUNDLE == 0) && (bestFound)) {
+        //remove existing overlay if any
+        NSArray *pointsArray = [self.mapView overlays];
+        if ([pointsArray count] > 0) {
+            [self.mapView removeOverlays:pointsArray];
+        }
+        
+        //Add new polyline
+        [self.mapView addOverlay:path.overallPolyline];
+    }
+
 }
 
 

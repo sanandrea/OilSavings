@@ -13,11 +13,19 @@
 
 @property (nonatomic, strong) APPath *path;
 @property (nonatomic, weak) IBOutlet UIImageView *gsImage;
-@property (nonatomic, weak) IBOutlet UILabel *gsAddress;
 @property (nonatomic, weak) IBOutlet UILabel *gsBrand;
+
+@property (nonatomic, weak) IBOutlet UILabel *gsAddress;
+@property (nonatomic, weak) IBOutlet UILabel *gsCAP;
+
+
 @property (nonatomic, weak) IBOutlet UILabel *gsPrice;
+@property (nonatomic, weak) IBOutlet UILabel *gsMillesimal;
+
 @property (nonatomic, weak) IBOutlet UILabel *gsDistance;
-@property (nonatomic, weak) IBOutlet UILabel *gsTime;
 @property (nonatomic, weak) IBOutlet UILabel *gsFuelRecharge;
+
+@property (nonatomic, weak) IBOutlet UILabel *gsTimeString;
+@property (nonatomic, weak) IBOutlet UILabel *gsTime;
 
 @end

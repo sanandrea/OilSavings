@@ -18,6 +18,9 @@ NSString *const kPreferredCar = @"preferredCar";
 NSString *const kCashAmount = @"deafultCashAmount";
 NSString *const GOOGLE_API_KEY = @"AIzaSyDk2W4Au5SlQC5WPpcFFEpy8I7PTnZtvno";
 
+//how much directions requests to wait before updating polyline of best path.
+const int REQUEST_BUNDLE = 5;
+
 @implementation APConstants
 
 // http://en.wikipedia.org/wiki/Haversine_formula

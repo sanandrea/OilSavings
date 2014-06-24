@@ -81,7 +81,7 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
             if ([[dict objectForKey:@"price" ] length] == 0){
                 continue;
             }
-//            ALog("dict is %@",dict);
+            ALog("dict is %@",dict);
             gs = [[APGasStation alloc]initWithDict:dict];
             gs.type = self.fuel;
             [self.gasStations addObject:gs];

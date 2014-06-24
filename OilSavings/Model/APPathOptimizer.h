@@ -23,7 +23,6 @@
 @property (nonatomic) CLLocationCoordinate2D dst;
 @property (nonatomic) BOOL hasDest;
 @property (nonatomic) NSInteger currentBatch;
-@property (nonatomic) APPath *bestPath;
 
 - (id) initWithCar:(APCar*) mycar cash:(NSInteger)import andDelegate:(id<APNetworkAPI>)dele;
 

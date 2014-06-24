@@ -10,7 +10,6 @@
 #import "APGasStation.h"
 #import "APDirectionsClient.h"
 
-static const int REQUEST_BUNDLE = 5;
 static const int SLEEP_INTERVAL = 250000; // 250ms
 
 @implementation APPathOptimizer
@@ -79,21 +78,16 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
     
 }
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
-    BOOL bestFound = NO;
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.delegate foundPath:path withIndex:0];
+    });
     
-//    ALog("Found path in optimizer is called with index %d but %d",index, self.currentBatch);
-    if ((index == 0) || ([path comparePath:self.bestPath andImport:self.cashAmount andWithCar:self.car] == NSOrderedAscending)){
-        self.bestPath = path;
-        bestFound = YES;
-    }
-    
-    if (index == self.currentBatch - 1) {
-//        ALog("REporting to map");
-        // go on main thread now
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate foundPath:self.bestPath withIndex:0];
-        });
-    }
+   
+
+//    if (self.processedRequests == self.currentBatch - 1) {
+//
+//    }
 }
 
 @end

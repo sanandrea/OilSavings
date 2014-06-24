@@ -11,6 +11,7 @@
 @interface APPath()
 
 @property (nonatomic) float pathFuelExpense;
+@property (nonatomic) float pathFuelRemaining;
 @end
 
 @implementation APPath
@@ -51,6 +52,18 @@
     return distance;
 }
 
+- (int) getTime{
+    int time = 0;
+    for (APLine *ll in self.lines) {
+        time += ll.duration.duration;
+    }
+    return time;
+}
+
+
+- (float) getFuelExpense{
+    return self.pathFuelRemaining;
+}
 - (void) constructMKPolyLines{
     for (APLine *line in self.lines) {
         
@@ -111,12 +124,18 @@
     [self calculatePathValueWithCar:car];
     [inObject calculatePathValueWithCar:car];
     
-    float myRemaining = import/self.gasStation.getPrice - self.pathFuelExpense;
+    
+    self.pathFuelRemaining = import/self.gasStation.getPrice - self.pathFuelExpense;
+
+    if (inObject == nil) {
+        return NSOrderedAscending;
+    }
+
     float otherRemaining = import/inObject.gasStation.getPrice - inObject.pathFuelExpense;
     
-    if (myRemaining < otherRemaining) {
+    if (self.pathFuelRemaining < otherRemaining) {
         return NSOrderedDescending;
-    }else if (myRemaining > otherRemaining){
+    }else if (self.pathFuelRemaining > otherRemaining){
         return NSOrderedAscending;
     }
     return NSOrderedSame;

@@ -76,7 +76,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 62;
+    return 50;
 }
 
 // Customize the appearance of table view cells.
@@ -87,9 +87,26 @@
     
     cell.gsAddress.text = path.gasStation.name;
     cell.gsImage.image = [UIImage imageNamed:path.gasStation.logo];
-    cell.gsPrice.text = [NSString stringWithFormat:@"%4.3f",[path.gasStation getPrice]];
-    cell.gsDistance.text = [NSString stringWithFormat:@"%d", [path getDistance]];
-    cell.gsFuelRecharge.text = @"11.2l";
+    
+    float price = [path.gasStation getPrice];
+    int millesimal = ((int)(price * 1000)) % 10;
+    
+    cell.gsPrice.text = [NSString stringWithFormat:@"%4.2f",price];
+    cell.gsMillesimal.text = [NSString stringWithFormat:@"%d",millesimal];
+    
+    int dist = [path getDistance];
+    
+    if (dist < 750) {
+        cell.gsDistance.text = [NSString stringWithFormat:@"%d m", dist];
+    } else {
+        float distKM = dist / 1000;
+        cell.gsDistance.text = [NSString stringWithFormat:@"%2.1f Km", distKM];
+    }
+    
+    int time = [path getTime];
+    cell.gsTime.text = [NSString stringWithFormat:@"%d min", (int)(time / 60)];
+    
+    cell.gsFuelRecharge.text = [NSString stringWithFormat:@"%3.1f L", [path getFuelExpense]];
     cell.path = path;
     
 //    Add target for press

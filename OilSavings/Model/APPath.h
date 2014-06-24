@@ -28,6 +28,8 @@
 - (void) addLine:(APLine*) line;
 
 - (int) getDistance;
+- (int) getTime;
+- (float) getFuelExpense;
 
 - (id) initWith:(CLLocationCoordinate2D)source andGasStation:(APGasStation*)gs;
 - (id) initWith:(CLLocationCoordinate2D)source and:(CLLocationCoordinate2D)destination andGasStation:(APGasStation*)gs;
