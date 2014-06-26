@@ -78,6 +78,10 @@ static NSString * const DIRECTIONS_URL = @"https://maps.googleapis.com/maps/api/
                 }
                 //ALog("polyline is %@", routeDict[@"overview_polyline"][@"points"]);
                 path.overallPolyline = [APDirectionsClient polylineWithEncodedString:routeDict[@"overview_polyline"][@"points"]];
+                
+                //set bounds for minimap view.
+                path.northEastBound = CLLocationCoordinate2DMake([routeDict[@"bounds"][@"northeast"][@"lat"] floatValue],[routeDict[@"bounds"][@"northeast"][@"lng"] floatValue]);
+                path.southWestBound = CLLocationCoordinate2DMake([routeDict[@"bounds"][@"southwest"][@"lat"] floatValue],[routeDict[@"bounds"][@"southwest"][@"lng"] floatValue]);
             }
             //[path constructMKPolyLines];
             [delegate foundPath:path withIndex:index];

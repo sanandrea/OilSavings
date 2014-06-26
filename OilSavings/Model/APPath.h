@@ -17,6 +17,9 @@
 @property (nonatomic) CLLocationCoordinate2D dst;
 @property (nonatomic) CLLocationCoordinate2D src;
 
+@property (nonatomic) CLLocationCoordinate2D northEastBound;
+@property (nonatomic) CLLocationCoordinate2D southWestBound;
+
 @property (nonatomic, strong) NSMutableArray *lines;
 @property (nonatomic, strong) APGasStation *gasStation;
 @property (nonatomic) BOOL hasDestination;

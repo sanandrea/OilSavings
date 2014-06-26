@@ -87,5 +87,36 @@ static NSString * const GEOCODE_URL = @"https://maps.googleapis.com/maps/api/geo
     }];
 }
 
++ (void) convertCoordinate:(CLLocationCoordinate2D)coord found:(void (^)(NSString*))found{
+    NSString *latlng = [NSString stringWithFormat:@"%f,%f",coord.latitude,coord.longitude];
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
+    [params setObject:latlng forKey:@"latlng"];
+    [params setObject:GOOGLE_API_KEY forKey:@"key"];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+    [manager GET:GEOCODE_URL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // Process Response Object
+        NSDictionary *response = (NSDictionary *)responseObject;
+        if ([response[@"status"] isEqualToString:@"OK"]) {
+            
+            NSArray* results = (NSArray*) response[@"results"];
+            NSDictionary *contents = [results objectAtIndex:0];
+            ALog("Geocode result %@",contents);
+            
+            //call the block
+            found(contents[@"formatted_address"]);
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        // Handle Error
+        
+    }];
+}
 
 @end

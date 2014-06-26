@@ -21,6 +21,9 @@
 @property (nonatomic) float dieselPrice;
 @property (nonatomic) CLLocationCoordinate2D position;
 
+@property (nonatomic, strong) NSString *street;
+@property (nonatomic, strong) NSString *postalCode;
+
 - (BOOL) hasEnergy:(ENERGY_TYPE)e;
 - (void) setPrice:(float) p forEnergyType:(ENERGY_TYPE)e;
 - (float) getPrice:(ENERGY_TYPE)e;

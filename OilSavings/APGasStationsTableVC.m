@@ -52,7 +52,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    ALog("Table has %d rows", [self.gasStations count]);
+    ALog("Table has %lu rows", (unsigned long)[self.gasStations count]);
     return [self.gasStations count];
 }
 
@@ -107,6 +107,10 @@
     cell.gsTime.text = [NSString stringWithFormat:@"%d min", (int)(time / 60)];
     
     cell.gsFuelRecharge.text = [NSString stringWithFormat:@"%3.1f L", [path getFuelExpense]];
+    
+    
+    cell.gsCAP.text = path.gasStation.postalCode;
+    cell.gsAddress.text = path.gasStation.street;
     cell.path = path;
     
 //    Add target for press

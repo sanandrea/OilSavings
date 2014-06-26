@@ -9,6 +9,7 @@
 #import "APPathOptimizer.h"
 #import "APGasStation.h"
 #import "APDirectionsClient.h"
+#import "APGeocodeClient.h"
 
 static const int SLEEP_INTERVAL = 250000; // 250ms
 
@@ -78,6 +79,15 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
     
 }
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
+
+    [APGeocodeClient convertCoordinate:path.gasStation.position found:^(NSString *fullAddress){
+        NSArray *components = [fullAddress componentsSeparatedByString:@","];
+        NSString *street = [NSString stringWithFormat:@"%@, %@",[components objectAtIndex:0],[components objectAtIndex:1]];
+        
+        path.gasStation.street = street;
+        path.gasStation.postalCode = [components objectAtIndex:2];
+        
+    }];
 
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate foundPath:path withIndex:0];
