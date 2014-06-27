@@ -24,7 +24,8 @@
 @property (nonatomic, strong) APGasStation *gasStation;
 @property (nonatomic) BOOL hasDestination;
 @property (nonatomic, strong) MKPolyline *overallPolyline;
-
+@property (nonatomic, strong) APCar *car;
+@property (nonatomic) NSUInteger import;
 //Distance of GasStation from Source plus Distance of GasStation to Destination
 @property (nonatomic) float haversineDistance;
 
@@ -34,12 +35,21 @@
 - (int) getTime;
 - (float) getFuelExpense;
 
+- (void) setTheCar:(APCar*)car;
+- (void) setTheImport:(NSUInteger)im;
+
 - (id) initWith:(CLLocationCoordinate2D)source andGasStation:(APGasStation*)gs;
 - (id) initWith:(CLLocationCoordinate2D)source and:(CLLocationCoordinate2D)destination andGasStation:(APGasStation*)gs;
 
 - (void) constructMKPolyLines;
-- (void) calculatePathValueWithCar:(APCar*)car;
+
+//no need to expose this
+//- (void) calculatePathValueWithCar:(APCar*)car;
 
 - (NSComparisonResult)compareAir:(APPath*)inObject;
-- (NSComparisonResult)comparePath:(APPath*)inObject andImport:(NSInteger)import andWithCar:(APCar*)car;
+
+- (NSComparisonResult)compareFuelPath:(APPath*)inObject;
+- (NSComparisonResult)compareTimePath:(APPath*)inObject;
+- (NSComparisonResult)compareDistancePath:(APPath*)inObject;
+- (NSComparisonResult)comparePricePath:(APPath*)inObject;
 @end

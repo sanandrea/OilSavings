@@ -28,6 +28,13 @@ typedef enum{
     kAddressDst
 }ADDRESS_TYPE;
 
+typedef enum{
+    kSortTime,
+    kSortFuel,
+    kSortDistance,
+    kSortPrice
+}SORT_TYPE;
+
 @interface APConstants : NSObject
 
 + (float) haversineDistance:(float)latA :(float)latB :(float)longA :(float)longB;

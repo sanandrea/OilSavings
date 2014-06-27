@@ -228,6 +228,12 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
     
 }
 
+- (void) userChangedCar{
+    for (APPath *path in self.paths) {
+        [path setCar:self.myCar];
+    }
+}
+
 #pragma mark - Network APIs
 
 #pragma mark - Gas Stations
@@ -283,8 +289,10 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
     //Add to path array
     [self.paths addObject:path];
     
-    
-    if ([path comparePath:self.bestPath andImport:self.cashAmount andWithCar:self.myCar] == NSOrderedAscending){
+    [path setTheCar:self.myCar];
+    [path setTheImport:self.cashAmount];
+
+    if ([path compareFuelPath:self.bestPath] == NSOrderedAscending){
         self.bestPath = path;
         bestFound = YES;
     }
@@ -484,7 +492,8 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
         }
     }else if ([[segue identifier] isEqualToString:@"showGSTable"]){
         APGasStationsTableVC *tableGS = (APGasStationsTableVC *)[segue destinationViewController];
-        tableGS.gasStations = self.paths;
+        tableGS.gasPaths = self.paths;
+        tableGS.sortType = kSortFuel;
         
     }
 }

@@ -64,6 +64,17 @@
 - (float) getFuelExpense{
     return self.pathFuelRemaining;
 }
+
+- (void) setTheCar:(APCar*)aCar{
+    self.car = aCar;
+    //calculate expenses with current car
+    [self calculatePathValueWithCar:self.car];
+}
+
+- (void) setTheImport:(NSUInteger)im{
+    self.import = im;
+    self.pathFuelRemaining = self.import/self.gasStation.getPrice - self.pathFuelExpense;
+}
 - (void) constructMKPolyLines{
     for (APLine *line in self.lines) {
         
@@ -119,26 +130,67 @@
     }
 }
 
-- (NSComparisonResult)comparePath:(APPath*)inObject andImport:(NSInteger)import andWithCar:(APCar*)car{
-    //calculate expenses with current car
-    [self calculatePathValueWithCar:car];
-    [inObject calculatePathValueWithCar:car];
+- (NSComparisonResult)comparePath:(APPath*)inObject byType:(SORT_TYPE)sortType{
+    float myValue;
+    float otherValue;
+    BOOL minIsBetter = YES;
     
+    switch (sortType) {
+        case kSortDistance:
+            myValue = [self getDistance];
+            otherValue = [inObject getDistance];
+            break;
+        case kSortTime:
+            myValue = [self getTime];
+            otherValue = [inObject getTime];
+            break;
+        case kSortPrice:
+            myValue = [self.gasStation getPrice];
+            otherValue = [inObject.gasStation getPrice];
+            break;
+        case kSortFuel:
+            myValue = self.pathFuelRemaining;
+            otherValue = inObject.pathFuelRemaining;
+            minIsBetter = NO;
+            break;
+        default:
+            break;
+    }
     
-    self.pathFuelRemaining = import/self.gasStation.getPrice - self.pathFuelExpense;
-
     if (inObject == nil) {
         return NSOrderedAscending;
     }
 
-    float otherRemaining = import/inObject.gasStation.getPrice - inObject.pathFuelExpense;
     
-    if (self.pathFuelRemaining < otherRemaining) {
-        return NSOrderedDescending;
-    }else if (self.pathFuelRemaining > otherRemaining){
-        return NSOrderedAscending;
+    
+    if (myValue < otherValue) {
+        if (minIsBetter) {
+            return NSOrderedAscending;
+        }else{
+            return NSOrderedDescending;
+        }
+    }else if (myValue > otherValue){
+        if (minIsBetter) {
+            return NSOrderedDescending;
+        }else{
+            return NSOrderedAscending;
+        }
     }
     return NSOrderedSame;
+}
+
+
+- (NSComparisonResult)compareFuelPath:(APPath*)inObject{
+    return [self comparePath:inObject byType:kSortFuel];
+}
+- (NSComparisonResult)compareTimePath:(APPath*)inObject{
+        return [self comparePath:inObject byType:kSortTime];
+}
+- (NSComparisonResult)compareDistancePath:(APPath*)inObject{
+        return [self comparePath:inObject byType:kSortDistance];
+}
+- (NSComparisonResult)comparePricePath:(APPath*)inObject{
+        return [self comparePath:inObject byType:kSortPrice];
 }
 
 

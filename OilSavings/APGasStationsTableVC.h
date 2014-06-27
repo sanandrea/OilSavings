@@ -10,6 +10,13 @@
 
 @interface APGasStationsTableVC : UITableViewController <UITableViewDelegate>
 
-@property (nonatomic, strong) NSArray *gasStations;
+@property (nonatomic, strong) NSMutableArray *gasPaths;
+@property (nonatomic) SORT_TYPE sortType;
+
+- (IBAction)sortByPrice:(id)sender;
+- (IBAction)sortByDistance:(id)sender;
+- (IBAction)sortByTime:(id)sender;
+- (IBAction)sortByFuel:(id)sender;
+
 
 @end

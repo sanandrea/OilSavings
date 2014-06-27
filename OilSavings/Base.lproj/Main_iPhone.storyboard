@@ -104,6 +104,31 @@
                             <outlet property="delegate" destination="912-rm-fvw" id="y2f-gX-5ZK"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem image="watch.png" id="aQB-co-trR">
+                            <connections>
+                                <action selector="sortByTime:" destination="912-rm-fvw" id="0nc-Jd-I3Y"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="eVM-th-GI6"/>
+                        <barButtonItem image="oil.png" id="toM-SC-qRA">
+                            <connections>
+                                <action selector="sortByFuel:" destination="912-rm-fvw" id="c2M-aL-8ao"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="N0p-pF-eGG"/>
+                        <barButtonItem image="eur.png" id="WWJ-9G-9qX">
+                            <connections>
+                                <action selector="sortByPrice:" destination="912-rm-fvw" id="vRb-9d-yig"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="V5v-RM-5sp"/>
+                        <barButtonItem image="route.png" id="CIN-lD-rUN">
+                            <connections>
+                                <action selector="sortByDistance:" destination="912-rm-fvw" id="hIe-GD-gY7"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="Awg-H1-xqo"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dPj-pt-B7a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -579,10 +604,13 @@
     </scenes>
     <resources>
         <image name="carIcon.png" width="25" height="23"/>
+        <image name="eur.png" width="25" height="25"/>
         <image name="list_gas_stations.png" width="25" height="25"/>
         <image name="location.png" width="25" height="25"/>
+        <image name="oil.png" width="25" height="25"/>
         <image name="opzioni.png" width="26" height="26"/>
         <image name="route.png" width="25" height="25"/>
+        <image name="watch.png" width="25" height="25"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

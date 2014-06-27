@@ -9,6 +9,7 @@
 #import "APGasStationsTableVC.h"
 #import "APGasStation.h"
 #import "APGSTableViewCell.h"
+#import "APPath.h"
 
 @interface APGasStationsTableVC ()
 
@@ -52,8 +53,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    ALog("Table has %lu rows", (unsigned long)[self.gasStations count]);
-    return [self.gasStations count];
+//    ALog("Table has %lu rows", (unsigned long)[self.gasPaths count]);
+    return [self.gasPaths count];
 }
 
 
@@ -83,15 +84,16 @@
 - (void)configureCell:(APGSTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
     // Configure the cell to show path info
-    APPath *path = [self.gasStations objectAtIndex:indexPath.row];
+    APPath *path = [self.gasPaths objectAtIndex:indexPath.row];
     
     cell.gsAddress.text = path.gasStation.name;
     cell.gsImage.image = [UIImage imageNamed:path.gasStation.logo];
     
     float price = [path.gasStation getPrice];
     int millesimal = ((int)(price * 1000)) % 10;
+    float truncPrice = floorf(price * 100)/100;
     
-    cell.gsPrice.text = [NSString stringWithFormat:@"%4.2f",price];
+    cell.gsPrice.text = [NSString stringWithFormat:@"%4.2f",truncPrice];
     cell.gsMillesimal.text = [NSString stringWithFormat:@"%d",millesimal];
     
     int dist = [path getDistance];
@@ -116,6 +118,36 @@
 //    Add target for press
 //    [cell.infoButton addTarget:self action:@selector(startInfoPush:) forControlEvents:UIControlEventTouchUpInside];
 }
+
+- (IBAction)sortByPrice:(id)sender{
+    if (self.sortType != kSortPrice) {
+        [self.gasPaths sortUsingSelector:@selector(comparePricePath:)];
+        [self.tableView reloadData];
+        self.sortType = kSortPrice;
+    }
+}
+- (IBAction)sortByDistance:(id)sender{
+    if (self.sortType != kSortDistance) {
+        [self.gasPaths sortUsingSelector:@selector(compareDistancePath:)];
+        self.sortType = kSortDistance;
+        [self.tableView reloadData];
+    }
+}
+- (IBAction)sortByTime:(id)sender{
+    if (self.sortType != kSortTime) {
+        [self.gasPaths sortUsingSelector:@selector(compareTimePath:)];
+        self.sortType = kSortTime;
+        [self.tableView reloadData];
+    }
+}
+- (IBAction)sortByFuel:(id)sender{
+    if (self.sortType != kSortFuel) {
+        [self.gasPaths sortUsingSelector:@selector(compareFuelPath:)];
+        self.sortType = kSortFuel;
+        [self.tableView reloadData];
+    }
+}
+
 
 /*
 // Override to support conditional editing of the table view.
