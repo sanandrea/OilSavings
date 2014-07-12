@@ -23,10 +23,7 @@
 		A94392CE19328DF000439E89 /* SidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A94392CC19328DF000439E89 /* SidebarViewController.m */; };
 		A989555D1958CEC40079FBD9 /* GasStationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A989555C1958CEC40079FBD9 /* GasStationCell.xib */; };
 		A98955601958D04E0079FBD9 /* APGSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A989555F1958D04E0079FBD9 /* APGSTableViewCell.m */; };
-		A98955651958D3330079FBD9 /* oil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A98955611958D3330079FBD9 /* oil@2x.png */; };
-		A98955661958D3330079FBD9 /* eur@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A98955621958D3330079FBD9 /* eur@2x.png */; };
 		A98955671958D3330079FBD9 /* length@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A98955631958D3330079FBD9 /* length@2x.png */; };
-		A98955681958D3330079FBD9 /* watch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A98955641958D3330079FBD9 /* watch@2x.png */; };
 		A98D0874192FDC33000DB81D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98D0873192FDC33000DB81D /* Foundation.framework */; };
 		A98D0876192FDC33000DB81D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98D0875192FDC33000DB81D /* CoreGraphics.framework */; };
 		A98D0878192FDC33000DB81D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98D0877192FDC33000DB81D /* UIKit.framework */; };
@@ -51,6 +48,10 @@
 		A99FCCE31932823500B26D6A /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FCCE11932823500B26D6A /* menu.png */; };
 		A99FCCE41932823500B26D6A /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FCCE21932823500B26D6A /* menu@2x.png */; };
 		A99FCCE6193284E900B26D6A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99FCCE5193284E900B26D6A /* MapKit.framework */; };
+		A9B773D0195E32E200441B42 /* eur@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B773CC195E32E200441B42 /* eur@2x.png */; };
+		A9B773D1195E32E200441B42 /* oil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B773CD195E32E200441B42 /* oil@2x.png */; };
+		A9B773D2195E32E200441B42 /* watch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B773CE195E32E200441B42 /* watch@2x.png */; };
+		A9B773D3195E32E200441B42 /* route@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B773CF195E32E200441B42 /* route@2x.png */; };
 		A9C711711932284B00E8EEF9 /* APCar.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C711701932284B00E8EEF9 /* APCar.m */; };
 		A9C711721932284B00E8EEF9 /* APCar.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C711701932284B00E8EEF9 /* APCar.m */; };
 		A9C71175193229A300E8EEF9 /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C71174193229A300E8EEF9 /* APConstants.m */; };
@@ -103,7 +104,6 @@
 		A9FC5057193C70D900C883B7 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC5056193C70D900C883B7 /* MKMapView+ZoomLevel.m */; };
 		A9FC505D193C786800C883B7 /* APGasStationClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC505C193C786800C883B7 /* APGasStationClient.m */; };
 		A9FC507C193CDC4E00C883B7 /* APGSAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC507B193CDC4E00C883B7 /* APGSAnnotation.m */; };
-		A9FC6DEE1958C914007959CA /* route@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FC6DED1958C914007959CA /* route@2x.png */; };
 		A9FC6DF11958CA30007959CA /* APGasStationsTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC6DF01958CA30007959CA /* APGasStationsTableVC.m */; };
 		A9FC965C19432C780067875B /* APGeocodeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC965B19432C780067875B /* APGeocodeClient.m */; };
 		A9FC966219434EC40067875B /* APDirectionsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC966119434EC40067875B /* APDirectionsClient.m */; };
@@ -149,10 +149,7 @@
 		A989555C1958CEC40079FBD9 /* GasStationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GasStationCell.xib; sourceTree = "<group>"; };
 		A989555E1958D04E0079FBD9 /* APGSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGSTableViewCell.h; sourceTree = "<group>"; };
 		A989555F1958D04E0079FBD9 /* APGSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGSTableViewCell.m; sourceTree = "<group>"; };
-		A98955611958D3330079FBD9 /* oil@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oil@2x.png"; sourceTree = "<group>"; };
-		A98955621958D3330079FBD9 /* eur@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eur@2x.png"; sourceTree = "<group>"; };
 		A98955631958D3330079FBD9 /* length@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "length@2x.png"; sourceTree = "<group>"; };
-		A98955641958D3330079FBD9 /* watch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "watch@2x.png"; sourceTree = "<group>"; };
 		A98D0870192FDC33000DB81D /* OilSavings.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OilSavings.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98D0873192FDC33000DB81D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A98D0875192FDC33000DB81D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -183,6 +180,10 @@
 		A99FCCE11932823500B26D6A /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = ../../../../Downloads/SidebarDemo/SidebarDemo/menu.png; sourceTree = "<group>"; };
 		A99FCCE21932823500B26D6A /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu@2x.png"; path = "../../../../Downloads/SidebarDemo/SidebarDemo/menu@2x.png"; sourceTree = "<group>"; };
 		A99FCCE5193284E900B26D6A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A9B773CC195E32E200441B42 /* eur@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eur@2x.png"; sourceTree = "<group>"; };
+		A9B773CD195E32E200441B42 /* oil@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oil@2x.png"; sourceTree = "<group>"; };
+		A9B773CE195E32E200441B42 /* watch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "watch@2x.png"; sourceTree = "<group>"; };
+		A9B773CF195E32E200441B42 /* route@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "route@2x.png"; sourceTree = "<group>"; };
 		A9C7116F1932284B00E8EEF9 /* APCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCar.h; sourceTree = "<group>"; };
 		A9C711701932284B00E8EEF9 /* APCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCar.m; sourceTree = "<group>"; };
 		A9C71173193229A300E8EEF9 /* APConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APConstants.h; sourceTree = "<group>"; };
@@ -239,7 +240,6 @@
 		A9FC505C193C786800C883B7 /* APGasStationClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGasStationClient.m; sourceTree = "<group>"; };
 		A9FC507A193CDC4E00C883B7 /* APGSAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGSAnnotation.h; sourceTree = "<group>"; };
 		A9FC507B193CDC4E00C883B7 /* APGSAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGSAnnotation.m; sourceTree = "<group>"; };
-		A9FC6DED1958C914007959CA /* route@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "route@2x.png"; sourceTree = "<group>"; };
 		A9FC6DEF1958CA30007959CA /* APGasStationsTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGasStationsTableVC.h; sourceTree = "<group>"; };
 		A9FC6DF01958CA30007959CA /* APGasStationsTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGasStationsTableVC.m; sourceTree = "<group>"; };
 		A9FC965A19432C780067875B /* APGeocodeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGeocodeClient.h; sourceTree = "<group>"; };
@@ -468,11 +468,11 @@
 		A9FC5058193C745800C883B7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				A98955611958D3330079FBD9 /* oil@2x.png */,
-				A98955621958D3330079FBD9 /* eur@2x.png */,
+				A9B773CC195E32E200441B42 /* eur@2x.png */,
+				A9B773CD195E32E200441B42 /* oil@2x.png */,
+				A9B773CE195E32E200441B42 /* watch@2x.png */,
+				A9B773CF195E32E200441B42 /* route@2x.png */,
 				A98955631958D3330079FBD9 /* length@2x.png */,
-				A98955641958D3330079FBD9 /* watch@2x.png */,
-				A9FC6DED1958C914007959CA /* route@2x.png */,
 				A9EA15C91957AB0900CF4446 /* location@2x.png */,
 				A9EA15C71957AA9400CF4446 /* list_gas_stations@2x.png */,
 				A9EA15C51957A55800CF4446 /* logo_im@2x.png */,
@@ -603,27 +603,27 @@
 				A9F7C476193E614F0092FCA2 /* logo_ar@2x.png in Resources */,
 				A9F7C494193E614F0092FCA2 /* logo_ta@2x.png in Resources */,
 				A9F7C487193E614F0092FCA2 /* logo_lt@2x.png in Resources */,
-				A98955661958D3330079FBD9 /* eur@2x.png in Resources */,
 				A9F7C477193E614F0092FCA2 /* logo_au@2x.png in Resources */,
 				A9F7C48C193E614F0092FCA2 /* logo_qe@2x.png in Resources */,
 				A98D088C192FDC33000DB81D /* Main_iPad.storyboard in Resources */,
-				A9FC6DEE1958C914007959CA /* route@2x.png in Resources */,
 				A9F7C475193E614F0092FCA2 /* logo_aq@2x.png in Resources */,
 				A9F7C483193E614F0092FCA2 /* logo_in@2x.png in Resources */,
 				A9F7C490193E614F0092FCA2 /* logo_sm@2x.png in Resources */,
 				A9F7C488193E614F0092FCA2 /* logo_mi@2x.png in Resources */,
 				A9CFA2F2193E8B0200ACCEC5 /* carIcon@2x.png in Resources */,
+				A9B773D2195E32E200441B42 /* watch@2x.png in Resources */,
+				A9B773D3195E32E200441B42 /* route@2x.png in Resources */,
+				A9B773D1195E32E200441B42 /* oil@2x.png in Resources */,
 				A9F7C47A193E614F0092FCA2 /* logo_cf@2x.png in Resources */,
 				A9F7C474193E614F0092FCA2 /* logo_ap@2x.png in Resources */,
 				A9CFA2ED193E844100ACCEC5 /* opzioni@2x.png in Resources */,
-				A98955651958D3330079FBD9 /* oil@2x.png in Resources */,
 				A9F7C492193E614F0092FCA2 /* logo_t2@2x.png in Resources */,
-				A98955681958D3330079FBD9 /* watch@2x.png in Resources */,
 				A9F7C496193E614F0092FCA2 /* logo_to@2x.png in Resources */,
 				A9F7C485193E614F0092FCA2 /* logo_is@2x.png in Resources */,
 				A9F7C482193E614F0092FCA2 /* logo_ie@2x.png in Resources */,
 				A9F7C473193E614F0092FCA2 /* logo_ag@2x.png in Resources */,
 				A9F7C491193E614F0092FCA2 /* logo_sp@2x.png in Resources */,
+				A9B773D0195E32E200441B42 /* eur@2x.png in Resources */,
 				A9F7C498193E64640092FCA2 /* marker_mid@2x.png in Resources */,
 				A9F7C493193E614F0092FCA2 /* logo_t7@2x.png in Resources */,
 				A9F7C47C193E614F0092FCA2 /* logo_eg@2x.png in Resources */,

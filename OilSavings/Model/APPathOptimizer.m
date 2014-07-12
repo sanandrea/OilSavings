@@ -80,12 +80,9 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
 }
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
 
-    [APGeocodeClient convertCoordinate:path.gasStation.position found:^(NSString *fullAddress){
-        NSArray *components = [fullAddress componentsSeparatedByString:@","];
-        NSString *street = [NSString stringWithFormat:@"%@, %@",[components objectAtIndex:0],[components objectAtIndex:1]];
-        
+    [APGeocodeClient convertCoordinate:path.gasStation.position found:^(NSString *street, NSString* capCity){
         path.gasStation.street = street;
-        path.gasStation.postalCode = [components objectAtIndex:2];
+        path.gasStation.postalCode = capCity;
         
     }];
 

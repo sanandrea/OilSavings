@@ -87,7 +87,7 @@ static NSString * const GEOCODE_URL = @"https://maps.googleapis.com/maps/api/geo
     }];
 }
 
-+ (void) convertCoordinate:(CLLocationCoordinate2D)coord found:(void (^)(NSString*))found{
++ (void) convertCoordinate:(CLLocationCoordinate2D)coord found:(void (^)(NSString*, NSString *))found{
     NSString *latlng = [NSString stringWithFormat:@"%f,%f",coord.latitude,coord.longitude];
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
@@ -103,13 +103,46 @@ static NSString * const GEOCODE_URL = @"https://maps.googleapis.com/maps/api/geo
         // Process Response Object
         NSDictionary *response = (NSDictionary *)responseObject;
         if ([response[@"status"] isEqualToString:@"OK"]) {
+            NSString *street = @"";
+            NSString *streetNumber = @"";
+            NSString *cap = @"";
+            NSString *city = @"";
+            
+            NSString *streetAndNumber;
+            NSString *CAPAndCity;
+            BOOL hasroute = NO;
             
             NSArray* results = (NSArray*) response[@"results"];
             NSDictionary *contents = [results objectAtIndex:0];
             ALog("Geocode result %@",contents);
             
+            NSArray* addressComponents = contents[@"address_components"];
+            
+            for (NSDictionary *component in addressComponents) {
+                //find type of component
+                NSArray *types = component[@"types"];
+                if ([types containsObject:@"street_number"]) {
+                    streetNumber = component[@"long_name"];
+                } else if ([types containsObject:@"route"]){
+                    street = component[@"long_name"];
+                    hasroute = YES;
+                } else if (!hasroute && [types containsObject:@"locality"]){
+                    street = component[@"long_name"];
+                } else if ([types containsObject:@"postal_code"]){
+                    cap = component[@"long_name"];
+                } else if([types containsObject:@"administrative_area_level_2"]){
+                    city = component[@"long_name"];
+                }
+            }
+            
+            streetAndNumber = [NSString stringWithFormat:@"%@ %@", street, streetNumber];
+            if ([cap length] > 0) {
+                CAPAndCity = [NSString stringWithFormat:@"%@ %@",cap ,city];
+            } else{
+                CAPAndCity = city;
+            }
             //call the block
-            found(contents[@"formatted_address"]);
+            found(streetAndNumber, CAPAndCity);
             
         }
         

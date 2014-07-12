@@ -16,5 +16,5 @@
 + (void) convertCoordinate:(CLLocationCoordinate2D)coord ofType:(ADDRESS_TYPE)type inDelegate:(id<APNetworkAPI>)delegate;
 
 //Block argument to play with
-+ (void) convertCoordinate:(CLLocationCoordinate2D)coord found:(void (^)(NSString*))found;
++ (void) convertCoordinate:(CLLocationCoordinate2D)coord found:(void (^)(NSString*, NSString*))found;
 @end
