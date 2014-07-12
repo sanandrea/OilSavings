@@ -108,6 +108,7 @@
 		A9FC965C19432C780067875B /* APGeocodeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC965B19432C780067875B /* APGeocodeClient.m */; };
 		A9FC966219434EC40067875B /* APDirectionsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC966119434EC40067875B /* APDirectionsClient.m */; };
 		A9FC966519434FD80067875B /* APPathOptimizer.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC966419434FD80067875B /* APPathOptimizer.m */; };
+		A9FE180719715A6D006ECBDA /* table_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FE180619715A6D006ECBDA /* table_indicator.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -249,6 +250,7 @@
 		A9FC966119434EC40067875B /* APDirectionsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDirectionsClient.m; sourceTree = "<group>"; };
 		A9FC966319434FD80067875B /* APPathOptimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPathOptimizer.h; sourceTree = "<group>"; };
 		A9FC966419434FD80067875B /* APPathOptimizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPathOptimizer.m; sourceTree = "<group>"; };
+		A9FE180619715A6D006ECBDA /* table_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = table_indicator.png; sourceTree = "<group>"; };
 		FAEA7545A18B4D538A596C22 /* Pods-OilSavings.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OilSavings.xcconfig"; path = "Pods/Pods-OilSavings.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -468,6 +470,7 @@
 		A9FC5058193C745800C883B7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A9FE180619715A6D006ECBDA /* table_indicator.png */,
 				A9B773CC195E32E200441B42 /* eur@2x.png */,
 				A9B773CD195E32E200441B42 /* oil@2x.png */,
 				A9B773CE195E32E200441B42 /* watch@2x.png */,
@@ -648,6 +651,7 @@
 				A9F7C47D193E614F0092FCA2 /* logo_er@2x.png in Resources */,
 				A9EA15CA1957AB0900CF4446 /* location@2x.png in Resources */,
 				A98D0889192FDC33000DB81D /* Main_iPhone.storyboard in Resources */,
+				A9FE180719715A6D006ECBDA /* table_indicator.png in Resources */,
 				A9F7C48A193E614F0092FCA2 /* logo_pe@2x.png in Resources */,
 				A98955671958D3330079FBD9 /* length@2x.png in Resources */,
 				A9F7C47B193E614F0092FCA2 /* logo_cl@2x.png in Resources */,

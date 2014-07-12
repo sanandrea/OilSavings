@@ -9,6 +9,7 @@
 #import "APGasStation.h"
 static NSString *imagePrefix = @"logo_";
 static NSString *imageSuffix = @"_small.png";
+static NSDictionary *nameExpansion;
 
 @implementation APGasStation
 
@@ -16,7 +17,7 @@ static NSString *imageSuffix = @"_small.png";
     self = [super init];
     if (self) {
         self.position = position;
-        self.name = nn;
+        self.name = nameExpansion[nn];
         self.logo = [APGasStation logoPath:nn];
     }
     return self;
@@ -37,83 +38,51 @@ static NSString *imageSuffix = @"_small.png";
     return self;
 }
 
-- (BOOL) hasEnergy:(ENERGY_TYPE)e{
-    if (e == kEnergyDiesel) {
-        return self.hasDiesel;
-    }else if (e == kEnergyGasoline){
-        return self.hasGasoline;
-    }
-    return NO;
-}
-- (void) setPrice:(float) p forEnergyType:(ENERGY_TYPE)e{
-    if (e == kEnergyDiesel) {
-        self.dieselPrice = p;
-    }else if (e == kEnergyGasoline){
-        self.gasolinePrice = p;
-    }
-}
-- (float) getPrice:(ENERGY_TYPE)e{
-    if (e == kEnergyDiesel) {
-        return self.dieselPrice;
-    }else if (e == kEnergyGasoline){
-        return self.gasolinePrice;
-    }
-    return 0.f;
-}
-- (float) getPrice{
-    if (self.type == kEnergyDiesel) {
-        return self.dieselPrice;
-    }else if (self.type == kEnergyGasoline){
-        return self.gasolinePrice;
-    }
-    return 0.f;
-}
 
-+ (NSDictionary*) longNameDictionary{
-    static NSDictionary* output = nil;
-    
-    if (output == nil)
++ (void) initialize{
+    static BOOL initialized = NO;
+    if(!initialized)
     {
-        // create dict
-        NSArray* objs = [[NSArray alloc] initWithObjects:
-                         @"ar",
-                         @"ap",
-                         @"aq",
-                         @"au",
-                         @"bz",
-                         @"be",
-                         @"cf",
-                         @"cl",
-                         @"eg",
-                         @"sp",
-                         @"ey",
-                         @"ag",
-                         @"er",
-                         @"es",
-                         @"f2",
-                         @"h6",
-                         @"ie",
-                         @"in",
-                         @"ip",
-                         @"is",
-                         @"kt",
-                         @"lt",
-                         @"mi",
-                         @"om",
-                         @"pe",
-                         @"q8",
-                         @"qe",
-                         @"re",
-                         @"sm",
-                         @"t7",
-                         @"sh",
-                         @"sf",
-                         @"ta",
-                         @"t2",
-                         @"to",
-                         @"te",
-                         nil];
+        initialized = YES;
         NSArray* keys = [[NSArray alloc] initWithObjects:
+                         @"AR",
+                         @"AP",
+                         @"AQ",
+                         @"AU",
+                         @"BZ",
+                         @"BE",
+                         @"CF",
+                         @"CL",
+                         @"EG",
+                         @"SP",
+                         @"EY",
+                         @"AG",
+                         @"ER",
+                         @"ES",
+                         @"F2",
+                         @"H6",
+                         @"IE",
+                         @"IN",
+                         @"IP",
+                         @"IS",
+                         @"KT",
+                         @"LT",
+                         @"MI",
+                         @"OM",
+                         @"PE",
+                         @"Q8",
+                         @"QE",
+                         @"RE",
+                         @"SM",
+                         @"T7",
+                         @"SH",
+                         @"SF",
+                         @"TA",
+                         @"T2",
+                         @"TO",
+                         @"TE",
+                         nil];
+        NSArray* objs = [[NSArray alloc] initWithObjects:
                          @"Al Risparmio",
                          @"Api",
                          @"Aquila",
@@ -152,12 +121,42 @@ static NSString *imageSuffix = @"_small.png";
                          @"TotalErg",
                          nil];
         
-        output = [NSDictionary dictionaryWithObjects:objs forKeys:keys];
-        
+        nameExpansion = [NSDictionary dictionaryWithObjects:objs forKeys:keys];
     }
-    
-    return output;
 }
+
+- (BOOL) hasEnergy:(ENERGY_TYPE)e{
+    if (e == kEnergyDiesel) {
+        return self.hasDiesel;
+    }else if (e == kEnergyGasoline){
+        return self.hasGasoline;
+    }
+    return NO;
+}
+- (void) setPrice:(float) p forEnergyType:(ENERGY_TYPE)e{
+    if (e == kEnergyDiesel) {
+        self.dieselPrice = p;
+    }else if (e == kEnergyGasoline){
+        self.gasolinePrice = p;
+    }
+}
+- (float) getPrice:(ENERGY_TYPE)e{
+    if (e == kEnergyDiesel) {
+        return self.dieselPrice;
+    }else if (e == kEnergyGasoline){
+        return self.gasolinePrice;
+    }
+    return 0.f;
+}
+- (float) getPrice{
+    if (self.type == kEnergyDiesel) {
+        return self.dieselPrice;
+    }else if (self.type == kEnergyGasoline){
+        return self.gasolinePrice;
+    }
+    return 0.f;
+}
+
 + (NSString*) logoPath:(NSString*) key{
     NSMutableString * ret = [[NSMutableString alloc] initWithString:imagePrefix];
     [ret appendString:[key lowercaseString]];

@@ -86,8 +86,8 @@
     // Configure the cell to show path info
     APPath *path = [self.gasPaths objectAtIndex:indexPath.row];
     
-    cell.gsAddress.text = path.gasStation.name;
     cell.gsImage.image = [UIImage imageNamed:path.gasStation.logo];
+    cell.gsBrand.text = path.gasStation.name;
     
     float price = [path.gasStation getPrice];
     int millesimal = ((int)(price * 1000)) % 10;
