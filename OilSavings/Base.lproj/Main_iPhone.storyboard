@@ -55,16 +55,16 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="cWJ-Fh-6Hg"/>
+                        <barButtonItem image="oil_drop.png" id="kmX-NU-2bO">
+                            <connections>
+                                <action selector="optimizeAgain:" destination="P8k-qS-1QL" id="tH8-VT-Ec1"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="wzv-xE-S6c"/>
                         <barButtonItem image="list_gas_stations.png" id="vZr-15-qpf">
                             <connections>
                                 <action selector="showGasStationList:" destination="P8k-qS-1QL" id="JTX-d4-lbG"/>
                                 <segue destination="912-rm-fvw" kind="push" identifier="showGSTable" id="2Ol-NF-DGF"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="wzv-xE-S6c"/>
-                        <barButtonItem image="route.png" id="kmX-NU-2bO">
-                            <connections>
-                                <action selector="optimizeAgain:" destination="P8k-qS-1QL" id="tH8-VT-Ec1"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem width="32" style="plain" systemItem="fixedSpace" id="JNX-AV-sfM"/>
@@ -105,21 +105,21 @@
                         </connections>
                     </tableView>
                     <toolbarItems>
+                        <barButtonItem image="eur.png" id="WWJ-9G-9qX">
+                            <connections>
+                                <action selector="sortByPrice:" destination="912-rm-fvw" id="vRb-9d-yig"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="eVM-th-GI6"/>
                         <barButtonItem image="watch.png" id="aQB-co-trR">
                             <connections>
                                 <action selector="sortByTime:" destination="912-rm-fvw" id="0nc-Jd-I3Y"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="eVM-th-GI6"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="N0p-pF-eGG"/>
                         <barButtonItem image="oil.png" id="toM-SC-qRA">
                             <connections>
                                 <action selector="sortByFuel:" destination="912-rm-fvw" id="c2M-aL-8ao"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="N0p-pF-eGG"/>
-                        <barButtonItem image="eur.png" id="WWJ-9G-9qX">
-                            <connections>
-                                <action selector="sortByPrice:" destination="912-rm-fvw" id="vRb-9d-yig"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="V5v-RM-5sp"/>
@@ -608,6 +608,7 @@
         <image name="list_gas_stations.png" width="25" height="25"/>
         <image name="location.png" width="25" height="25"/>
         <image name="oil.png" width="25" height="25"/>
+        <image name="oil_drop.png" width="30" height="41"/>
         <image name="opzioni.png" width="26" height="26"/>
         <image name="route.png" width="25" height="25"/>
         <image name="watch.png" width="25" height="25"/>

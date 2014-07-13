@@ -25,10 +25,10 @@
 @property (nonatomic) NSInteger currentBatch;
 
 - (id) initWithCar:(APCar*) mycar cash:(NSInteger)import andDelegate:(id<APNetworkAPI>)dele;
+- (void) changeCar:(APCar*)car;
 
 - (void) optimizeRouteFrom:(CLLocationCoordinate2D)src
                         to:(CLLocationCoordinate2D)dst
-            hasDestination:(BOOL)hasDest
            withGasStations:(NSArray*)gasStations;
 
 @end

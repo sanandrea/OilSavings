@@ -25,7 +25,7 @@
 @property (nonatomic, weak) id <APNetworkAPI> delegate;
 
 
-- (id) initWithRegion:(MKCoordinateRegion) region andFuel:(ENERGY_TYPE) fuel;
+- (id) initWithCenter:(CLLocationCoordinate2D) center andFuel:(ENERGY_TYPE) fuel;
 - (void)getStations;
 
 @end

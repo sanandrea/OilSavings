@@ -28,9 +28,12 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
     return self;
 }
 
+- (void) changeCar:(APCar *)c{
+    self.car = c;
+}
+
 - (void) optimizeRouteFrom:(CLLocationCoordinate2D)src
                         to:(CLLocationCoordinate2D)dst
-            hasDestination:(BOOL)hasDest
            withGasStations:(NSArray*)gasStations{
     
     //init paths
@@ -38,20 +41,22 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
     self.src = src;
     self.dst = dst;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self initPathsWithGasStations:gasStations hasDest:hasDest];
+        [self initPathsWithGasStations:gasStations];
     });
 
 }
 
 
-- (void) initPathsWithGasStations:(NSArray*)gs hasDest:(BOOL)hd{
+- (void) initPathsWithGasStations:(NSArray*)gs {
 //    ALog("Dispatched Job for Gas Stations in optimizer");
     APPath *path;
+    
     for (APGasStation* g in gs) {
-        if (!hd) {
-            path = [[APPath alloc]initWith:self.src andGasStation:g];
-        }else{
+        if (CLLocationCoordinate2DIsValid(self.dst)) {
             path = [[APPath alloc]initWith:self.src and:self.dst andGasStation:g];
+            path.hasDestination = YES;
+        }else{
+            path = [[APPath alloc]initWith:self.src andGasStation:g];
         }
         [self.paths addObject:path];
     }

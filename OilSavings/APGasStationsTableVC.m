@@ -108,7 +108,7 @@
     int time = [path getTime];
     cell.gsTime.text = [NSString stringWithFormat:@"%d min", (int)(time / 60)];
     
-    cell.gsFuelRecharge.text = [NSString stringWithFormat:@"%3.1f L", [path getFuelExpense]];
+    cell.gsFuelRecharge.text = [NSString stringWithFormat:@"%3.2f L", [path getFuelExpense]];
     
     
     cell.gsCAP.text = path.gasStation.postalCode;

@@ -23,9 +23,6 @@ static float kCallOutHeight = 40.0f;
 static float kLogoHeightPadding = 14.0f;
 static float kTextPadding = 10.0f;
 
-static const CLLocationDegrees emptyLocation = -1000.0;
-static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, emptyLocation};
-
 @interface APMapViewController ()
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
@@ -41,8 +38,8 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
 @property (nonatomic, strong) NSArray *gasStations;
 @property (nonatomic, strong) NSMutableArray *paths;
 
-#warning Manage best path in various refreshes
-@property (nonatomic) APPath *bestPath;
+@property (nonatomic,strong) APPath *bestPath;
+@property (nonatomic) BOOL bestFound;
 
 //how many directions requests are we making
 @property (nonatomic) int totalRequests;
@@ -77,8 +74,6 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
         self.showGSButton.enabled = NO;
     }
     
-    
-#warning Manage this Counters
     self.totalRequests = 0;
     self.processedRequests = 0;
 
@@ -126,6 +121,11 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
         self.myCar = [array objectAtIndex:0];
     }
     
+    //now alloc optimizer
+    self.optimizer = [[APPathOptimizer alloc] initWithCar:self.myCar cash:self.cashAmount andDelegate:self];
+    
+    
+    //begin listening location
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     
@@ -140,12 +140,8 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
 
 
 - (void) centerMapInLocation:(CLLocationCoordinate2D)loc animated:(BOOL)anime{
-    /*
-     * old implementation
-     *
-     */
     [self.mapView setCenterCoordinate:loc zoomLevel:ZOOM_LEVEL animated:anime];
-    APGasStationClient *gs = [[APGasStationClient alloc] initWithRegion:self.mapView.region andFuel:[self.myCar.energy intValue]];
+    APGasStationClient *gs = [[APGasStationClient alloc] initWithCenter:loc andFuel:[self.myCar.energy intValue]];
     gs.delegate = self;
     [gs getStations];
     
@@ -154,17 +150,6 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
 }
 - (void) viewDidAppear:(BOOL)animated{
     ALog("Map appeared");
-    //Check if there is any Car Saved.
-    /*
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if ([[prefs objectForKey:kCarsRegistered] integerValue] == 0) {
-        //Present Add Car View controller by presenting the container View Controller
-        
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle: nil];
-        UINavigationController *controller = (UINavigationController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"addCarNavContainer"];
-        [self presentViewController:controller animated:YES completion:nil];
-    }
-    */
     if (self.myCar != nil) {
         ALog("Car name is: %@", self.myCar.friendlyName);
     }
@@ -172,18 +157,6 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     CLLocation *newLocation = [locations lastObject];
-    
-    /* 
-     * New implementation
-    static dispatch_once_t centerMapFirstTime;
-    
-	if ((newLocation.coordinate.latitude != 0.0) && (newLocation.coordinate.longitude != 0.0)) {
-		dispatch_once(&centerMapFirstTime, ^{
-			[self.map setCenterCoordinate:newLocation.coordinate zoomLevel:ZOOM_LEVEL animated:YES];
-		});
-	}
-     */
-    
     
     NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
     self.myLocation = newLocation.coordinate;
@@ -225,10 +198,17 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
 }
 
 - (IBAction) optimizeAgain:(id)sender{
+    self.bestPath = nil;
+    self.totalRequests = [self.gasStations count];
+    self.processedRequests = 0;
+    self.bestFound = NO;
     
+    CLLocationCoordinate2D origin = CLLocationCoordinate2DIsValid(self.srcCoord) ? self.srcCoord : self.myLocation;
+    [self.optimizer optimizeRouteFrom:origin to:self.dstCoord withGasStations:self.gasStations];
 }
 
 - (void) userChangedCar{
+#warning Change car in optimzer also
     for (APPath *path in self.paths) {
         [path setCar:self.myCar];
     }
@@ -253,12 +233,6 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
             [self.mapView addAnnotation:annotation];
         }
         self.gasStations = gsClient.gasStations;
-        
-        self.optimizer = [[APPathOptimizer alloc] initWithCar:self.myCar cash:5 andDelegate:self];
-        CLLocationCoordinate2D origin = CLLocationCoordinate2DIsValid(self.srcCoord) ? self.srcCoord : self.myLocation;
-        
-        [self.optimizer optimizeRouteFrom:origin to:self.dstCoord hasDestination:NO withGasStations:self.gasStations];
-        
     }
     
 }
@@ -285,7 +259,6 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
 #pragma mark - Path Available
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
     ALog("Found path in map is called");
-    BOOL bestFound = NO;
     //Add to path array
     [self.paths addObject:path];
     
@@ -294,12 +267,15 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
 
     if ([path compareFuelPath:self.bestPath] == NSOrderedAscending){
         self.bestPath = path;
-        bestFound = YES;
+        self.bestFound = YES;
+        ALog("Found best path");
     }
     self.processedRequests ++;
 
 
-    if ((self.processedRequests % REQUEST_BUNDLE == 0) && (bestFound)) {
+    if (((self.processedRequests % REQUEST_BUNDLE == 0)||(self.processedRequests == self.totalRequests)) && self.bestFound) {
+        ALog("Desing path on map");
+
         //remove existing overlay if any
         NSArray *pointsArray = [self.mapView overlays];
         if ([pointsArray count] > 0) {
@@ -307,9 +283,8 @@ static const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, em
         }
         
         //Add new polyline
-        [self.mapView addOverlay:path.overallPolyline];
+        [self.mapView addOverlay:self.bestPath.overallPolyline];
     }
-
 }
 
 

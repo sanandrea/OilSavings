@@ -114,7 +114,7 @@ static NSString * const GEOCODE_URL = @"https://maps.googleapis.com/maps/api/geo
             
             NSArray* results = (NSArray*) response[@"results"];
             NSDictionary *contents = [results objectAtIndex:0];
-            ALog("Geocode result %@",contents);
+//            ALog("Geocode result %@",contents);
             
             NSArray* addressComponents = contents[@"address_components"];
             

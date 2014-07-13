@@ -109,6 +109,7 @@
 		A9FC966219434EC40067875B /* APDirectionsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC966119434EC40067875B /* APDirectionsClient.m */; };
 		A9FC966519434FD80067875B /* APPathOptimizer.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC966419434FD80067875B /* APPathOptimizer.m */; };
 		A9FE180719715A6D006ECBDA /* table_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FE180619715A6D006ECBDA /* table_indicator.png */; };
+		A9FE180919715DBE006ECBDA /* oil_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FE180819715DBE006ECBDA /* oil_drop@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -251,6 +252,7 @@
 		A9FC966319434FD80067875B /* APPathOptimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPathOptimizer.h; sourceTree = "<group>"; };
 		A9FC966419434FD80067875B /* APPathOptimizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPathOptimizer.m; sourceTree = "<group>"; };
 		A9FE180619715A6D006ECBDA /* table_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = table_indicator.png; sourceTree = "<group>"; };
+		A9FE180819715DBE006ECBDA /* oil_drop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oil_drop@2x.png"; sourceTree = "<group>"; };
 		FAEA7545A18B4D538A596C22 /* Pods-OilSavings.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OilSavings.xcconfig"; path = "Pods/Pods-OilSavings.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -470,6 +472,7 @@
 		A9FC5058193C745800C883B7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A9FE180819715DBE006ECBDA /* oil_drop@2x.png */,
 				A9FE180619715A6D006ECBDA /* table_indicator.png */,
 				A9B773CC195E32E200441B42 /* eur@2x.png */,
 				A9B773CD195E32E200441B42 /* oil@2x.png */,
@@ -611,6 +614,7 @@
 				A98D088C192FDC33000DB81D /* Main_iPad.storyboard in Resources */,
 				A9F7C475193E614F0092FCA2 /* logo_aq@2x.png in Resources */,
 				A9F7C483193E614F0092FCA2 /* logo_in@2x.png in Resources */,
+				A9FE180919715DBE006ECBDA /* oil_drop@2x.png in Resources */,
 				A9F7C490193E614F0092FCA2 /* logo_sm@2x.png in Resources */,
 				A9F7C488193E614F0092FCA2 /* logo_mi@2x.png in Resources */,
 				A9CFA2F2193E8B0200ACCEC5 /* carIcon@2x.png in Resources */,

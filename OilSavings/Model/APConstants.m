@@ -21,6 +21,9 @@ NSString *const GOOGLE_API_KEY = @"AIzaSyDk2W4Au5SlQC5WPpcFFEpy8I7PTnZtvno";
 //how much directions requests to wait before updating polyline of best path.
 const int REQUEST_BUNDLE = 5;
 
+const CLLocationDegrees emptyLocation = -1000.0;
+const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, emptyLocation};
+
 @implementation APConstants
 
 // http://en.wikipedia.org/wiki/Haversine_formula
@@ -50,4 +53,9 @@ const int REQUEST_BUNDLE = 5;
             break;
     }
 }
+
++ (float) deltaLongitude:(float) distanceKm atLat:(float)latitude{
+    return 2 * asinf(sinf(distanceKm / (2 * EARTH_RADIUS)) / cosf(latitude));
+}
+
 @end

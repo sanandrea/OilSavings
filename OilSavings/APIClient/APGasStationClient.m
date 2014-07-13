@@ -13,6 +13,8 @@
 
 static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/tech/handlers/search_handler.php";
 
+static float const AREA_DISTANCE = 2.5;
+
 @interface APGasStationClient ()
 
 
@@ -21,15 +23,24 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
 @implementation APGasStationClient
 
 
-- (id) initWithRegion:(MKCoordinateRegion) region andFuel:(ENERGY_TYPE) fuel{
+- (id) initWithCenter:(CLLocationCoordinate2D) center andFuel:(ENERGY_TYPE) fuel{
     self = [super init];
+
+    /*
+     * http://en.wikipedia.org/wiki/Longitude#Length_of_a_degree_of_longitude
+     */
+    
+    float latDelta = AREA_DISTANCE/111.2;
     
     //a region double in size that that of the map
-    self.minLat = region.center.latitude - region.span.latitudeDelta;
-    self.maxLat = region.center.latitude + region.span.latitudeDelta;
+    self.minLat = center.latitude - latDelta;
+    self.maxLat = center.latitude + latDelta;
     
-    self.minLong = region.center.longitude - 2 * region.span.longitudeDelta;
-    self.maxLong = region.center.longitude + 2 * region.span.longitudeDelta;
+
+    float longDelta = AREA_DISTANCE/78.847;
+    
+    self.minLong = center.longitude - longDelta;
+    self.maxLong = center.longitude + longDelta;
     
     self.fuel = fuel;
     
@@ -70,7 +81,7 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
                      nil];
     
     NSDictionary *urlParams = [NSDictionary dictionaryWithObjects:objs forKeys:keys];
-//    ALog("Query dict %@",urlParams);
+    ALog("Query dict %@",urlParams);
     
     [manager GET:BaseURLString parameters:urlParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // Process Response Object
@@ -81,7 +92,7 @@ static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/t
             if ([[dict objectForKey:@"price" ] length] == 0){
                 continue;
             }
-            ALog("dict is %@",dict);
+//            ALog("dict is %@",dict);
             gs = [[APGasStation alloc]initWithDict:dict];
             gs.type = self.fuel;
             [self.gasStations addObject:gs];
