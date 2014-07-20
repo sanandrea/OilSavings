@@ -55,8 +55,11 @@ static int MAX_LINEAR = 40;
     }else{
         self.src.placeholder = NSLocalizedString(@"Indirizzo di partenza", @"indirizzo di partenza");
     }
-
-    self.dst.placeholder = NSLocalizedString(@"Indirizzo di destinazione", @"indirizzo di destinazione");
+    if (self.dstAddr != nil) {
+        self.dst.placeholder = self.dstAddr;
+    }else{
+        self.dst.placeholder = NSLocalizedString(@"Indirizzo di destinazione", @"indirizzo di destinazione");
+    }
     self.src.delegate = self;
     self.dst.delegate = self;
     UITextField* txt;

@@ -495,6 +495,9 @@ static float kTextPadding = 10.0f;
         if (self.srcAddress != nil){
             optController.srcAddr = self.srcAddress;
         }
+        if (CLLocationCoordinate2DIsValid(self.dstCoord)) {
+            optController.dstAddr = self.dstAddress;
+        }
     }else if ([[segue identifier] isEqualToString:@"showGSTable"]){
         APGasStationsTableVC *tableGS = (APGasStationsTableVC *)[segue destinationViewController];
         tableGS.gasPaths = self.paths;
