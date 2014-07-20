@@ -36,9 +36,9 @@
     MKCoordinateSpan span;
     span.latitudeDelta = self.path.northEastBound.latitude - self.path.southWestBound.latitude;
     span.longitudeDelta = self.path.northEastBound.longitude - self.path.southWestBound.longitude;
-    ALog("Map bounds SIZE: %f %f",self.miniMap.bounds.size.height, self.miniMap.bounds.size.width);
+//    ALog("Map bounds SIZE: %f %f",self.miniMap.bounds.size.height, self.miniMap.bounds.size.width);
     
-    //Make span 25% taller for annotations
+    //Make span a little bigger for annotations
     span.latitudeDelta = span.latitudeDelta + span.latitudeDelta * .4;
     span.longitudeDelta = span.longitudeDelta + span.longitudeDelta * .25;
     MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
@@ -83,13 +83,19 @@
     
 }
 
-- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {
-    MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
-    polylineView.strokeColor = [UIColor blueColor];
-    polylineView.lineWidth = 5.0;
-    polylineView.lineCap = kCGLineCapRound;
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
+{
+    MKPolyline *route = overlay;
     
-    return polylineView;
+    MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithPolyline:route];
+    UIColor *color = [UIColor colorWithRed:((float) 137 / 255.0f)
+                                     green:((float) 104 / 255.0f)
+                                      blue:((float) 205 / 255.0f)
+                                     alpha:.65f];
+    renderer.strokeColor = color;
+    renderer.lineWidth = 4.0;
+    renderer.lineCap = kCGLineCapRound;
+    return renderer;
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation

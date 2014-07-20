@@ -203,6 +203,8 @@ static float kTextPadding = 10.0f;
     self.processedRequests = 0;
     self.bestFound = NO;
     
+    [self.paths removeAllObjects];
+    
     CLLocationCoordinate2D origin = CLLocationCoordinate2DIsValid(self.srcCoord) ? self.srcCoord : self.myLocation;
     [self.optimizer optimizeRouteFrom:origin to:self.dstCoord withGasStations:self.gasStations];
 }
@@ -240,11 +242,12 @@ static float kTextPadding = 10.0f;
 #pragma mark - Geocoding Convertions Protocol
 
 - (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord{
-    
+    ALog("Address converted");
     if (type == kAddressSrc) {
         self.srcCoord = coord;
         [self centerMapInLocation:coord animated:YES];
     }else{
+        ALog("It is destination");
         self.dstCoord = coord;
     }
     
@@ -298,8 +301,9 @@ static float kTextPadding = 10.0f;
         }
         
         if (([controller.dstAddr length] > 0) && ![self.dstAddress isEqualToString:controller.dstAddr]) {
+            ALog("Set dest");
             self.dstAddress = controller.dstAddr;
-            [APGeocodeClient convertAddress:self.srcAddress ofType:kAddressSrc inDelegate:self];
+            [APGeocodeClient convertAddress:self.dstAddress ofType:kAddressDst inDelegate:self];
         }
        
         
@@ -430,14 +434,30 @@ static float kTextPadding = 10.0f;
     }
     return nil;
 }
-
+/*
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {
     MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
     polylineView.strokeColor = [UIColor blueColor];
+    polylineView.fillColor = [UIColor redColor];
     polylineView.lineWidth = 5.0;
     polylineView.lineCap = kCGLineCapRound;
     
     return polylineView;
+}
+ */
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
+{
+    MKPolyline *route = overlay;
+    
+    MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithPolyline:route];
+    UIColor *color = [UIColor colorWithRed:((float) 137 / 255.0f)
+                                     green:((float) 104 / 255.0f)
+                                      blue:((float) 205 / 255.0f)
+                                     alpha:.65f];
+    renderer.strokeColor = color;
+    renderer.lineWidth = 5.0;
+    renderer.lineCap = kCGLineCapRound;
+    return renderer;
 }
 
 //removes all annotations except user location

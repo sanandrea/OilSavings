@@ -49,6 +49,8 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
 
 - (void) initPathsWithGasStations:(NSArray*)gs {
 //    ALog("Dispatched Job for Gas Stations in optimizer");
+    //clear existing paths
+    [self.paths removeAllObjects];
     APPath *path;
     
     for (APGasStation* g in gs) {
