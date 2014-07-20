@@ -153,14 +153,19 @@
             otherValue = inObject.pathFuelRemaining;
             minIsBetter = NO;
             break;
+        case kSortRandom:
+            
         default:
+            myValue = 0;
+            otherValue = 0;
             break;
     }
     
     if (inObject == nil) {
         return NSOrderedAscending;
     }
-
+    
+    ALog("My value is %f but other value is %f",myValue, otherValue);
     
     
     if (myValue < otherValue) {

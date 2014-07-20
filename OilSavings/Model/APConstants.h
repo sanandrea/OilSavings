@@ -37,7 +37,8 @@ typedef enum{
     kSortTime,
     kSortFuel,
     kSortDistance,
-    kSortPrice
+    kSortPrice, 
+    kSortRandom
 }SORT_TYPE;
 
 @interface APConstants : NSObject

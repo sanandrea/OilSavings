@@ -261,7 +261,7 @@ static float kTextPadding = 10.0f;
 
 #pragma mark - Path Available
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
-    ALog("Found path in map is called");
+//    ALog("Found path in map is called");
     //Add to path array
     [self.paths addObject:path];
     
@@ -271,13 +271,13 @@ static float kTextPadding = 10.0f;
     if ([path compareFuelPath:self.bestPath] == NSOrderedAscending){
         self.bestPath = path;
         self.bestFound = YES;
-        ALog("Found best path");
+//        ALog("Found best path");
     }
     self.processedRequests ++;
 
 
     if (((self.processedRequests % REQUEST_BUNDLE == 0)||(self.processedRequests == self.totalRequests)) && self.bestFound) {
-        ALog("Desing path on map");
+//        ALog("Desing path on map");
 
         //remove existing overlay if any
         NSArray *pointsArray = [self.mapView overlays];
@@ -488,7 +488,7 @@ static float kTextPadding = 10.0f;
     }else if ([[segue identifier] isEqualToString:@"showGSTable"]){
         APGasStationsTableVC *tableGS = (APGasStationsTableVC *)[segue destinationViewController];
         tableGS.gasPaths = self.paths;
-        tableGS.sortType = kSortFuel;
+        tableGS.sortType = kSortRandom;
         
     }
 }

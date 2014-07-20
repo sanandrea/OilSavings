@@ -81,7 +81,7 @@ static float const AREA_DISTANCE = 2.5;
                      nil];
     
     NSDictionary *urlParams = [NSDictionary dictionaryWithObjects:objs forKeys:keys];
-    ALog("Query dict %@",urlParams);
+//    ALog("Query dict %@",urlParams);
     
     [manager GET:BaseURLString parameters:urlParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // Process Response Object
