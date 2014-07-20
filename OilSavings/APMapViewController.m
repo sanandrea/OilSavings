@@ -16,6 +16,7 @@
 #import "APGeocodeClient.h"
 #import "APPathOptimizer.h"
 #import "APGasStationsTableVC.h"
+#import "UINavigationController+M13ProgressViewBar.h"
 
 #define ZOOM_LEVEL 14
 static float kAnnotationPadding = 10.0f;
@@ -136,6 +137,9 @@ static float kTextPadding = 10.0f;
         [self centerMapInLocation:[locationManager location].coordinate animated:NO];
     }
     self.mapView.showsUserLocation = YES;
+    
+    //Progress
+    [self.navigationController showProgress];
 }
 
 
@@ -274,6 +278,12 @@ static float kTextPadding = 10.0f;
 //        ALog("Found best path");
     }
     self.processedRequests ++;
+    
+    [self.navigationController setProgress:((float)self.processedRequests/self.totalRequests) animated:YES];
+    
+    if (self.processedRequests == self.totalRequests){
+        [self.navigationController finishProgress];
+    }
 
 
     if (((self.processedRequests % REQUEST_BUNDLE == 0)||(self.processedRequests == self.totalRequests)) && self.bestFound) {

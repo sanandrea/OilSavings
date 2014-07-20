@@ -11,7 +11,7 @@
 #import "APDirectionsClient.h"
 #import "APGeocodeClient.h"
 
-static const int SLEEP_INTERVAL = 250000; // 250ms
+static const int SLEEP_INTERVAL = 150000; // 150ms
 
 @implementation APPathOptimizer
 
@@ -78,9 +78,10 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
         while (index < counter * REQUEST_BUNDLE && index < [self.paths count]) {
 //            ALog("Internal while: counter is %d and index is %d",counter, index);
             [APDirectionsClient findDirectionsOfPath:[self.paths objectAtIndex:index] indexOfRequest:index delegateTo:self];
+            usleep(SLEEP_INTERVAL);
             index++;
         }
-        usleep(SLEEP_INTERVAL);
+        usleep(SLEEP_INTERVAL * 5);
         counter ++;
     }
     
@@ -96,12 +97,6 @@ static const int SLEEP_INTERVAL = 250000; // 250ms
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate foundPath:path withIndex:0];
     });
-    
-   
-
-//    if (self.processedRequests == self.currentBatch - 1) {
-//
-//    }
 }
 
 @end
