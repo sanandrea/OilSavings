@@ -10,6 +10,7 @@
 #import "APGasStation.h"
 #import "APGSTableViewCell.h"
 #import "APPath.h"
+#import "APPathDetailViewController.h"
 
 @interface APGasStationsTableVC ()
 
@@ -78,6 +79,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 50;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self performSegueWithIdentifier:@"PathDetail" sender:[self.gasPaths objectAtIndex:indexPath.row]];
 }
 
 // Customize the appearance of table view cells.
@@ -187,7 +192,7 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -195,7 +200,12 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([[segue identifier] isEqualToString:@"PathDetail"]) {
+        
+        APPathDetailViewController *dvc = (APPathDetailViewController *)[segue destinationViewController];
+        dvc.path = (APPath*) sender;
+        
+    }
 }
-*/
 
 @end

@@ -110,6 +110,7 @@
 		A9FC966519434FD80067875B /* APPathOptimizer.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC966419434FD80067875B /* APPathOptimizer.m */; };
 		A9FE180719715A6D006ECBDA /* table_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FE180619715A6D006ECBDA /* table_indicator.png */; };
 		A9FE180919715DBE006ECBDA /* oil_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FE180819715DBE006ECBDA /* oil_drop@2x.png */; };
+		A9FF939D197BB8E600D4CCB0 /* APPathDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FF939C197BB8E600D4CCB0 /* APPathDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -253,6 +254,8 @@
 		A9FC966419434FD80067875B /* APPathOptimizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPathOptimizer.m; sourceTree = "<group>"; };
 		A9FE180619715A6D006ECBDA /* table_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = table_indicator.png; sourceTree = "<group>"; };
 		A9FE180819715DBE006ECBDA /* oil_drop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oil_drop@2x.png"; sourceTree = "<group>"; };
+		A9FF939B197BB8E600D4CCB0 /* APPathDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPathDetailViewController.h; sourceTree = "<group>"; };
+		A9FF939C197BB8E600D4CCB0 /* APPathDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPathDetailViewController.m; sourceTree = "<group>"; };
 		FAEA7545A18B4D538A596C22 /* Pods-OilSavings.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OilSavings.xcconfig"; path = "Pods/Pods-OilSavings.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -389,6 +392,8 @@
 				A99FCCDF19327CA400B26D6A /* APMapViewController.m */,
 				A9FC6DEF1958CA30007959CA /* APGasStationsTableVC.h */,
 				A9FC6DF01958CA30007959CA /* APGasStationsTableVC.m */,
+				A9FF939B197BB8E600D4CCB0 /* APPathDetailViewController.h */,
+				A9FF939C197BB8E600D4CCB0 /* APPathDetailViewController.m */,
 				A94F66E71942689000D8453A /* CarManage */,
 				A98D0896192FDC33000DB81D /* Images.xcassets */,
 				A98D088D192FDC33000DB81D /* OilSavings.xcdatamodeld */,
@@ -724,6 +729,7 @@
 				A919D0EF1932B8120052A47F /* APAddCarViewController.m in Sources */,
 				A919D0F21932BD900052A47F /* APInfoCarViewController.m in Sources */,
 				A9C71175193229A300E8EEF9 /* APConstants.m in Sources */,
+				A9FF939D197BB8E600D4CCB0 /* APPathDetailViewController.m in Sources */,
 				A9FC966219434EC40067875B /* APDirectionsClient.m in Sources */,
 				A901461E193BCE36003B826D /* APLine.m in Sources */,
 				A9FC5057193C70D900C883B7 /* MKMapView+ZoomLevel.m in Sources */,
