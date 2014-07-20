@@ -17,6 +17,12 @@
 @property (nonatomic, weak) IBOutlet UILabel *gsAddress;
 @property (nonatomic, weak) IBOutlet MKMapView *miniMap;
 
+@property (nonatomic, weak) IBOutlet UILabel *priceLabel;
+@property (nonatomic, weak) IBOutlet UILabel *priceValue;
+@property (nonatomic, weak) IBOutlet UILabel *distanceLabel;
+@property (nonatomic, weak) IBOutlet UILabel *distanceValue;
+@property (nonatomic, weak) IBOutlet UILabel *timeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *timeValue;
 
 @property (nonatomic, strong) APPath *path;
 
