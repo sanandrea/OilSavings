@@ -95,13 +95,15 @@ static int MAX_LINEAR = 40;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
-    
+    [tap setCancelsTouchesInView:NO];
     [self.view addGestureRecognizer:tap];
 }
 
 - (void) dismissKeyboard{
+    /*
     [self.src resignFirstResponder];
     [self.dst resignFirstResponder];
+    */
 }
 
 - (void)didReceiveMemoryWarning

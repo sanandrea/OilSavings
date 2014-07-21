@@ -68,18 +68,26 @@ static float kMoveUpOffset = 50;
                                                         cellFactory:[[TRGoogleMapsAutocompletionCellFactory alloc] initWithCellForegroundColor:[UIColor lightGrayColor] fontSize:14]
                                                        presentingIn:self];
     
-    /* Works ok only for the problem that cannot select nothing in autocomplete
+
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     
-    
+    [tap setCancelsTouchesInView:NO];
     [self.view addGestureRecognizer:tap];
-     */
+    
+#warning disable cell selection
+    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void) dismissKeyboard
 {
+    if ([self.brandSearch.text length] == 0) {
+        [self.brandSearch resignFirstResponder];
+    }
+    if ([self.modelSearch.text length] == 0) {
+        [self.modelSearch resignFirstResponder];
+    }
     [self.gasTankCapacity resignFirstResponder];
     [self.freindlyNameText resignFirstResponder];
 }
