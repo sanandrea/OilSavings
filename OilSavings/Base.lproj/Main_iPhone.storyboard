@@ -599,12 +599,12 @@
                                                 <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Marca" translatesAutoresizingMaskIntoConstraints="NO" id="8iV-Y5-rzG">
                                                     <rect key="frame" x="20" y="9" width="285" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                 </searchBar>
                                                 <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Modello" translatesAutoresizingMaskIntoConstraints="NO" id="PTe-jg-pc2">
                                                     <rect key="frame" x="20" y="56" width="285" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                 </searchBar>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nome" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yeF-PQ-YdV">
                                                     <rect key="frame" x="20" y="111" width="285" height="30"/>
@@ -682,6 +682,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="brandSearch" destination="8iV-Y5-rzG" id="c9v-8z-Da9"/>
+                        <outlet property="freindlyNameText" destination="yeF-PQ-YdV" id="928-3A-xbZ"/>
                         <outlet property="gasTankCapacity" destination="wAy-Lx-5dr" id="Ypq-DZ-xTC"/>
                         <outlet property="modelSearch" destination="PTe-jg-pc2" id="k8a-XQ-sIA"/>
                     </connections>
