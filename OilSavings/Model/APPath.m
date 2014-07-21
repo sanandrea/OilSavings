@@ -103,6 +103,7 @@
         }
     }
     self.pathFuelExpense = expense;
+    //ALog("Distanze is %d and expense is %f", [self getDistance], self.pathFuelExpense);
 }
 
 - (float) calculateExpense:(float)velocity forDistance:(APDistance *)distance withCar:(APCar*)car{
@@ -164,8 +165,6 @@
     if (inObject == nil) {
         return NSOrderedAscending;
     }
-    
-    ALog("My value is %f but other value is %f",myValue, otherValue);
     
     
     if (myValue < otherValue) {

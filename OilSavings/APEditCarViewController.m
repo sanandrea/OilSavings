@@ -63,7 +63,7 @@
         NSString *querySQL;
         sqlite3_stmt    *statement;
 
-        if (self.type == kBrandEdit) {
+        if (self.type == kBrandEdit || self.type == kFriendlyNameEdit) {
             querySQL = @"SELECT brand FROM brands ORDER BY brand";
         }else{
             querySQL = [NSString stringWithFormat:
