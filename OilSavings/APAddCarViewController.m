@@ -8,10 +8,23 @@
 
 #import "APAddCarViewController.h"
 #import "APCar.h"
+#import "APCarDBAutoCompleteItemsSource.h"
+
+//Using GoogleAutocomplete cellfactory
+#import "TRGoogleMapsAutocompletionCellFactory.h"
+
+static float kLeftSearchBarPadding = 31;
 
 @interface APAddCarViewController ()
 
 @property (nonatomic) BOOL brandSet;
+@property (nonatomic, weak) IBOutlet UISearchBar *brandSearch;
+@property (nonatomic, weak) IBOutlet UISearchBar *modelSearch;
+@property (nonatomic, weak) IBOutlet UITextField *freindlyNameText;
+
+@property (nonatomic, weak) IBOutlet UISegmentedControl *energyTypeSelect;
+@property (nonatomic, weak) IBOutlet UITextField *gasTankCapacity;
+
 
 @end
 
@@ -21,11 +34,38 @@
 {
     [super viewDidLoad];
     
-    // Set up the undo manager and set editing state to YES.
-    [self setUpUndoManager];
-    self.editing = YES;
+//    self.editing = YES;
     
-    self.brandSet = false;
+//    self.brandSet = false;
+    UITextField* txt;
+    for (UIView *subView in self.brandSearch.subviews){
+        for (UIView *secView in subView.subviews){
+            if ([secView isKindOfClass:[UITextField class]])
+            {
+                txt = (UITextField *)secView;
+                break;
+            }
+        }
+    }
+    _autocompleteBrand = [TRAutocompleteView autocompleteViewBindedTo:txt
+                                                        havingSpace:kLeftSearchBarPadding
+                                                          usingSource:[[APCarDBAutoCompleteItemsSource alloc] initWithMinimumCharactersToTrigger:2 andFieldType:kBrandEdit]
+                                                        cellFactory:[[TRGoogleMapsAutocompletionCellFactory alloc] initWithCellForegroundColor:[UIColor lightGrayColor] fontSize:14]
+                                                       presentingIn:self];
+    for (UIView *subView in self.modelSearch.subviews){
+        for (UIView *secView in subView.subviews){
+            if ([secView isKindOfClass:[UITextField class]])
+            {
+                txt = (UITextField *)secView;
+                break;
+            }
+        }
+    }
+    _autocompleteModel = [TRAutocompleteView autocompleteViewBindedTo:txt
+                                                        havingSpace:kLeftSearchBarPadding
+                                                        usingSource:[[APCarDBAutoCompleteItemsSource alloc] initWithMinimumCharactersToTrigger:2 andFieldType:kModelEdit]
+                                                        cellFactory:[[TRGoogleMapsAutocompletionCellFactory alloc] initWithCellForegroundColor:[UIColor lightGrayColor] fontSize:14]
+                                                       presentingIn:self];
     
     
 }
@@ -46,6 +86,22 @@
         self.brandSet = YES;
     }
 }
+
+#pragma mark - Search bar delegate
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    
+    if ([searchText length] == 0) {
+        ALog("Canceled");
+        if (searchBar == self.brandSearch){
+            [_autocompleteBrand hidesuggestions];
+            [_brandSearch endEditing:YES];
+        }else{
+            [_autocompleteModel hidesuggestions];
+            [_modelSearch endEditing:YES];
+        }
+    }
+}
+
 - (IBAction)cancel:(id)sender
 {
     [self.delegate addViewController:self didFinishWithSave:NO];
@@ -65,12 +121,6 @@
     if (self.editing) {
         [self performSegueWithIdentifier:@"EditSelectedItem" sender:self];
     }
-}
-
-
-- (void)dealloc
-{
-    [self cleanUpUndoManager];
 }
 
 @end

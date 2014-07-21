@@ -8,14 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "APInfoCarViewController.h"
+#import "TRAutocompleteView.h"
 
 @protocol AddViewControllerDelegate;
 
-@interface APAddCarViewController : APInfoCarViewController
+@interface APAddCarViewController : UITableViewController<UISearchBarDelegate>{
+    TRAutocompleteView *_autocompleteBrand;
+    TRAutocompleteView *_autocompleteModel;
+}
+
 
 @property (nonatomic, weak) id <AddViewControllerDelegate> delegate;
 @property (nonatomic,strong) NSManagedObjectContext *managedObjectContext;
-
+@property (nonatomic, strong) APCar *car;
 @end
 
 @protocol AddViewControllerDelegate

@@ -157,7 +157,7 @@ static int MAX_LINEAR = 40;
             [_src endEditing:YES];
         }else{
             [_autocompleteDst hidesuggestions];
-            [_src endEditing:YES];
+            [_dst endEditing:YES];
         }
     }
 }

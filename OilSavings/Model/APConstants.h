@@ -41,6 +41,12 @@ typedef enum{
     kSortRandom
 }SORT_TYPE;
 
+typedef enum{
+    kBrandEdit,
+    kModelEdit,
+    kFriendlyNameEdit
+}EDIT_TYPE;
+
 @interface APConstants : NSObject
 
 + (float) haversineDistance:(float)latA :(float)latB :(float)longA :(float)longB;

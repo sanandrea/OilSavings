@@ -8,12 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum{
-    kBrandEdit,
-    kModelEdit,
-    kFriendlyNameEdit
-}EDIT_TYPE;
-
 @interface APEditCarViewController : UIViewController<UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (nonatomic, strong) NSManagedObject *editedObject;

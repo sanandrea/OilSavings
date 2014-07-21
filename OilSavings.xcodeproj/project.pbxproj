@@ -101,6 +101,7 @@
 		A9F7C495193E614F0092FCA2 /* logo_te@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F7C471193E614F0092FCA2 /* logo_te@2x.png */; };
 		A9F7C496193E614F0092FCA2 /* logo_to@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F7C472193E614F0092FCA2 /* logo_to@2x.png */; };
 		A9F7C498193E64640092FCA2 /* marker_mid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F7C497193E64640092FCA2 /* marker_mid@2x.png */; };
+		A9FBF957197DB817001FE719 /* APCarDBAutoCompleteItemsSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FBF956197DB817001FE719 /* APCarDBAutoCompleteItemsSource.m */; };
 		A9FC5057193C70D900C883B7 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC5056193C70D900C883B7 /* MKMapView+ZoomLevel.m */; };
 		A9FC505D193C786800C883B7 /* APGasStationClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC505C193C786800C883B7 /* APGasStationClient.m */; };
 		A9FC507C193CDC4E00C883B7 /* APGSAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC507B193CDC4E00C883B7 /* APGSAnnotation.m */; };
@@ -237,6 +238,8 @@
 		A9F7C471193E614F0092FCA2 /* logo_te@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_te@2x.png"; sourceTree = "<group>"; };
 		A9F7C472193E614F0092FCA2 /* logo_to@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_to@2x.png"; sourceTree = "<group>"; };
 		A9F7C497193E64640092FCA2 /* marker_mid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker_mid@2x.png"; sourceTree = "<group>"; };
+		A9FBF955197DB817001FE719 /* APCarDBAutoCompleteItemsSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCarDBAutoCompleteItemsSource.h; sourceTree = "<group>"; };
+		A9FBF956197DB817001FE719 /* APCarDBAutoCompleteItemsSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCarDBAutoCompleteItemsSource.m; sourceTree = "<group>"; };
 		A9FC5055193C70D900C883B7 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
 		A9FC5056193C70D900C883B7 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
 		A9FC505B193C786800C883B7 /* APGasStationClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGasStationClient.h; sourceTree = "<group>"; };
@@ -470,6 +473,8 @@
 				A9014626193BE7AD003B826D /* APGasStation.m */,
 				A9FC966319434FD80067875B /* APPathOptimizer.h */,
 				A9FC966419434FD80067875B /* APPathOptimizer.m */,
+				A9FBF955197DB817001FE719 /* APCarDBAutoCompleteItemsSource.h */,
+				A9FBF956197DB817001FE719 /* APCarDBAutoCompleteItemsSource.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -750,6 +755,7 @@
 				A9014624193BD486003B826D /* APPath.m in Sources */,
 				A98D088F192FDC33000DB81D /* OilSavings.xcdatamodeld in Sources */,
 				A98955601958D04E0079FBD9 /* APGSTableViewCell.m in Sources */,
+				A9FBF957197DB817001FE719 /* APCarDBAutoCompleteItemsSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
