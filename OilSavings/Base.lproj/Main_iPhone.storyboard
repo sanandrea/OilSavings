@@ -680,6 +680,11 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="brandSearch" destination="8iV-Y5-rzG" id="c9v-8z-Da9"/>
+                        <outlet property="gasTankCapacity" destination="wAy-Lx-5dr" id="Ypq-DZ-xTC"/>
+                        <outlet property="modelSearch" destination="PTe-jg-pc2" id="k8a-XQ-sIA"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n0P-CP-DfQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

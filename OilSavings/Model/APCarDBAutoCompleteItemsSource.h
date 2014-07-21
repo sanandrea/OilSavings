@@ -12,5 +12,6 @@
 @interface APCarDBAutoCompleteItemsSource : NSObject <TRAutocompleteItemsSource>
 
 - (id)initWithMinimumCharactersToTrigger:(NSUInteger)minimumCharactersToTrigger andFieldType:(EDIT_TYPE) tt;
+- (id)initWithMinimumCharactersToTrigger:(NSUInteger)minimumCharactersToTrigger andFieldType:(EDIT_TYPE) tt andBrand:(NSString*)bb;
 
 @end

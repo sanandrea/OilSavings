@@ -7,11 +7,14 @@
 //
 
 #import "APCarDBAutoCompleteItemsSource.h"
+//Use this it is almost identical
+#import "TRGoogleMapsSuggestion.h"
 #import <sqlite3.h>
 
 @implementation APCarDBAutoCompleteItemsSource{
     NSUInteger _minimumCharactersToTrigger;
     NSString *_databasePath;
+    NSString *_brand;
     sqlite3 *_carDB;
     EDIT_TYPE _type;
     BOOL _requestToReload;
@@ -28,9 +31,18 @@
     
     return self;
 }
+
+- (id)initWithMinimumCharactersToTrigger:(NSUInteger)minimumCharactersToTrigger andFieldType:(EDIT_TYPE) tt andBrand:(NSString*)bb{
+    self = [self initWithMinimumCharactersToTrigger:minimumCharactersToTrigger andFieldType:tt];
+    if (self)
+    {
+        _brand = bb;
+    }
+    
+    return self;
+}
 - (void)itemsFor:(NSString *)query whenReady:(void (^)(NSArray *))suggestionsReady
 {
-    ALog("Items for car model");
     @synchronized (self)
     {
         if (_loading)
@@ -68,21 +80,28 @@
         sqlite3_stmt    *statement;
         
         if (_type == kBrandEdit) {
-            querySQL = [NSString stringWithFormat:@"SELECT brand FROM brands like %@",query];
+            querySQL = [NSString stringWithFormat:@"SELECT brand FROM brands where brand like '%%%@%%'",query];
         }else if (_type == kModelEdit){
-            querySQL = [NSString stringWithFormat:@"SELECT model FROM models like %@",query];
+            if (_brand != nil) {
+                querySQL = [NSString stringWithFormat:@"SELECT model FROM models where brandID = (SELECT id from brands WHERE brand = '%@') and model like '%%%@%%'",_brand, query];
+            }else{
+                querySQL = [NSString stringWithFormat:@"SELECT model FROM models where model like '%%%@%%'",query];
+            }
         }
         
+        ALog("Items for car model %@",querySQL);
         
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(_carDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
             NSMutableArray *result = [[NSMutableArray alloc]init];
+            ALog("Query returns something");
             
             while (sqlite3_step(statement) == SQLITE_ROW) {
                 NSString *info = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
-                [result addObject:info];
+                TRGoogleMapsSuggestion *suggestion = [[TRGoogleMapsSuggestion alloc] initWith:info];
+                [result addObject:suggestion];
             }
             sqlite3_finalize(statement);
             if (suggestionsReady)
@@ -98,6 +117,8 @@
                     [self itemsFor:query whenReady:suggestionsReady];
                 }
             }
+        }else{
+            
         }
 
         sqlite3_close(_carDB);

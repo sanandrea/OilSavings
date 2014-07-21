@@ -68,10 +68,33 @@ static float kLeftSearchBarPadding = 31;
                                                        presentingIn:self];
     
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    
+    [self.view addGestureRecognizer:tap];
+    
+    CGRect rect = [self.modelSearch convertRect:self.modelSearch.frame fromView:self.tableView];
+    [self.tableView scrollRectToVisible:rect animated:YES];
+    ALog("Origin is %f %f", rect.origin.x, rect.origin.y);
+}
+
+- (void) dismissKeyboard
+{
+    // add self
+    [self.brandSearch resignFirstResponder];
+    [self.modelSearch resignFirstResponder];
+    [self.gasTankCapacity resignFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    
+    
 //    ALog("Car brand is %@",self.car.brand);
     if (!self.brandSet) {
         //Disable click on model
