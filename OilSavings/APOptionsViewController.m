@@ -100,10 +100,12 @@ static int MAX_LINEAR = 40;
 }
 
 - (void) dismissKeyboard{
-    /*
-    [self.src resignFirstResponder];
-    [self.dst resignFirstResponder];
-    */
+    if ([self.src.text length] == 0) {
+        [self.src resignFirstResponder];
+    }
+    if ([self.dst.text length] ==0) {
+        [self.dst resignFirstResponder];
+    }
 }
 
 - (void)didReceiveMemoryWarning

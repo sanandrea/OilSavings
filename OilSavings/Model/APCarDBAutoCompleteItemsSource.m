@@ -125,6 +125,71 @@
     }
     
 }
+
++ (NSDictionary*) getIDForCarModel:(NSString*)model{
+    //Root filepath
+    NSString *appDir = [[NSBundle mainBundle] resourcePath];
+    
+    NSString *dataPath = [[NSString alloc] initWithString: [appDir stringByAppendingPathComponent:@"car.sqlite"]];
+    
+    NSFileManager *filemgr = [NSFileManager defaultManager];
+    sqlite3 *db;
+    
+    NSDictionary * result = [[NSDictionary alloc] init];
+
+    if ([filemgr fileExistsAtPath: dataPath ] == NO){
+        ALog("Error here buddy , could not find car db file");
+    }else{
+        const char *dbpath = [dataPath UTF8String];
+        
+        if (sqlite3_open(dbpath, &db) != SQLITE_OK){
+            ALog("Failed to open/create database");
+        }
+        //Load data
+        
+        
+        NSString *querySQL;
+        sqlite3_stmt    *statement;
+        
+
+        querySQL = [NSString stringWithFormat:@"SELECT id,energy FROM models where model = %@",model];
+        
+        const char *query_stmt = [querySQL UTF8String];
+        NSUInteger rowID;
+        if (sqlite3_prepare_v2(db, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                rowID = sqlite3_column_int(statement, 0);
+                [result setValue:[NSNumber numberWithInt:rowID] forKeyPath:@"id"];
+                
+                NSString *energy = [NSString stringWithUTF8String:sqlite3_column_name(statement, 1)];
+                if ([energy isEqualToString:@"gasoline"]) {
+                    [result setValue:[NSNumber numberWithInt:kEnergyGasoline] forKeyPath:@"energy"];
+                }else if ([energy isEqualToString:@"diesel"]){
+                    [result setValue:[NSNumber numberWithInt:kEnergyDiesel] forKeyPath:@"energy"];
+                }
+                
+            }
+            sqlite3_finalize(statement);
+        }
+        
+        /* Find all params */
+        querySQL = [NSString stringWithFormat:@"SELECT * FROM parameters where modelID = %d",rowID];
+        query_stmt = [querySQL UTF8String];
+        if (sqlite3_prepare_v2(db, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 1)] forKeyPath:@"pA"];
+                [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 2)] forKeyPath:@"pB"];
+                [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 3)] forKeyPath:@"pB"];
+                [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 4)] forKeyPath:@"pD"];
+                
+            }
+            sqlite3_finalize(statement);
+        }
+    }
+    return result;
+}
 - (NSUInteger)minimumCharactersToTrigger
 {
     return _minimumCharactersToTrigger;

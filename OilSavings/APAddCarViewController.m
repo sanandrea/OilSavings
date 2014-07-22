@@ -25,7 +25,14 @@ static float kMoveUpOffset = 50;
 
 @property (nonatomic, weak) IBOutlet UISegmentedControl *energyTypeSelect;
 @property (nonatomic, weak) IBOutlet UITextField *gasTankCapacity;
+@property (nonatomic, weak) IBOutlet UILabel *selectEnergyLabel;
+@property (nonatomic, weak) IBOutlet UILabel *gasCapacityLabel;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *saveButton;
 
+@property (nonatomic) BOOL modelSet;
+@property (nonatomic) BOOL nameSet;
+@property (nonatomic) BOOL eTypeSet;
+@property (nonatomic) BOOL gasCapSet;
 
 @end
 
@@ -34,10 +41,28 @@ static float kMoveUpOffset = 50;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.brandSearch.placeholder = NSLocalizedString(@"Marca", @"Brand Car Placeholder");
+    self.modelSearch.placeholder = NSLocalizedString(@"Modello", @"Model for car model");
+    [self.brandSearch setDelegate:self];
+    [self.modelSearch setDelegate:self];
+
+    [self.energyTypeSelect setTitle:NSLocalizedString(@"Benzina", nil) forSegmentAtIndex:0];
+    [self.energyTypeSelect setTitle:NSLocalizedString(@"Gasolio", nil) forSegmentAtIndex:1];
+    [self.energyTypeSelect setTitle:NSLocalizedString(@"Metano", nil) forSegmentAtIndex:2];
+    [self.energyTypeSelect setTitle:NSLocalizedString(@"GPL", nil) forSegmentAtIndex:3];
+
+    self.saveButton.enabled = NO;
     
-//    self.editing = YES;
+    //When done is pressed dismiss keyboard
+    [self.gasTankCapacity addTarget:self
+                       action:@selector(dismissKeyboard)
+             forControlEvents:UIControlEventEditingDidEndOnExit];
     
-//    self.brandSet = false;
+    [self.freindlyNameText addTarget:self
+                             action:@selector(userEnteredName)
+                   forControlEvents:UIControlEventEditingDidEndOnExit];
+
     UITextField* txt;
     for (UIView *subView in self.brandSearch.subviews){
         for (UIView *secView in subView.subviews){
@@ -76,8 +101,17 @@ static float kMoveUpOffset = 50;
     [tap setCancelsTouchesInView:NO];
     [self.view addGestureRecognizer:tap];
     
-#warning disable cell selection
-    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0){
+        return NSLocalizedString(@"AUTO", @"Titolo prima sezione tabella aggiungi auto");
+    }
+    if (section == 1){
+        return NSLocalizedString(@"DETTAGLI", @"Titolo seconda sezione tabella aggiungi auto");
+    }
+    return @"";
 }
 
 - (void) dismissKeyboard
@@ -91,23 +125,16 @@ static float kMoveUpOffset = 50;
     [self.gasTankCapacity resignFirstResponder];
     [self.freindlyNameText resignFirstResponder];
 }
+- (void) userEnteredName{
+    if ([self.freindlyNameText.text length] > 0) {
+        ALog("Name was set");
+        self.nameSet = YES;
+        [self checkifCanSave];
+    }
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    /*
-    if (!self.brandSet) {
-        //Disable click on model
-        NSIndexPath *path = [NSIndexPath indexPathForRow:1 inSection:0];
-        UITableViewCell *modelCell = (UITableViewCell *)[self.tableView cellForRowAtIndexPath:path];
-        modelCell.userInteractionEnabled = NO;
-    }
-    if (self.car.brand != NULL && !self.brandSet) {
-        NSIndexPath *path = [NSIndexPath indexPathForRow:1 inSection:0];
-        UITableViewCell *modelCell = (UITableViewCell *)[self.tableView cellForRowAtIndexPath:path];
-        modelCell.userInteractionEnabled = YES;
-        self.brandSet = YES;
-    }
-     */
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow)
                                                  name:UIKeyboardWillShowNotification
@@ -146,7 +173,6 @@ static float kMoveUpOffset = 50;
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     
     if ([searchText length] == 0) {
-        ALog("Canceled");
         if (searchBar == self.brandSearch){
             [_autocompleteBrand hidesuggestions];
             [_brandSearch endEditing:YES];
@@ -154,6 +180,11 @@ static float kMoveUpOffset = 50;
             [_autocompleteModel hidesuggestions];
             [_modelSearch endEditing:YES];
         }
+    }
+}
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    if (searchBar == self.modelSearch && [self.modelSearch.text length] > 0) {
+        self.modelSet = YES;
     }
 }
 
@@ -182,6 +213,12 @@ static float kMoveUpOffset = 50;
     [UIView commitAnimations];
 }
 
+- (void) checkifCanSave{
+    if (self.nameSet && self.modelSet && self.eTypeSet) {
+        self.saveButton.enabled = YES;
+    }
+}
+
 - (IBAction)cancel:(id)sender
 {
     [self.delegate addViewController:self didFinishWithSave:NO];
@@ -190,6 +227,16 @@ static float kMoveUpOffset = 50;
 
 - (IBAction)save:(id)sender
 {
+    NSDictionary *source = [APCarDBAutoCompleteItemsSource getIDForCarModel:self.modelSearch.text];
+    self.car.friendlyName = self.freindlyNameText.text;
+    self.car.modelID = [source objectForKeyedSubscript:@"id"];
+    self.car.energy = [source objectForKey:@"energy"] ;
+
+    self.car.pA = [source objectForKey:@"pA"];
+    self.car.pB = [source objectForKey:@"pB"];
+    self.car.pC = [source objectForKey:@"pC"];
+    self.car.pD = [source objectForKey:@"pD"];
+
     [self.delegate addViewController:self didFinishWithSave:YES];
 }
 

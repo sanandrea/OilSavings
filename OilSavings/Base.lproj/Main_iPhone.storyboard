@@ -589,11 +589,11 @@
                         <sections>
                             <tableViewSection headerTitle="Auto" id="x5l-Th-IlV">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" rowHeight="157" id="CYa-Bh-fvH">
-                                        <rect key="frame" x="0.0" y="119" width="320" height="157"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" rowHeight="146" id="CYa-Bh-fvH">
+                                        <rect key="frame" x="0.0" y="119" width="320" height="146"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CYa-Bh-fvH" id="S2S-wY-Oaa">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="156"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="145"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Marca" translatesAutoresizingMaskIntoConstraints="NO" id="8iV-Y5-rzG">
@@ -607,7 +607,7 @@
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                 </searchBar>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nome" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yeF-PQ-YdV">
-                                                    <rect key="frame" x="20" y="111" width="285" height="30"/>
+                                                    <rect key="frame" x="20" y="106" width="285" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
@@ -619,18 +619,17 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Dettagli" id="Tbs-l2-sMZ">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="208" id="dpc-uE-f0W">
-                                        <rect key="frame" x="0.0" y="324" width="320" height="208"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="172" id="dpc-uE-f0W">
+                                        <rect key="frame" x="0.0" y="313" width="320" height="172"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dpc-uE-f0W" id="Aea-MA-kiQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="207"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="171"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rbg-jd-8F5">
-                                                    <rect key="frame" x="20" y="48" width="280" height="29"/>
+                                                    <rect key="frame" x="20" y="41" width="280" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <segments>
-                                                        <segment title=""/>
                                                         <segment title=""/>
                                                         <segment title=""/>
                                                         <segment title=""/>
@@ -645,17 +644,17 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Serbatoio" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldR-HW-UGe">
-                                                    <rect key="frame" x="117" y="128" width="87" height="28"/>
+                                                    <rect key="frame" x="117" y="93" width="87" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" red="0.32156862749999998" green="0.40000000000000002" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Litri" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="wAy-Lx-5dr">
-                                                    <rect key="frame" x="112" y="169" width="97" height="30"/>
+                                                    <rect key="frame" x="112" y="129" width="97" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -682,9 +681,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="brandSearch" destination="8iV-Y5-rzG" id="c9v-8z-Da9"/>
+                        <outlet property="energyTypeSelect" destination="rbg-jd-8F5" id="Sbf-aK-O7E"/>
                         <outlet property="freindlyNameText" destination="yeF-PQ-YdV" id="928-3A-xbZ"/>
+                        <outlet property="gasCapacityLabel" destination="ldR-HW-UGe" id="1eh-4b-QuO"/>
                         <outlet property="gasTankCapacity" destination="wAy-Lx-5dr" id="Ypq-DZ-xTC"/>
                         <outlet property="modelSearch" destination="PTe-jg-pc2" id="k8a-XQ-sIA"/>
+                        <outlet property="saveButton" destination="4ca-sb-G3a" id="NVY-ib-tpU"/>
+                        <outlet property="selectEnergyLabel" destination="3mA-Qu-du6" id="dig-3h-tVU"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n0P-CP-DfQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
