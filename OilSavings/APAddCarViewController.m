@@ -31,8 +31,8 @@ static float kMoveUpOffset = 50;
 
 @property (nonatomic) BOOL modelSet;
 @property (nonatomic) BOOL nameSet;
-@property (nonatomic) BOOL eTypeSet;
 @property (nonatomic) BOOL gasCapSet;
+@property (nonatomic, strong) NSDictionary *source;
 
 @end
 
@@ -184,7 +184,11 @@ static float kMoveUpOffset = 50;
 }
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     if (searchBar == self.modelSearch && [self.modelSearch.text length] > 0) {
+        self.source = [APCarDBAutoCompleteItemsSource getIDForCarModel:self.modelSearch.text];
+        ALog("Dict is %@",self.source);
+        [self.energyTypeSelect setSelectedSegmentIndex:[[self.source objectForKey:@"energy"] intValue]];
         self.modelSet = YES;
+        [self checkifCanSave];
     }
 }
 
@@ -214,7 +218,7 @@ static float kMoveUpOffset = 50;
 }
 
 - (void) checkifCanSave{
-    if (self.nameSet && self.modelSet && self.eTypeSet) {
+    if (self.nameSet && self.modelSet) {
         self.saveButton.enabled = YES;
     }
 }
@@ -227,15 +231,14 @@ static float kMoveUpOffset = 50;
 
 - (IBAction)save:(id)sender
 {
-    NSDictionary *source = [APCarDBAutoCompleteItemsSource getIDForCarModel:self.modelSearch.text];
     self.car.friendlyName = self.freindlyNameText.text;
-    self.car.modelID = [source objectForKeyedSubscript:@"id"];
-    self.car.energy = [source objectForKey:@"energy"] ;
+    self.car.modelID = [self.source objectForKeyedSubscript:@"id"];
+    self.car.energy = [NSNumber numberWithInt:[self.energyTypeSelect selectedSegmentIndex]];
 
-    self.car.pA = [source objectForKey:@"pA"];
-    self.car.pB = [source objectForKey:@"pB"];
-    self.car.pC = [source objectForKey:@"pC"];
-    self.car.pD = [source objectForKey:@"pD"];
+    self.car.pA = [self.source objectForKey:@"pA"];
+    self.car.pB = [self.source objectForKey:@"pB"];
+    self.car.pC = [self.source objectForKey:@"pC"];
+    self.car.pD = [self.source objectForKey:@"pD"];
 
     [self.delegate addViewController:self didFinishWithSave:YES];
 }

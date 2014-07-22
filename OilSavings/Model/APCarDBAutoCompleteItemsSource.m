@@ -135,7 +135,7 @@
     NSFileManager *filemgr = [NSFileManager defaultManager];
     sqlite3 *db;
     
-    NSDictionary * result = [[NSDictionary alloc] init];
+    NSMutableDictionary * result = [[NSMutableDictionary alloc] init];
 
     if ([filemgr fileExistsAtPath: dataPath ] == NO){
         ALog("Error here buddy , could not find car db file");
@@ -152,7 +152,7 @@
         sqlite3_stmt    *statement;
         
 
-        querySQL = [NSString stringWithFormat:@"SELECT id,energy FROM models where model = %@",model];
+        querySQL = [NSString stringWithFormat:@"SELECT id,energy FROM models where model = '%@'",model];
         
         const char *query_stmt = [querySQL UTF8String];
         NSUInteger rowID;
@@ -160,15 +160,15 @@
         {
             while (sqlite3_step(statement) == SQLITE_ROW) {
                 rowID = sqlite3_column_int(statement, 0);
-                [result setValue:[NSNumber numberWithInt:rowID] forKeyPath:@"id"];
+                [result setValue:[NSNumber numberWithInt:rowID] forKey:@"modelID"];
                 
-                NSString *energy = [NSString stringWithUTF8String:sqlite3_column_name(statement, 1)];
+                NSString *energy = [NSString stringWithUTF8String:(char*)sqlite3_column_text(statement, 1)];
                 if ([energy isEqualToString:@"gasoline"]) {
-                    [result setValue:[NSNumber numberWithInt:kEnergyGasoline] forKeyPath:@"energy"];
+                    [result setValue:[NSNumber numberWithInt:kEnergyGasoline] forKey:@"energy"];
                 }else if ([energy isEqualToString:@"diesel"]){
-                    [result setValue:[NSNumber numberWithInt:kEnergyDiesel] forKeyPath:@"energy"];
+                    [result setValue:[NSNumber numberWithInt:kEnergyDiesel] forKey:@"energy"];
                 }
-                
+                ALog("Energy %@ and id %d",energy, rowID);
             }
             sqlite3_finalize(statement);
         }
@@ -179,10 +179,10 @@
         if (sqlite3_prepare_v2(db, query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
             while (sqlite3_step(statement) == SQLITE_ROW) {
-                [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 1)] forKeyPath:@"pA"];
-                [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 2)] forKeyPath:@"pB"];
-                [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 3)] forKeyPath:@"pB"];
-                [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 4)] forKeyPath:@"pD"];
+                [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 1)] forKey:@"pA"];
+                [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 2)] forKey:@"pB"];
+                [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 3)] forKey:@"pB"];
+                [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 4)] forKey:@"pD"];
                 
             }
             sqlite3_finalize(statement);

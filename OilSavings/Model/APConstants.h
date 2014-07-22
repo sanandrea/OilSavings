@@ -25,7 +25,9 @@ extern const CLLocationCoordinate2D emptyLocationCoordinate;
 
 typedef enum{
     kEnergyGasoline = 0,
-    kEnergyDiesel
+    kEnergyDiesel,
+    kEnergyMethan,
+    kEnergyGPL
 }ENERGY_TYPE;
 
 typedef enum{
