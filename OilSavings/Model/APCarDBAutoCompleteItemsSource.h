@@ -13,6 +13,6 @@
 
 - (id)initWithMinimumCharactersToTrigger:(NSUInteger)minimumCharactersToTrigger andFieldType:(EDIT_TYPE) tt;
 - (id)initWithMinimumCharactersToTrigger:(NSUInteger)minimumCharactersToTrigger andFieldType:(EDIT_TYPE) tt andBrand:(NSString*)bb;
-
+- (void)setBrandString:(NSString*)brand;
 + (NSDictionary*) getIDForCarModel:(NSString*)model;
 @end

@@ -200,6 +200,13 @@
     [self resignFirstResponder];
 }
 
+- (IBAction)deleteButton:(id)sender{
+    ALog("Deleting....");
+    [self.managedObjectContext deleteObject:self.car];
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
 
 #pragma mark - Segue management
 

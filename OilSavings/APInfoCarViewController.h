@@ -14,6 +14,7 @@
 @interface APInfoCarViewController : UITableViewController
 
 @property (nonatomic, strong) APCar *car;
+@property (nonatomic,strong) NSManagedObjectContext *managedObjectContext;
 
 @end
 

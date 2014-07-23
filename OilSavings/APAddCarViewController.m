@@ -16,6 +16,11 @@
 static float kLeftSearchBarPadding = 31;
 static float kMoveUpOffset = 50;
 
+int SLIDER_MAX = 100;
+int SLIDER_MIN = 20;
+int SLIDER_STEP = 5;
+
+
 @interface APAddCarViewController ()
 
 @property (nonatomic) BOOL brandSet;
@@ -24,15 +29,22 @@ static float kMoveUpOffset = 50;
 @property (nonatomic, weak) IBOutlet UITextField *freindlyNameText;
 
 @property (nonatomic, weak) IBOutlet UISegmentedControl *energyTypeSelect;
-@property (nonatomic, weak) IBOutlet UITextField *gasTankCapacity;
+@property (nonatomic, weak) IBOutlet UISlider *gasTankCapacity;
 @property (nonatomic, weak) IBOutlet UILabel *selectEnergyLabel;
 @property (nonatomic, weak) IBOutlet UILabel *gasCapacityLabel;
+
+@property (nonatomic, weak) IBOutlet UILabel *gasTypeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *tankCapacityTilte;
+@property (nonatomic, weak) IBOutlet UILabel *tankCapacityValue;
+
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *saveButton;
 
 @property (nonatomic) BOOL modelSet;
 @property (nonatomic) BOOL nameSet;
 @property (nonatomic) BOOL gasCapSet;
 @property (nonatomic, strong) NSDictionary *source;
+
+@property (nonatomic, strong) APCarDBAutoCompleteItemsSource *itemSource;
 
 @end
 
@@ -44,6 +56,9 @@ static float kMoveUpOffset = 50;
 
     self.brandSearch.placeholder = NSLocalizedString(@"Marca", @"Brand Car Placeholder");
     self.modelSearch.placeholder = NSLocalizedString(@"Modello", @"Model for car model");
+    self.selectEnergyLabel.text = NSLocalizedString(@"Carburante", @"Segmented Control Title");
+    self.tankCapacityTilte.text = NSLocalizedString(@"Serbatoio", @"Title of slider for tank capacity");
+    
     [self.brandSearch setDelegate:self];
     [self.modelSearch setDelegate:self];
 
@@ -51,7 +66,14 @@ static float kMoveUpOffset = 50;
     [self.energyTypeSelect setTitle:NSLocalizedString(@"Gasolio", nil) forSegmentAtIndex:1];
     [self.energyTypeSelect setTitle:NSLocalizedString(@"Metano", nil) forSegmentAtIndex:2];
     [self.energyTypeSelect setTitle:NSLocalizedString(@"GPL", nil) forSegmentAtIndex:3];
-
+    
+    [self.gasTankCapacity setMaximumValue:(float)(SLIDER_MAX - SLIDER_MIN) / SLIDER_STEP];
+    //get user prefs for the preferred car model id
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    int defaultTankCapacity = [[prefs objectForKey:kDefaultTankCapacity] intValue];
+    [self.gasTankCapacity setValue:(defaultTankCapacity - SLIDER_MIN) / SLIDER_STEP];
+    [self.tankCapacityValue setText:[NSString stringWithFormat:@"%d L",defaultTankCapacity]];
+    
     self.saveButton.enabled = NO;
     
     //When done is pressed dismiss keyboard
@@ -87,9 +109,10 @@ static float kMoveUpOffset = 50;
             }
         }
     }
+    self.itemSource = [[APCarDBAutoCompleteItemsSource alloc] initWithMinimumCharactersToTrigger:1 andFieldType:kModelEdit];
     _autocompleteModel = [TRAutocompleteView autocompleteViewBindedTo:txt
                                                         havingSpace:kLeftSearchBarPadding
-                                                        usingSource:[[APCarDBAutoCompleteItemsSource alloc] initWithMinimumCharactersToTrigger:2 andFieldType:kModelEdit]
+                                                        usingSource:self.itemSource
                                                         cellFactory:[[TRGoogleMapsAutocompletionCellFactory alloc] initWithCellForegroundColor:[UIColor lightGrayColor] fontSize:14]
                                                        presentingIn:self];
     
@@ -122,7 +145,6 @@ static float kMoveUpOffset = 50;
     if ([self.modelSearch.text length] == 0) {
         [self.modelSearch resignFirstResponder];
     }
-    [self.gasTankCapacity resignFirstResponder];
     [self.freindlyNameText resignFirstResponder];
 }
 - (void) userEnteredName{
@@ -131,6 +153,14 @@ static float kMoveUpOffset = 50;
         self.nameSet = YES;
         [self checkifCanSave];
     }
+}
+
+-(IBAction)cashSlider:(id)sender{
+    int index = (int)(self.gasTankCapacity.value + 0.5); // Round the number.
+    [self.gasTankCapacity setValue:index animated:NO];
+    
+    int value = SLIDER_MIN + index * SLIDER_STEP;
+    [self.tankCapacityValue setText:[NSString stringWithFormat:@"%d L",value]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -188,7 +218,13 @@ static float kMoveUpOffset = 50;
         ALog("Dict is %@",self.source);
         [self.energyTypeSelect setSelectedSegmentIndex:[[self.source objectForKey:@"energy"] intValue]];
         self.modelSet = YES;
+        
+        if ([self.brandSearch.text length] == 0) {
+            self.brandSearch.text = [self.source objectForKey:@"brand"];
+        }
         [self checkifCanSave];
+    }else if (searchBar == self.brandSearch && [self.brandSearch.text length] > 0){
+        [self.itemSource setBrandString:self.brandSearch.text];
     }
 }
 
@@ -231,6 +267,8 @@ static float kMoveUpOffset = 50;
 
 - (IBAction)save:(id)sender
 {
+    self.car.brand = self.brandSearch.text;
+    self.car.model = self.modelSearch.text;
     self.car.friendlyName = self.freindlyNameText.text;
     self.car.modelID = [self.source objectForKeyedSubscript:@"id"];
     self.car.energy = [NSNumber numberWithInt:[self.energyTypeSelect selectedSegmentIndex]];

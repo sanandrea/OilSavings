@@ -292,6 +292,7 @@
         // Pass the selected car to the new view controller.
         APInfoCarViewController *infoViewController = (APInfoCarViewController *)[segue destinationViewController];
         infoViewController.car = selectedCar;
+        infoViewController.managedObjectContext = self.managedObjectContext;
     }
 }
 

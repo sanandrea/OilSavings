@@ -17,7 +17,7 @@ NSString *const kCarsRegistered = @"carsRegistered";
 NSString *const kPreferredCar = @"preferredCar";
 NSString *const kCashAmount = @"deafultCashAmount";
 NSString *const GOOGLE_API_KEY = @"AIzaSyDk2W4Au5SlQC5WPpcFFEpy8I7PTnZtvno";
-
+NSString *const kDefaultTankCapacity = @"defaultTankCapa";
 //how much directions requests to wait before updating polyline of best path.
 const int REQUEST_BUNDLE = 5;
 

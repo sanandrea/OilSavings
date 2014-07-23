@@ -16,6 +16,7 @@ extern NSString *const kCarsRegistered;
 extern NSString *const kPreferredCar;
 extern NSString *const kCashAmount;
 extern NSString *const GOOGLE_API_KEY;
+extern NSString *const kDefaultTankCapacity;
 
 extern const int REQUEST_BUNDLE;
 

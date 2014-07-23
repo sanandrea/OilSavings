@@ -41,6 +41,9 @@
     
     return self;
 }
+- (void)setBrandString:(NSString*)bb{
+    _brand = bb;
+}
 - (void)itemsFor:(NSString *)query whenReady:(void (^)(NSArray *))suggestionsReady
 {
     @synchronized (self)
@@ -184,6 +187,16 @@
                 [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 3)] forKey:@"pB"];
                 [result setValue:[NSNumber numberWithDouble:sqlite3_column_double(statement, 4)] forKey:@"pD"];
                 
+            }
+            sqlite3_finalize(statement);
+        }
+        /* Find brand name also */
+        querySQL = [NSString stringWithFormat:@"SELECT brand FROM brands where id = (SELECT brandID from models where model = '%@')",model];
+        query_stmt = [querySQL UTF8String];
+        if (sqlite3_prepare_v2(db, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW) {
+                [result setValue:[NSString stringWithUTF8String:(char*)sqlite3_column_text(statement, 0)] forKey:@"brand"];
             }
             sqlite3_finalize(statement);
         }
