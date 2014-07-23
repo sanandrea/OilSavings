@@ -92,14 +92,14 @@
             }
         }
         
-        ALog("Items for car model %@",querySQL);
+//        ALog("Items for car model %@",querySQL);
         
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(_carDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
             NSMutableArray *result = [[NSMutableArray alloc]init];
-            ALog("Query returns something");
+//            ALog("Query returns something");
             
             while (sqlite3_step(statement) == SQLITE_ROW) {
                 NSString *info = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
@@ -171,7 +171,7 @@
                 }else if ([energy isEqualToString:@"diesel"]){
                     [result setValue:[NSNumber numberWithInt:kEnergyDiesel] forKey:@"energy"];
                 }
-                ALog("Energy %@ and id %d",energy, rowID);
+//                ALog("Energy %@ and id %d",energy, rowID);
             }
             sqlite3_finalize(statement);
         }

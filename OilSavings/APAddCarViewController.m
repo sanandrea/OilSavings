@@ -149,7 +149,7 @@ int SLIDER_STEP = 5;
 }
 - (void) userEnteredName{
     if ([self.freindlyNameText.text length] > 0) {
-        ALog("Name was set");
+//        ALog("Name was set");
         self.nameSet = YES;
         [self checkifCanSave];
     }
@@ -215,7 +215,6 @@ int SLIDER_STEP = 5;
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     if (searchBar == self.modelSearch && [self.modelSearch.text length] > 0) {
         self.source = [APCarDBAutoCompleteItemsSource getIDForCarModel:self.modelSearch.text];
-        ALog("Dict is %@",self.source);
         [self.energyTypeSelect setSelectedSegmentIndex:[[self.source objectForKey:@"energy"] intValue]];
         self.modelSet = YES;
         
