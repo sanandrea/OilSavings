@@ -23,6 +23,7 @@
 
 @property (nonatomic, strong) NSString *street;
 @property (nonatomic, strong) NSString *postalCode;
+@property (nonatomic) NSUInteger gasStationID;
 
 - (BOOL) hasEnergy:(ENERGY_TYPE)e;
 - (void) setPrice:(float) p forEnergyType:(ENERGY_TYPE)e;

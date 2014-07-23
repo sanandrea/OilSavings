@@ -343,7 +343,7 @@ static float kTextPadding = 10.0f;
 {
     if ([annotation isKindOfClass:[APGSAnnotation class]]){
         APGSAnnotation *gsn = (APGSAnnotation*) annotation;
-        NSString *GSAnnotationIdentifier = [NSString stringWithFormat:@"gasStationIdentifier_%@", gsn.gasStation.name];
+        NSString *GSAnnotationIdentifier = [NSString stringWithFormat:@"gasStationIdentifier_%d", gsn.gasStation.gasStationID];
         
         MKAnnotationView *markerView = [theMapView dequeueReusableAnnotationViewWithIdentifier:GSAnnotationIdentifier];
         if (markerView == nil)

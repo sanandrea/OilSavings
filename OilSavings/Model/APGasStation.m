@@ -33,7 +33,8 @@ static NSDictionary *nameExpansion;
     }else if (self.type == kEnergyDiesel){
         self.dieselPrice = [dict[@"price"] floatValue];
     }
-    
+    self.gasStationID = [dict[@"id"] intValue];
+    ALog("My Id is: %d",self.gasStationID);
     self = [self initWithPosition:p andName:dict[@"brand"]];
     return self;
 }

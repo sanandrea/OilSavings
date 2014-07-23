@@ -146,6 +146,10 @@ int SLIDER_STEP = 5;
         [self.modelSearch resignFirstResponder];
     }
     [self.freindlyNameText resignFirstResponder];
+    if ([self.freindlyNameText.text length] > 0) {
+        self.nameSet = YES;
+        [self checkifCanSave];
+    }
 }
 - (void) userEnteredName{
     if ([self.freindlyNameText.text length] > 0) {
@@ -269,7 +273,7 @@ int SLIDER_STEP = 5;
     self.car.brand = self.brandSearch.text;
     self.car.model = self.modelSearch.text;
     self.car.friendlyName = self.freindlyNameText.text;
-    self.car.modelID = [self.source objectForKeyedSubscript:@"id"];
+    self.car.modelID = [self.source objectForKey:@"id"];
     self.car.energy = [NSNumber numberWithInt:[self.energyTypeSelect selectedSegmentIndex]];
 
     self.car.pA = [self.source objectForKey:@"pA"];
