@@ -226,9 +226,6 @@ static float kTextPadding = 10.0f;
 
 - (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations{
     if (newStations) {
-        //Enable Gas Stations List
-        self.showGSButton.enabled = YES;
-        
         //remove any existing pin.
         [self removeAllPinsButUserLocation];
         
@@ -283,11 +280,18 @@ static float kTextPadding = 10.0f;
     
     if (self.processedRequests == self.totalRequests){
         [self.navigationController finishProgress];
+        
     }
 
 
     if (((self.processedRequests % REQUEST_BUNDLE == 0)||(self.processedRequests == self.totalRequests)) && self.bestFound) {
 //        ALog("Desing path on map");
+
+        //Enable Gas Stations List
+        self.showGSButton.enabled = YES;
+        
+        //Test
+        [self setChosenGSRed:self.bestPath.gasStation];
 
         //remove existing overlay if any
         NSArray *pointsArray = [self.mapView overlays];
@@ -352,62 +356,8 @@ static float kTextPadding = 10.0f;
                                                                             reuseIdentifier:GSAnnotationIdentifier];
             annotationView.canShowCallout = YES;
             
-            UIImage *markerImage = [UIImage imageNamed:@"marker_blue.png"];
-            UIImage *logoImage = [UIImage imageNamed:gsn.gasStation.logo];
-            // size the flag down to the appropriate size
-            CGRect resizeRect;
-            resizeRect.size = markerImage.size;
-            CGSize maxSize = CGRectInset(self.view.bounds, kAnnotationPadding, kAnnotationPadding).size;
             
-            maxSize.height -= self.navigationController.navigationBar.frame.size.height + kCallOutHeight;
-            
-            if (resizeRect.size.width > maxSize.width)
-                resizeRect.size = CGSizeMake(maxSize.width, resizeRect.size.height / resizeRect.size.width * maxSize.width);
-            
-            if (resizeRect.size.height > maxSize.height)
-                resizeRect.size = CGSizeMake(resizeRect.size.width / resizeRect.size.height * maxSize.height, maxSize.height);
-            
-            resizeRect.origin = CGPointMake(0.0, 0.0);
-            float initialWidth = resizeRect.size.width;
-            
-            UIGraphicsBeginImageContextWithOptions(resizeRect.size, NO, 0.0f);
-            [markerImage drawInRect:resizeRect];
-            resizeRect.size.width = resizeRect.size.width/2;
-            resizeRect.size.height = resizeRect.size.height/2;
-            
-            resizeRect.origin.x = resizeRect.origin.x + (initialWidth - resizeRect.size.width)/2;
-            resizeRect.origin.y = resizeRect.origin.y + kLogoHeightPadding;
-            
-            [logoImage drawInRect:resizeRect];
-
-            
-            // Create string drawing context
-            UIFont *font = [UIFont fontWithName:@"DBLCDTempBlack" size:12.0];
-            NSString * num = [NSString stringWithFormat:@"%4.3f",[gsn.gasStation getPrice]];
-            NSDictionary *textAttributes = @{NSFontAttributeName: font,
-                                             NSForegroundColorAttributeName: [UIColor whiteColor]};
-            
-            CGSize textSize = [num sizeWithAttributes:textAttributes];
-            
-            NSStringDrawingContext *drawingContext = [[NSStringDrawingContext alloc] init];
-            
-            //adjust center
-            if (resizeRect.size.width - textSize.width > 0) {
-                resizeRect.origin.x += (resizeRect.size.width - textSize.width)/2;
-            }else{
-                resizeRect.origin.x -= (resizeRect.size.width - textSize.width)/2;
-            }
-            
-            resizeRect.origin.y -= kTextPadding;
-            [num drawWithRect:resizeRect
-                      options:NSStringDrawingUsesLineFragmentOrigin
-                   attributes:textAttributes
-                      context:drawingContext];
-            
-            UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            
-            annotationView.image = resizedImage;
+            annotationView.image = [self customizeAnnotationImage:gsn.gasStation];
             annotationView.opaque = NO;
             
             
@@ -480,6 +430,84 @@ static float kTextPadding = 10.0f;
     }
     
     [self.mapView removeAnnotations:pins];
+}
+
+- (void)setChosenGSRed:(APGasStation *)gs{
+    for (id<MKAnnotation> annotation in self.mapView.annotations){
+        if ([annotation isKindOfClass:[APGSAnnotation class]]){
+            
+            APGSAnnotation *agn = (APGSAnnotation*) annotation;
+            if (agn.gasStation.gasStationID == gs.gasStationID) {
+                MKAnnotationView* anView = [self.mapView viewForAnnotation: annotation];
+                anView.image = [self customizeAnnotationImage:agn.gasStation];
+            }
+
+        }
+    }
+}
+
+- (UIImage*)customizeAnnotationImage:(APGasStation*)gasStation{
+    UIImage *markerImage;
+    
+    if (gasStation.gasStationID == self.bestPath.gasStation.gasStationID) {
+        markerImage = [UIImage imageNamed:@"marker_red.png"];
+    }else{
+        markerImage = [UIImage imageNamed:@"marker_blue.png"];
+    }
+    UIImage *logoImage = [UIImage imageNamed:gasStation.logo];
+    // size the flag down to the appropriate size
+    CGRect resizeRect;
+    resizeRect.size = markerImage.size;
+    CGSize maxSize = CGRectInset(self.view.bounds, kAnnotationPadding, kAnnotationPadding).size;
+    
+    maxSize.height -= self.navigationController.navigationBar.frame.size.height + kCallOutHeight;
+    
+    if (resizeRect.size.width > maxSize.width)
+        resizeRect.size = CGSizeMake(maxSize.width, resizeRect.size.height / resizeRect.size.width * maxSize.width);
+    
+    if (resizeRect.size.height > maxSize.height)
+        resizeRect.size = CGSizeMake(resizeRect.size.width / resizeRect.size.height * maxSize.height, maxSize.height);
+    
+    resizeRect.origin = CGPointMake(0.0, 0.0);
+    float initialWidth = resizeRect.size.width;
+    
+    UIGraphicsBeginImageContextWithOptions(resizeRect.size, NO, 0.0f);
+    [markerImage drawInRect:resizeRect];
+    resizeRect.size.width = resizeRect.size.width/2;
+    resizeRect.size.height = resizeRect.size.height/2;
+    
+    resizeRect.origin.x = resizeRect.origin.x + (initialWidth - resizeRect.size.width)/2;
+    resizeRect.origin.y = resizeRect.origin.y + kLogoHeightPadding;
+    
+    [logoImage drawInRect:resizeRect];
+    
+    
+    // Create string drawing context
+    UIFont *font = [UIFont fontWithName:@"DBLCDTempBlack" size:12.0];
+    NSString * num = [NSString stringWithFormat:@"%4.3f",[gasStation getPrice]];
+    NSDictionary *textAttributes = @{NSFontAttributeName: font,
+                                     NSForegroundColorAttributeName: [UIColor whiteColor]};
+    
+    CGSize textSize = [num sizeWithAttributes:textAttributes];
+    
+    NSStringDrawingContext *drawingContext = [[NSStringDrawingContext alloc] init];
+    
+    //adjust center
+    if (resizeRect.size.width - textSize.width > 0) {
+        resizeRect.origin.x += (resizeRect.size.width - textSize.width)/2;
+    }else{
+        resizeRect.origin.x -= (resizeRect.size.width - textSize.width)/2;
+    }
+    
+    resizeRect.origin.y -= kTextPadding;
+    [num drawWithRect:resizeRect
+              options:NSStringDrawingUsesLineFragmentOrigin
+           attributes:textAttributes
+              context:drawingContext];
+    
+    UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return resizedImage;
 }
 
 #pragma mark - Segues
