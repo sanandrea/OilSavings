@@ -111,7 +111,18 @@
                                                                             reuseIdentifier:GSAnnotationIdentifier];
             annotationView.canShowCallout = YES;
             
-            UIImage *markerImage = [UIImage imageNamed:@"marker_blue.png"];
+            UIImage *markerImage;
+            
+            if (gsn.gasStation.type == kEnergyGasoline){
+                markerImage = [UIImage imageNamed:@"marker_blue.png"];
+            }else if (gsn.gasStation.type == kEnergyDiesel){
+                markerImage = [UIImage imageNamed:@"marker_green.png"];
+            }else if (gsn.gasStation.type == kEnergyGPL){
+                markerImage = [UIImage imageNamed:@"marker_purple.png"];
+            }else if (gsn.gasStation.type == kEnergyMethan){
+                markerImage = [UIImage imageNamed:@"marker_brown.png"];
+            }
+
             UIImage *logoImage = [UIImage imageNamed:gsn.gasStation.logo];
             // size the flag down to the appropriate size
             CGRect resizeRect;
@@ -141,7 +152,7 @@
             
             
             // Create string drawing context
-            UIFont *font = [UIFont fontWithName:@"DBLCDTempBlack" size:9.0];
+            UIFont *font = [UIFont fontWithName:@"DBLCDTempBlack" size:8.0];
             NSString * num = [NSString stringWithFormat:@"%4.3f",[gsn.gasStation getPrice]];
             NSDictionary *textAttributes = @{NSFontAttributeName: font,
                                              NSForegroundColorAttributeName: [UIColor whiteColor]};

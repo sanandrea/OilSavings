@@ -19,6 +19,9 @@
 
 @property (nonatomic) float gasolinePrice;
 @property (nonatomic) float dieselPrice;
+@property (nonatomic) float gplPrice;
+@property (nonatomic) float methanPrice;
+
 @property (nonatomic) CLLocationCoordinate2D position;
 
 @property (nonatomic, strong) NSString *street;
@@ -29,6 +32,6 @@
 - (void) setPrice:(float) p forEnergyType:(ENERGY_TYPE)e;
 - (float) getPrice:(ENERGY_TYPE)e;
 - (float) getPrice;
-- (id) initWithDict:(NSDictionary*) dict;
+- (id) initWithDict:(NSDictionary*) dict andFuelType:(ENERGY_TYPE) e;
 
 @end

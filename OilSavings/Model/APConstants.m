@@ -48,6 +48,12 @@ const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, emptyLoca
         case kEnergyDiesel:
             return @"d";
             break;
+        case kEnergyGPL:
+            return @"g";
+            break;
+        case kEnergyMethan:
+            return @"m";
+            break;
         default:
             return @"b";
             break;

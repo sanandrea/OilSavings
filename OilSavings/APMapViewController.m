@@ -145,10 +145,8 @@ static float kTextPadding = 10.0f;
 
 - (void) centerMapInLocation:(CLLocationCoordinate2D)loc animated:(BOOL)anime{
     [self.mapView setCenterCoordinate:loc zoomLevel:ZOOM_LEVEL animated:anime];
-    APGasStationClient *gs = [[APGasStationClient alloc] initWithCenter:loc andFuel:[self.myCar.energy intValue]];
-    gs.delegate = self;
-    [gs getStations];
     
+    [self findGasStations:self.srcCoord];
     //convert the address so the user has the address in the options VC
     [APGeocodeClient convertCoordinate:loc ofType:kAddressSrc inDelegate:self];
 }
@@ -164,7 +162,11 @@ static float kTextPadding = 10.0f;
     
     NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
     self.myLocation = newLocation.coordinate;
-    [self centerMapInLocation:self.myLocation animated:NO];
+    
+    if (!CLLocationCoordinate2DIsValid(self.srcCoord)) {
+        self.srcCoord = self.myLocation;
+        [self centerMapInLocation:self.myLocation animated:NO];
+    }
     
     [locationManager stopUpdatingLocation];
 }
@@ -213,16 +215,26 @@ static float kTextPadding = 10.0f;
     [self.optimizer optimizeRouteFrom:origin to:self.dstCoord withGasStations:self.gasStations];
 }
 
-- (void) userChangedCar{
-#warning Change car in optimzer also
+- (void) carChanged{
+    [self.optimizer changeCar:self.myCar];
+    
+    [self findGasStations:self.srcCoord];
+    
     for (APPath *path in self.paths) {
         [path setCar:self.myCar];
     }
+    
 }
 
 #pragma mark - Network APIs
 
 #pragma mark - Gas Stations
+
+- (void) findGasStations:(CLLocationCoordinate2D) center{
+    APGasStationClient *gs = [[APGasStationClient alloc] initWithCenter:center andFuel:[self.myCar.energy intValue]];
+    gs.delegate = self;
+    [gs getStations];
+}
 
 - (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations{
     if (newStations) {
@@ -451,8 +463,14 @@ static float kTextPadding = 10.0f;
     
     if (gasStation.gasStationID == self.bestPath.gasStation.gasStationID) {
         markerImage = [UIImage imageNamed:@"marker_red.png"];
-    }else{
+    }else if (gasStation.type == kEnergyGasoline){
         markerImage = [UIImage imageNamed:@"marker_blue.png"];
+    }else if (gasStation.type == kEnergyDiesel){
+        markerImage = [UIImage imageNamed:@"marker_green.png"];
+    }else if (gasStation.type == kEnergyGPL){
+        markerImage = [UIImage imageNamed:@"marker_purple.png"];
+    }else if (gasStation.type == kEnergyMethan){
+        markerImage = [UIImage imageNamed:@"marker_brown.png"];
     }
     UIImage *logoImage = [UIImage imageNamed:gasStation.logo];
     // size the flag down to the appropriate size
@@ -483,7 +501,7 @@ static float kTextPadding = 10.0f;
     
     
     // Create string drawing context
-    UIFont *font = [UIFont fontWithName:@"DBLCDTempBlack" size:12.0];
+    UIFont *font = [UIFont fontWithName:@"DBLCDTempBlack" size:11.2];
     NSString * num = [NSString stringWithFormat:@"%4.3f",[gasStation getPrice]];
     NSDictionary *textAttributes = @{NSFontAttributeName: font,
                                      NSForegroundColorAttributeName: [UIColor whiteColor]};

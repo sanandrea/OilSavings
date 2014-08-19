@@ -88,13 +88,12 @@ static float const AREA_DISTANCE = 2.5;
         NSArray *response = (NSArray *)responseObject;
         APGasStation *gs;
         for (NSDictionary *dict in response) {
-//            ALog("%@",dict[@"price"]);
+            ALog("%@",dict[@"price"]);
             if ([[dict objectForKey:@"price" ] length] == 0){
                 continue;
             }
 //            ALog("dict is %@",dict);
-            gs = [[APGasStation alloc]initWithDict:dict];
-            gs.type = self.fuel;
+            gs = [[APGasStation alloc]initWithDict:dict andFuelType:self.fuel];
             [self.gasStations addObject:gs];
         }
         [self .delegate gasStation:self didFinishWithStations:YES];

@@ -23,7 +23,9 @@ static NSDictionary *nameExpansion;
     return self;
 }
 
-- (id) initWithDict:(NSDictionary*) dict{
+- (id) initWithDict:(NSDictionary*) dict andFuelType:(ENERGY_TYPE) fuelType{
+    self.type = fuelType;
+    
     CLLocationCoordinate2D p;
     p.latitude = [dict[@"lat"] doubleValue];
     p.longitude = [dict[@"lng"] doubleValue];
@@ -32,9 +34,13 @@ static NSDictionary *nameExpansion;
         self.gasolinePrice = [dict[@"price"] floatValue];
     }else if (self.type == kEnergyDiesel){
         self.dieselPrice = [dict[@"price"] floatValue];
+    }else if (self.type == kEnergyMethan){
+        self.methanPrice = [dict[@"price"] floatValue];
+    }else if (self.type == kEnergyGPL){
+        self.gplPrice = [dict[@"price"] floatValue];
     }
     self.gasStationID = [dict[@"id"] intValue];
-    ALog("My Id is: %d",self.gasStationID);
+//    ALog("My Id is: %d",self.gasStationID);
     self = [self initWithPosition:p andName:dict[@"brand"]];
     return self;
 }
@@ -146,16 +152,15 @@ static NSDictionary *nameExpansion;
         return self.dieselPrice;
     }else if (e == kEnergyGasoline){
         return self.gasolinePrice;
+    }else if (e == kEnergyMethan){
+        return self.methanPrice;
+    }else if (e == kEnergyGPL){
+        return self.gplPrice;
     }
     return 0.f;
 }
 - (float) getPrice{
-    if (self.type == kEnergyDiesel) {
-        return self.dieselPrice;
-    }else if (self.type == kEnergyGasoline){
-        return self.gasolinePrice;
-    }
-    return 0.f;
+    return [self getPrice:self.type];
 }
 
 + (NSString*) logoPath:(NSString*) key{

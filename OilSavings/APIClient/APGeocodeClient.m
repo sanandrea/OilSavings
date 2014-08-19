@@ -52,7 +52,7 @@ static NSString * const GEOCODE_URL = @"https://maps.googleapis.com/maps/api/geo
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        // Handle Error
+#warning In case of failure report a message to UI
         
     }];
     

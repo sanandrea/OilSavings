@@ -26,6 +26,8 @@ MKMapViewDelegate, OptimizationOptions>
 - (IBAction) showGasStationList:(id)sender;
 - (IBAction) optimizeAgain:(id)sender;
 
+-(void) carChanged;
+
 @property (nonatomic, strong) APCar* myCar;
 
 @end

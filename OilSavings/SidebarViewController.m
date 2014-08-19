@@ -90,6 +90,7 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     [prefs setInteger:[car.modelID intValue] forKey:kPreferredCar];
     
+    [mvc carChanged];
     //close side menu
     [self.revealViewController revealToggleAnimated:YES];
 }
