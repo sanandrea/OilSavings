@@ -12,10 +12,11 @@
 #import <MapKit/MapKit.h>
 #import "APGasStationClient.h"
 #import "APOptionsViewController.h"
+#import "RNGridMenu.h"
 #import "APNetworkAPI.h"
 
 @interface APMapViewController : UIViewController <CLLocationManagerDelegate, APNetworkAPI,
-MKMapViewDelegate, OptimizationOptions>
+MKMapViewDelegate, OptimizationOptions, RNGridMenuDelegate>
 {
     CLLocationManager *locationManager;
 }

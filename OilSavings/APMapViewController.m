@@ -197,6 +197,20 @@ static float kTextPadding = 10.0f;
 
 - (IBAction) gotoCurrentLocation:(id)sender{
     [locationManager startUpdatingLocation];
+    /*
+    NSArray *items = [[NSArray alloc] initWithObjects:
+                      @"Benzina",
+                      @"Diesel",
+                      nil];
+    RNGridMenu *av = [[RNGridMenu alloc] initWithTitles:items];
+    CGPoint center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
+    CGSize itemsize = CGSizeMake(100, 50);
+    av.delegate = self;
+    av.itemSize = itemsize;
+    av.blurLevel = 0.1f;
+    
+    [av showInViewController:self center:center];
+    */
 }
 
 - (IBAction) showGasStationList:(id)sender{
@@ -224,6 +238,10 @@ static float kTextPadding = 10.0f;
         [path setCar:self.myCar];
     }
     
+}
+
+- (void)gridMenu:(RNGridMenu *)gridMenu willDismissWithSelectedItem:(RNGridMenuItem *)item atIndex:(NSInteger)itemIndex{
+    ALog("User selected %d item",itemIndex);
 }
 
 #pragma mark - Network APIs
