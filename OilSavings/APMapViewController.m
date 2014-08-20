@@ -368,8 +368,10 @@ static float kTextPadding = 10.0f;
     if ([annotation isKindOfClass:[APGSAnnotation class]])
     {
         ALog("clicked Annotation");
+        /*
         APGSAnnotation *gsn = (APGSAnnotation*) annotation;
         [APGasStationClient getDetailsOfGasStation:gsn.gasStation intoDict:nil];
+        */
     }
     
 //    [self.navigationController pushViewController:self.detailViewController animated:YES];

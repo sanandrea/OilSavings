@@ -88,7 +88,7 @@ static float const AREA_DISTANCE = 2.5;
         NSArray *response = (NSArray *)responseObject;
         APGasStation *gs;
         for (NSDictionary *dict in response) {
-//            ALog("%@",dict[@"price"]);
+//            ALog("General price is %@",dict[@"price"]);
             if ([[dict objectForKey:@"price" ] length] == 0){
                 continue;
             }
@@ -98,12 +98,16 @@ static float const AREA_DISTANCE = 2.5;
         }
         [self .delegate gasStation:self didFinishWithStations:YES];
         
+        for (APGasStation *ags in self.gasStations) {
+            [APGasStationClient getDetailsOfGasStation:ags intoDict:nil];
+        }
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         // Handle Error
         [self .delegate gasStation:self didFinishWithStations:NO];
     }];
 }
-+ (void) getDetailsOfGasStation:(APGasStation*)gst intoDict:(void (^)(NSDictionary*))result;{
++ (void) getDetailsOfGasStation:(APGasStation*)gst intoDict:(void (^)(NSDictionary*))result{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -127,9 +131,38 @@ static float const AREA_DISTANCE = 2.5;
     
     [manager GET:BaseStationString parameters:urlParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // Process Response Object
-        NSArray *response = (NSArray *)responseObject;
-        ALog("%@",response);
+        NSArray *objects = (NSArray *)responseObject;
+        if ([objects count] == 0) {
+            return;
+        }
+        NSDictionary *gasStationInfo = (NSDictionary*) objects[0];
+        NSArray *fuels = gasStationInfo[@"fuels"];
+        NSMutableDictionary *availableFuels = [[NSMutableDictionary alloc]init];
+        for (NSDictionary* fuelInfo in fuels) {
+//            ALog("Fuel info is %@",fuelInfo);
+            if ([fuelInfo[@"active"] intValue] == 1) {
+                //key is fuel_descr and object is the enum ENERGY_TYPE translated from fuel_value
+                [availableFuels setObject:[NSNumber numberWithInt:[APConstants getEnergyTypeForString:fuelInfo[@"fuel_value"]]] forKey:fuelInfo[@"fuel_descr"]];
+            }
+        }
         
+//        ALog("Available fuels are: %@",availableFuels);
+        for (NSDictionary *report in gasStationInfo[@"reports"]) {
+//            ALog("Report is: %@",report);
+            NSNumber *tt = [availableFuels objectForKey:report[@"fuel_descr"]];
+            if (tt != nil) {
+                [gst setPrice:[report[@"price"] floatValue] forEnergyType:[tt intValue]];
+            }
+        }
+        
+        
+        //Debug
+        /*
+        for (int i = 0; i < ENERGIES_COUNT; i++) {
+            ALog("Energy price: %4.3f", [gst getPrice:(ENERGY_TYPE)i]);
+        }
+        */
+
     }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         // Handle Error
 #warning Handle error

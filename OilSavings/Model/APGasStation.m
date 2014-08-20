@@ -11,6 +11,11 @@ static NSString *imagePrefix = @"logo_";
 static NSString *imageSuffix = @"_small.png";
 static NSDictionary *nameExpansion;
 
+@interface APGasStation ()
+@property (nonatomic, strong) NSMutableArray* energyPrices;
+
+@end
+
 @implementation APGasStation
 
 - (id) initWithPosition:(CLLocationCoordinate2D) position andName:(NSString*)nn{
@@ -19,6 +24,10 @@ static NSDictionary *nameExpansion;
         self.position = position;
         self.name = nameExpansion[nn];
         self.logo = [APGasStation logoPath:nn];
+        self.energyPrices = [[NSMutableArray alloc] init];
+        for (int i = 0; i < ENERGIES_COUNT; i++) {
+            [self.energyPrices addObject:[NSNumber numberWithFloat:-1]];
+        }
     }
     return self;
 }
@@ -141,28 +150,15 @@ static NSDictionary *nameExpansion;
     return NO;
 }
 - (void) setPrice:(float) p forEnergyType:(ENERGY_TYPE)e{
-    if (e == kEnergyDiesel) {
-        self.dieselPrice = p;
-    }else if (e == kEnergyGasoline){
-        self.gasolinePrice = p;
-    }
+    [self.energyPrices replaceObjectAtIndex:e withObject:[NSNumber numberWithFloat:p]];
 }
 - (float) getPrice:(ENERGY_TYPE)e{
-    if (e == kEnergyDiesel) {
-        return self.dieselPrice;
-    }else if (e == kEnergyGasoline){
-        return self.gasolinePrice;
-    }else if (e == kEnergyMethan){
-        return self.methanPrice;
-    }else if (e == kEnergyGPL){
-        return self.gplPrice;
-    }
-    return 0.f;
+    return [[self.energyPrices objectAtIndex:e] floatValue];
 }
+
 - (float) getPrice{
     return [self getPrice:self.type];
 }
-
 + (NSString*) logoPath:(NSString*) key{
     NSMutableString * ret = [[NSMutableString alloc] initWithString:imagePrefix];
     [ret appendString:[key lowercaseString]];

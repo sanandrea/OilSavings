@@ -18,8 +18,10 @@ extern NSString *const kCashAmount;
 extern NSString *const GOOGLE_API_KEY;
 extern NSString *const kDefaultTankCapacity;
 
+//how much directions requests to wait before updating polyline of best path.
 extern const int REQUEST_BUNDLE;
-
+//Number of energy types
+extern const int ENERGIES_COUNT;
 
 extern const CLLocationDegrees emptyLocation;
 extern const CLLocationCoordinate2D emptyLocationCoordinate;
@@ -28,7 +30,10 @@ typedef enum{
     kEnergyGasoline = 0,
     kEnergyDiesel,
     kEnergyMethan,
-    kEnergyGPL
+    kEnergyGPL,
+    kEnergyGasolineSP,
+    kEnergyDieselSP,
+    kEnergyUnknown
 }ENERGY_TYPE;
 
 typedef enum{
@@ -55,5 +60,6 @@ typedef enum{
 + (float) haversineDistance:(float)latA :(float)latB :(float)longA :(float)longB;
 + (float) deltaLongitude:(float) distanceKm atLat:(float)latitude;
 + (NSString *) getEnergyStringForType:(ENERGY_TYPE)t;
++ (ENERGY_TYPE) getEnergyTypeForString:(NSString*) type;
 
 @end

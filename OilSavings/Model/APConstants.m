@@ -18,8 +18,11 @@ NSString *const kPreferredCar = @"preferredCar";
 NSString *const kCashAmount = @"deafultCashAmount";
 NSString *const GOOGLE_API_KEY = @"AIzaSyDk2W4Au5SlQC5WPpcFFEpy8I7PTnZtvno";
 NSString *const kDefaultTankCapacity = @"defaultTankCapa";
-//how much directions requests to wait before updating polyline of best path.
+
 const int REQUEST_BUNDLE = 5;
+
+//
+const int ENERGIES_COUNT = 6;
 
 const CLLocationDegrees emptyLocation = -1000.0;
 const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, emptyLocation};
@@ -54,9 +57,33 @@ const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, emptyLoca
         case kEnergyMethan:
             return @"m";
             break;
+        case kEnergyGasolineSP:
+            return @"c";
+            break;
+        case kEnergyDieselSP:
+            return @"e";
+            break;
         default:
             return @"b";
             break;
+    }
+}
+
++ (ENERGY_TYPE) getEnergyTypeForString:(NSString*) type{
+    if ([type isEqualToString:@"b"]) {
+        return kEnergyGasoline;
+    }else if ([type isEqualToString:@"d"]){
+        return kEnergyDiesel;
+    }else if ([type isEqualToString:@"g"]){
+        return kEnergyGPL;
+    }else if ([type isEqualToString:@"m"]){
+        return kEnergyMethan;
+    }else if ([type isEqualToString:@"c"]){
+        return kEnergyGasolineSP;
+    }else if ([type isEqualToString:@"e"]){
+        return kEnergyDieselSP;
+    }else{
+        return kEnergyUnknown;
     }
 }
 

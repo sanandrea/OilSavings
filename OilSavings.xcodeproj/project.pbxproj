@@ -328,6 +328,7 @@
 		A93D9F8719354FDE008B530A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A99FCCD819327AE300B26D6A /* SideViewC */,
 				A9B7752219A5201800EA6B69 /* RNGrid */,
 				A93D9F881935500F008B530A /* APTableViewCell.h */,
 				A93D9F891935500F008B530A /* APTableViewCell.m */,
@@ -405,7 +406,6 @@
 				A9FC5058193C745800C883B7 /* Images */,
 				A9014629193BEB45003B826D /* APIClient */,
 				A93D9F8719354FDE008B530A /* View */,
-				A99FCCD819327AE300B26D6A /* SideViewC */,
 				A99FCCD6193248DF00B26D6A /* car.sqlite */,
 				A9C7116C1932282000E8EEF9 /* Resources */,
 				A9C7116D1932282000E8EEF9 /* Model */,
@@ -464,7 +464,8 @@
 				A99FCCD919327AE300B26D6A /* SWRevealViewController.h */,
 				A99FCCDA19327AE300B26D6A /* SWRevealViewController.m */,
 			);
-			path = SideViewC;
+			name = SideViewC;
+			path = ../SideViewC;
 			sourceTree = "<group>";
 		};
 		A9B7752219A5201800EA6B69 /* RNGrid */ = {

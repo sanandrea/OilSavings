@@ -79,7 +79,8 @@
     self.timeValue.text = [NSString stringWithFormat:@"%d min", (int)(time / 60)];
     
     self.priceLabel.text = NSLocalizedString(@"Prezzo", nil);
-    self.priceValue.text = [NSString stringWithFormat:@"%4.3f €/l",[self.path.gasStation getPrice]];
+#warning TODO
+//    self.priceValue.text = [NSString stringWithFormat:@"%4.3f €/l",[self.path.gasStation getPrice]];
     
 }
 
@@ -152,6 +153,7 @@
             
             
             // Create string drawing context
+            /*
             UIFont *font = [UIFont fontWithName:@"DBLCDTempBlack" size:8.0];
             NSString * num = [NSString stringWithFormat:@"%4.3f",[gsn.gasStation getPrice]];
             NSDictionary *textAttributes = @{NSFontAttributeName: font,
@@ -173,7 +175,7 @@
                       options:NSStringDrawingUsesLineFragmentOrigin
                    attributes:textAttributes
                       context:drawingContext];
-            
+            */
             UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             
