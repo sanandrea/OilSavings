@@ -349,7 +349,9 @@ static float kTextPadding = 10.0f;
     id <MKAnnotation> annotation = [view annotation];
     if ([annotation isKindOfClass:[APGSAnnotation class]])
     {
-        NSLog(@"clicked Annotation");
+        ALog("clicked Annotation");
+        APGSAnnotation *gsn = (APGSAnnotation*) annotation;
+        [APGasStationClient getDetailsOfGasStation:gsn.gasStation intoDict:nil];
     }
     
 //    [self.navigationController pushViewController:self.detailViewController animated:YES];
@@ -405,6 +407,10 @@ static float kTextPadding = 10.0f;
         return markerView;
     }
     return nil;
+}
+-(void) gasStationInfoTapped{
+    ALog("Tapped");
+    
 }
 /*
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {

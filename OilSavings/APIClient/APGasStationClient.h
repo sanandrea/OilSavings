@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "APGasStation.h"
 #import <MapKit/MapKit.h>
 
 @protocol APNetworkAPI;
@@ -27,5 +28,6 @@
 
 - (id) initWithCenter:(CLLocationCoordinate2D) center andFuel:(ENERGY_TYPE) fuel;
 - (void)getStations;
++ (void) getDetailsOfGasStation:(APGasStation*)gst intoDict:(void (^)(NSDictionary*))result;
 
 @end

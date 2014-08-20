@@ -8,10 +8,10 @@
 
 #import "APGasStationClient.h"
 #import "AFNetworking.h"
-#import "APGasStation.h"
 #import "APNetworkAPI.h"
 
 static NSString * const BaseURLString = @"http://www2.prezzibenzina.it/develop/tech/handlers/search_handler.php";
+static NSString * const BaseStationString = @"http://www2.prezzibenzina.it/develop/tech/handlers/station_handler.php";
 
 static float const AREA_DISTANCE = 2.5;
 
@@ -88,7 +88,7 @@ static float const AREA_DISTANCE = 2.5;
         NSArray *response = (NSArray *)responseObject;
         APGasStation *gs;
         for (NSDictionary *dict in response) {
-            ALog("%@",dict[@"price"]);
+//            ALog("%@",dict[@"price"]);
             if ([[dict objectForKey:@"price" ] length] == 0){
                 continue;
             }
@@ -103,6 +103,37 @@ static float const AREA_DISTANCE = 2.5;
         [self .delegate gasStation:self didFinishWithStations:NO];
     }];
 }
-
++ (void) getDetailsOfGasStation:(APGasStation*)gst intoDict:(void (^)(NSDictionary*))result;{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+    
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager.requestSerializer setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
+    
+    ALog("Gas station Id is %d",gst.gasStationID);
+    
+    NSArray* objs = [[NSArray alloc] initWithObjects:
+                     [NSNumber numberWithInt:gst.gasStationID],
+                     @"getStation",
+                     nil];
+    NSArray* keys = [[NSArray alloc] initWithObjects:
+                     @"idstation",
+                     @"sel",
+                     nil];
+    NSDictionary *urlParams = [NSDictionary dictionaryWithObjects:objs forKeys:keys];
+    //    ALog("Query dict %@",urlParams);
+    
+    [manager GET:BaseStationString parameters:urlParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // Process Response Object
+        NSArray *response = (NSArray *)responseObject;
+        ALog("%@",response);
+        
+    }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        // Handle Error
+#warning Handle error
+    }];
+}
 
 @end
