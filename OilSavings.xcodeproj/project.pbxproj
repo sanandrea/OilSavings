@@ -55,6 +55,8 @@
 		A9B7752519A5203C00EA6B69 /* RNGridMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7752419A5203C00EA6B69 /* RNGridMenu.m */; };
 		A9B7752719A520F000EA6B69 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B7752619A520F000EA6B69 /* QuartzCore.framework */; };
 		A9B7752919A520F600EA6B69 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B7752819A520F600EA6B69 /* Accelerate.framework */; };
+		A9B7752B19A54D3E00EA6B69 /* FuelPriceDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B7752A19A54D3E00EA6B69 /* FuelPriceDetail.xib */; };
+		A9B7752E19A54E1E00EA6B69 /* APFuelPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7752D19A54E1E00EA6B69 /* APFuelPriceCell.m */; };
 		A9C711711932284B00E8EEF9 /* APCar.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C711701932284B00E8EEF9 /* APCar.m */; };
 		A9C711721932284B00E8EEF9 /* APCar.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C711701932284B00E8EEF9 /* APCar.m */; };
 		A9C71175193229A300E8EEF9 /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C71174193229A300E8EEF9 /* APConstants.m */; };
@@ -201,6 +203,9 @@
 		A9B7752419A5203C00EA6B69 /* RNGridMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNGridMenu.m; sourceTree = "<group>"; };
 		A9B7752619A520F000EA6B69 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A9B7752819A520F600EA6B69 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		A9B7752A19A54D3E00EA6B69 /* FuelPriceDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FuelPriceDetail.xib; sourceTree = "<group>"; };
+		A9B7752C19A54E1E00EA6B69 /* APFuelPriceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APFuelPriceCell.h; sourceTree = "<group>"; };
+		A9B7752D19A54E1E00EA6B69 /* APFuelPriceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APFuelPriceCell.m; sourceTree = "<group>"; };
 		A9C7116F1932284B00E8EEF9 /* APCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCar.h; sourceTree = "<group>"; };
 		A9C711701932284B00E8EEF9 /* APCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCar.m; sourceTree = "<group>"; };
 		A9C71173193229A300E8EEF9 /* APConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APConstants.h; sourceTree = "<group>"; };
@@ -334,8 +339,11 @@
 				A93D9F891935500F008B530A /* APTableViewCell.m */,
 				A989555E1958D04E0079FBD9 /* APGSTableViewCell.h */,
 				A989555F1958D04E0079FBD9 /* APGSTableViewCell.m */,
+				A9B7752C19A54E1E00EA6B69 /* APFuelPriceCell.h */,
+				A9B7752D19A54E1E00EA6B69 /* APFuelPriceCell.m */,
 				A93D9F8D193550E0008B530A /* CarCellDesign.xib */,
 				A989555C1958CEC40079FBD9 /* GasStationCell.xib */,
+				A9B7752A19A54D3E00EA6B69 /* FuelPriceDetail.xib */,
 				A9FC5055193C70D900C883B7 /* MKMapView+ZoomLevel.h */,
 				A9FC5056193C70D900C883B7 /* MKMapView+ZoomLevel.m */,
 				A9FC507A193CDC4E00C883B7 /* APGSAnnotation.h */,
@@ -678,6 +686,7 @@
 				A9F7C492193E614F0092FCA2 /* logo_t2@2x.png in Resources */,
 				A9F7C496193E614F0092FCA2 /* logo_to@2x.png in Resources */,
 				A9F7C485193E614F0092FCA2 /* logo_is@2x.png in Resources */,
+				A9B7752B19A54D3E00EA6B69 /* FuelPriceDetail.xib in Resources */,
 				A9F7C482193E614F0092FCA2 /* logo_ie@2x.png in Resources */,
 				A9F7C473193E614F0092FCA2 /* logo_ag@2x.png in Resources */,
 				A9F7C491193E614F0092FCA2 /* logo_sp@2x.png in Resources */,
@@ -779,6 +788,7 @@
 				A9C71175193229A300E8EEF9 /* APConstants.m in Sources */,
 				A9FF939D197BB8E600D4CCB0 /* APPathDetailViewController.m in Sources */,
 				A9FC966219434EC40067875B /* APDirectionsClient.m in Sources */,
+				A9B7752E19A54E1E00EA6B69 /* APFuelPriceCell.m in Sources */,
 				A901461E193BCE36003B826D /* APLine.m in Sources */,
 				A9FC5057193C70D900C883B7 /* MKMapView+ZoomLevel.m in Sources */,
 				A9FC507C193CDC4E00C883B7 /* APGSAnnotation.m in Sources */,
