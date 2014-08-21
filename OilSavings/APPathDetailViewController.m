@@ -84,6 +84,44 @@
     
 }
 
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *gsCellIdentifier = @"GasStationInfo";
+    static NSString *fpCellIdentifier = @"FuelPriceInfo";
+    static NSString *piCellIdentifier = @"PathInfoCell";
+    static NSString *miCellIdentifier = @"MapInfoCell";
+    
+    UITableViewCell *cell;
+    if (indexPath.section == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:gsCellIdentifier];
+    }else if (indexPath.section == 2){
+        cell = [tableView dequeueReusableCellWithIdentifier:piCellIdentifier];
+    }else if (indexPath.section == 3){
+        cell = [tableView dequeueReusableCellWithIdentifier:miCellIdentifier];
+    }else{
+        cell = [tableView dequeueReusableCellWithIdentifier:fpCellIdentifier];
+    }
+
+    // Configure the cell.
+//    [self configureCell:cell atIndexPath:indexPath];
+    
+    return cell;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 1) {
+        return 3;
+    }else{
+        return 1;
+    }
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 4;
+}
+
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
 {
     MKPolyline *route = overlay;
