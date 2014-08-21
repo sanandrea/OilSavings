@@ -79,6 +79,30 @@
     }
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionName;
+    switch (section)
+    {
+        case 0:
+            sectionName = NSLocalizedString(@"Info Distributore", @"Prima sezione dettagli path");
+            break;
+        case 1:
+            sectionName = NSLocalizedString(@"Prezzi", @"Seconda sezione dettagli path");
+            break;
+        case 2:
+            sectionName = NSLocalizedString(@"Info Percorso", @"Terza sezione dettagli path");
+            break;
+        case 3:
+            sectionName = NSLocalizedString(@"Mappa", @"Quarta sezione dettagli path");
+            break;
+        default:
+            sectionName = @"";
+            break;
+    }
+    return sectionName;
+}
+
 - (void) customizeMapCell:(APMapInfoCell*)cell{
     [cell.miniMap setDelegate:self];
     
