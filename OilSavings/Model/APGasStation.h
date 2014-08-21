@@ -33,5 +33,7 @@
 - (float) getPrice:(ENERGY_TYPE)e;
 - (float) getPrice;
 - (id) initWithDict:(NSDictionary*) dict andFuelType:(ENERGY_TYPE) e;
+- (NSInteger) getNumberOfFuelsAvailable;
+- (NSArray*) getAvailableFuelTypes;
 
 @end

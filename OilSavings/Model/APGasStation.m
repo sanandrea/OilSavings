@@ -159,6 +159,28 @@ static NSDictionary *nameExpansion;
 - (float) getPrice{
     return [self getPrice:self.type];
 }
+
+- (NSInteger) getNumberOfFuelsAvailable{
+    NSInteger count = 0;
+    for (int i = 0; i < ENERGIES_COUNT; i++) {
+        if ([self getPrice:(ENERGY_TYPE)i] > 0) {
+            count++;
+        }
+    }
+    return count;
+}
+
+- (NSArray*) getAvailableFuelTypes{
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < ENERGIES_COUNT; i++) {
+        if ([self getPrice:(ENERGY_TYPE)i] > 0) {
+            [result addObject:[NSNumber numberWithInt:i]];
+        }
+    }
+    return result;
+}
+
 + (NSString*) logoPath:(NSString*) key{
     NSMutableString * ret = [[NSMutableString alloc] initWithString:imagePrefix];
     [ret appendString:[key lowercaseString]];

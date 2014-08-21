@@ -16,6 +16,8 @@
 
 @interface APPathDetailViewController ()
 
+@property (nonatomic, strong) NSArray *fuels;
+
 @end
 
 @implementation APPathDetailViewController
@@ -33,12 +35,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.fuels = [self.path.gasStation getAvailableFuelTypes];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ALog("Loading cells");
     static NSString *gsCellIdentifier = @"GasStationInfo";
     static NSString *fpCellIdentifier = @"FuelPriceInfo";
     static NSString *piCellIdentifier = @"PathInfoCell";
@@ -132,15 +134,17 @@
 }
 
 - (void)customizeFuelPriceCell:(APFuelPriceCell*)cell atIndex:(NSInteger)index{
-    cell.fuelLabel.text = NSLocalizedString(@"Prezzo", nil);
-    cell.fuelPrice.text = [NSString stringWithFormat:@"%4.3f €/l",[self.path.gasStation getPrice]];
+    NSInteger fuelIndex = [[self.fuels objectAtIndex:index] intValue];
+
+    cell.fuelLabel.text = [APConstants getEnergyLongNameForType:(ENERGY_TYPE)fuelIndex];
+    cell.fuelPrice.text = [NSString stringWithFormat:@"%4.3f €/l",[self.path.gasStation getPrice:(ENERGY_TYPE)fuelIndex]];
 
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 1) {
-        return 3;
+        return [self.path.gasStation getNumberOfFuelsAvailable];
     }else{
         return 1;
     }

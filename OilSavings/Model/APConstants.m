@@ -69,6 +69,32 @@ const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, emptyLoca
     }
 }
 
++ (NSString *) getEnergyLongNameForType:(ENERGY_TYPE)t{
+    switch (t) {
+        case kEnergyGasoline:
+            return NSLocalizedString(@"Benzina", nil);
+            break;
+        case kEnergyDiesel:
+            return NSLocalizedString(@"Diesel", nil);
+            break;
+        case kEnergyGPL:
+            return NSLocalizedString(@"GPL", nil);
+            break;
+        case kEnergyMethan:
+            return NSLocalizedString(@"Metano", nil);
+            break;
+        case kEnergyGasolineSP:
+            return NSLocalizedString(@"Benzina Speciale", nil);
+            break;
+        case kEnergyDieselSP:
+            return NSLocalizedString(@"Diesel Speciale", nil);
+            break;
+        default:
+            return @"b";
+            break;
+    }
+}
+
 + (ENERGY_TYPE) getEnergyTypeForString:(NSString*) type{
     if ([type isEqualToString:@"b"]) {
         return kEnergyGasoline;

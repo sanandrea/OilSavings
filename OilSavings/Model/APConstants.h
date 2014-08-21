@@ -60,6 +60,7 @@ typedef enum{
 + (float) haversineDistance:(float)latA :(float)latB :(float)longA :(float)longB;
 + (float) deltaLongitude:(float) distanceKm atLat:(float)latitude;
 + (NSString *) getEnergyStringForType:(ENERGY_TYPE)t;
++ (NSString *) getEnergyLongNameForType:(ENERGY_TYPE)t;
 + (ENERGY_TYPE) getEnergyTypeForString:(NSString*) type;
 
 @end
