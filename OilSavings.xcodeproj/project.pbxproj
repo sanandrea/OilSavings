@@ -111,6 +111,9 @@
 		A9F8DFFD19805D750098DAA8 /* marker_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F8DFF919805D750098DAA8 /* marker_red@2x.png */; };
 		A9F8DFFE19805D750098DAA8 /* marker_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F8DFFA19805D750098DAA8 /* marker_green@2x.png */; };
 		A9FBF957197DB817001FE719 /* APCarDBAutoCompleteItemsSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FBF956197DB817001FE719 /* APCarDBAutoCompleteItemsSource.m */; };
+		A9FC06BC19A68D6700AC0558 /* APGasStationInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC06BB19A68D6700AC0558 /* APGasStationInfoCell.m */; };
+		A9FC06BF19A68D7D00AC0558 /* APPathInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC06BE19A68D7D00AC0558 /* APPathInfoCell.m */; };
+		A9FC06C219A68D8D00AC0558 /* APMapInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC06C119A68D8D00AC0558 /* APMapInfoCell.m */; };
 		A9FC5057193C70D900C883B7 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC5056193C70D900C883B7 /* MKMapView+ZoomLevel.m */; };
 		A9FC505D193C786800C883B7 /* APGasStationClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC505C193C786800C883B7 /* APGasStationClient.m */; };
 		A9FC507C193CDC4E00C883B7 /* APGSAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC507B193CDC4E00C883B7 /* APGSAnnotation.m */; };
@@ -262,6 +265,12 @@
 		A9F8DFFA19805D750098DAA8 /* marker_green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker_green@2x.png"; sourceTree = "<group>"; };
 		A9FBF955197DB817001FE719 /* APCarDBAutoCompleteItemsSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCarDBAutoCompleteItemsSource.h; sourceTree = "<group>"; };
 		A9FBF956197DB817001FE719 /* APCarDBAutoCompleteItemsSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCarDBAutoCompleteItemsSource.m; sourceTree = "<group>"; };
+		A9FC06BA19A68D6700AC0558 /* APGasStationInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGasStationInfoCell.h; sourceTree = "<group>"; };
+		A9FC06BB19A68D6700AC0558 /* APGasStationInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGasStationInfoCell.m; sourceTree = "<group>"; };
+		A9FC06BD19A68D7D00AC0558 /* APPathInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPathInfoCell.h; sourceTree = "<group>"; };
+		A9FC06BE19A68D7D00AC0558 /* APPathInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPathInfoCell.m; sourceTree = "<group>"; };
+		A9FC06C019A68D8D00AC0558 /* APMapInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMapInfoCell.h; sourceTree = "<group>"; };
+		A9FC06C119A68D8D00AC0558 /* APMapInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMapInfoCell.m; sourceTree = "<group>"; };
 		A9FC5055193C70D900C883B7 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
 		A9FC5056193C70D900C883B7 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
 		A9FC505B193C786800C883B7 /* APGasStationClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGasStationClient.h; sourceTree = "<group>"; };
@@ -333,14 +342,13 @@
 		A93D9F8719354FDE008B530A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A9FC06B919A68D2800AC0558 /* CustomStaticCells */,
 				A99FCCD819327AE300B26D6A /* SideViewC */,
 				A9B7752219A5201800EA6B69 /* RNGrid */,
 				A93D9F881935500F008B530A /* APTableViewCell.h */,
 				A93D9F891935500F008B530A /* APTableViewCell.m */,
 				A989555E1958D04E0079FBD9 /* APGSTableViewCell.h */,
 				A989555F1958D04E0079FBD9 /* APGSTableViewCell.m */,
-				A9B7752C19A54E1E00EA6B69 /* APFuelPriceCell.h */,
-				A9B7752D19A54E1E00EA6B69 /* APFuelPriceCell.m */,
 				A93D9F8D193550E0008B530A /* CarCellDesign.xib */,
 				A989555C1958CEC40079FBD9 /* GasStationCell.xib */,
 				A9B7752A19A54D3E00EA6B69 /* FuelPriceDetail.xib */,
@@ -520,6 +528,21 @@
 				A9FBF956197DB817001FE719 /* APCarDBAutoCompleteItemsSource.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		A9FC06B919A68D2800AC0558 /* CustomStaticCells */ = {
+			isa = PBXGroup;
+			children = (
+				A9FC06BA19A68D6700AC0558 /* APGasStationInfoCell.h */,
+				A9FC06BB19A68D6700AC0558 /* APGasStationInfoCell.m */,
+				A9FC06BD19A68D7D00AC0558 /* APPathInfoCell.h */,
+				A9FC06BE19A68D7D00AC0558 /* APPathInfoCell.m */,
+				A9FC06C019A68D8D00AC0558 /* APMapInfoCell.h */,
+				A9FC06C119A68D8D00AC0558 /* APMapInfoCell.m */,
+				A9B7752C19A54E1E00EA6B69 /* APFuelPriceCell.h */,
+				A9B7752D19A54E1E00EA6B69 /* APFuelPriceCell.m */,
+			);
+			name = CustomStaticCells;
 			sourceTree = "<group>";
 		};
 		A9FC5058193C745800C883B7 /* Images */ = {
@@ -790,8 +813,11 @@
 				A9FC966219434EC40067875B /* APDirectionsClient.m in Sources */,
 				A9B7752E19A54E1E00EA6B69 /* APFuelPriceCell.m in Sources */,
 				A901461E193BCE36003B826D /* APLine.m in Sources */,
+				A9FC06BF19A68D7D00AC0558 /* APPathInfoCell.m in Sources */,
+				A9FC06BC19A68D6700AC0558 /* APGasStationInfoCell.m in Sources */,
 				A9FC5057193C70D900C883B7 /* MKMapView+ZoomLevel.m in Sources */,
 				A9FC507C193CDC4E00C883B7 /* APGSAnnotation.m in Sources */,
+				A9FC06C219A68D8D00AC0558 /* APMapInfoCell.m in Sources */,
 				A9FC6DF11958CA30007959CA /* APGasStationsTableVC.m in Sources */,
 				A9FC505D193C786800C883B7 /* APGasStationClient.m in Sources */,
 				A9014618193BCC00003B826D /* APDistance.m in Sources */,

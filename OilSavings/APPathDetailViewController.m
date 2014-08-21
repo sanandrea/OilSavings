@@ -7,6 +7,11 @@
 //
 
 #import "APPathDetailViewController.h"
+#import "APPathInfoCell.h"
+#import "APGasStationInfoCell.h"
+#import "APMapInfoCell.h"
+#import "APFuelPriceCell.h"
+
 #import "APGSAnnotation.h"
 
 @interface APPathDetailViewController ()
@@ -28,65 +33,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.miniMap setDelegate:self];
-    
-    CLLocationCoordinate2D center;
-    center.latitude = self.path.southWestBound.latitude + (self.path.northEastBound.latitude - self.path.southWestBound.latitude)/2;
-    center.longitude = self.path.southWestBound.longitude + (self.path.northEastBound.longitude - self.path.southWestBound.longitude)/2;
-    MKCoordinateSpan span;
-    span.latitudeDelta = self.path.northEastBound.latitude - self.path.southWestBound.latitude;
-    span.longitudeDelta = self.path.northEastBound.longitude - self.path.southWestBound.longitude;
-//    ALog("Map bounds SIZE: %f %f",self.miniMap.bounds.size.height, self.miniMap.bounds.size.width);
-    
-    //Make span a little bigger for annotations
-    span.latitudeDelta = span.latitudeDelta + span.latitudeDelta * .4;
-    span.longitudeDelta = span.longitudeDelta + span.longitudeDelta * .25;
-    MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
-    
-    [self.miniMap setRegion:region];
-    
-    
-    APGSAnnotation *annotation;
-    
-    annotation = [[APGSAnnotation alloc]initWithLocation:CLLocationCoordinate2DMake(self.path.gasStation.position.latitude, self.path.gasStation.position.longitude)];
-    annotation.gasStation = self.path.gasStation;
-    [self.miniMap addAnnotation:annotation];
-    
-    MKPointAnnotation *start = [[MKPointAnnotation alloc] init];
-    [start setCoordinate:self.path.src];
-    [start setTitle:@"Start"];
-    [self.miniMap addAnnotation:start];
-    
-    
-    [self.miniMap addOverlay:self.path.overallPolyline];
-    
-    self.gsAddress.text = self.path.gasStation.street;
-    self.gsName.text = self.path.gasStation.name;
-    self.gsLogo.image = [UIImage imageNamed:self.path.gasStation.logo];
-    
-    self.distanceLabel.text = NSLocalizedString(@"Distanza", nil);
-    int dist = [self.path getDistance];
-    
-    if (dist < 750) {
-        self.distanceValue.text = [NSString stringWithFormat:@"%d m", dist];
-    } else {
-        float distKM = dist / 1000;
-        self.distanceValue.text = [NSString stringWithFormat:@"%2.1f Km", distKM];
-    }
-    
-    self.timeLabel.text = NSLocalizedString(@"Tempo", nil);
-    int time = [self.path getTime];
-    self.timeValue.text = [NSString stringWithFormat:@"%d min", (int)(time / 60)];
-    
-    self.priceLabel.text = NSLocalizedString(@"Prezzo", nil);
-#warning TODO
-//    self.priceValue.text = [NSString stringWithFormat:@"%4.3f €/l",[self.path.gasStation getPrice]];
-    
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    ALog("Loading cells");
     static NSString *gsCellIdentifier = @"GasStationInfo";
     static NSString *fpCellIdentifier = @"FuelPriceInfo";
     static NSString *piCellIdentifier = @"PathInfoCell";
@@ -94,19 +46,95 @@
     
     UITableViewCell *cell;
     if (indexPath.section == 0) {
-        cell = [tableView dequeueReusableCellWithIdentifier:gsCellIdentifier];
+        cell = (APGasStationInfoCell*) [tableView dequeueReusableCellWithIdentifier:gsCellIdentifier];
+        [self customizeGSInfoCell:(APGasStationInfoCell*)cell];
     }else if (indexPath.section == 2){
-        cell = [tableView dequeueReusableCellWithIdentifier:piCellIdentifier];
+        cell = (APPathInfoCell*) [tableView dequeueReusableCellWithIdentifier:piCellIdentifier];
+        [self customizePathInfoCell:(APPathInfoCell*)cell];
     }else if (indexPath.section == 3){
         cell = [tableView dequeueReusableCellWithIdentifier:miCellIdentifier];
+        [self customizeMapCell:(APMapInfoCell*)cell];
     }else{
-        cell = [tableView dequeueReusableCellWithIdentifier:fpCellIdentifier];
+        cell = (APFuelPriceCell*) [tableView dequeueReusableCellWithIdentifier:fpCellIdentifier];
+        [self customizeFuelPriceCell:(APFuelPriceCell*)cell atIndex:indexPath.row];
     }
 
     // Configure the cell.
 //    [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        return 61;
+    }else if (indexPath.section == 2){
+        return 36;
+    }else if (indexPath.section == 3){
+        return 151;
+    }else{
+        return 25;
+    }
+}
+
+- (void) customizeMapCell:(APMapInfoCell*)cell{
+    [cell.miniMap setDelegate:self];
+    
+    CLLocationCoordinate2D center;
+    center.latitude = self.path.southWestBound.latitude + (self.path.northEastBound.latitude - self.path.southWestBound.latitude)/2;
+    center.longitude = self.path.southWestBound.longitude + (self.path.northEastBound.longitude - self.path.southWestBound.longitude)/2;
+    MKCoordinateSpan span;
+    span.latitudeDelta = self.path.northEastBound.latitude - self.path.southWestBound.latitude;
+    span.longitudeDelta = self.path.northEastBound.longitude - self.path.southWestBound.longitude;
+    //    ALog("Map bounds SIZE: %f %f",self.miniMap.bounds.size.height, self.miniMap.bounds.size.width);
+    
+    //Make span a little bigger for annotations
+    span.latitudeDelta = span.latitudeDelta + span.latitudeDelta * .4;
+    span.longitudeDelta = span.longitudeDelta + span.longitudeDelta * .25;
+    MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
+    
+    [cell.miniMap setRegion:region];
+    
+    
+    APGSAnnotation *annotation;
+    
+    annotation = [[APGSAnnotation alloc]initWithLocation:CLLocationCoordinate2DMake(self.path.gasStation.position.latitude, self.path.gasStation.position.longitude)];
+    annotation.gasStation = self.path.gasStation;
+    [cell.miniMap addAnnotation:annotation];
+    
+    MKPointAnnotation *start = [[MKPointAnnotation alloc] init];
+    [start setCoordinate:self.path.src];
+    [start setTitle:@"Start"];
+    [cell.miniMap addAnnotation:start];
+    
+    
+    [cell.miniMap addOverlay:self.path.overallPolyline];
+}
+
+- (void) customizeGSInfoCell:(APGasStationInfoCell*)cell{
+    cell.gsAddress.text = self.path.gasStation.street;
+    cell.gsName.text = self.path.gasStation.name;
+    cell.gsImage.image = [UIImage imageNamed:self.path.gasStation.logo];
+}
+
+- (void) customizePathInfoCell:(APPathInfoCell*)cell{
+    int dist = [self.path getDistance];
+    
+    if (dist < 750) {
+        cell.distanceValue.text = [NSString stringWithFormat:@"%d m", dist];
+    } else {
+        float distKM = dist / 1000;
+        cell.distanceValue.text = [NSString stringWithFormat:@"%2.1f Km", distKM];
+    }
+    
+    int time = [self.path getTime];
+    cell.timeValue.text = [NSString stringWithFormat:@"%d min", (int)(time / 60)];
+}
+
+- (void)customizeFuelPriceCell:(APFuelPriceCell*)cell atIndex:(NSInteger)index{
+    cell.fuelLabel.text = NSLocalizedString(@"Prezzo", nil);
+    cell.fuelPrice.text = [NSString stringWithFormat:@"%4.3f €/l",[self.path.gasStation getPrice]];
+
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -191,7 +219,7 @@
             
             
             // Create string drawing context
-            /*
+            
             UIFont *font = [UIFont fontWithName:@"DBLCDTempBlack" size:8.0];
             NSString * num = [NSString stringWithFormat:@"%4.3f",[gsn.gasStation getPrice]];
             NSDictionary *textAttributes = @{NSFontAttributeName: font,
@@ -213,7 +241,7 @@
                       options:NSStringDrawingUsesLineFragmentOrigin
                    attributes:textAttributes
                       context:drawingContext];
-            */
+            
             UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             

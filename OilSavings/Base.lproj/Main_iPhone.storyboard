@@ -157,7 +157,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GasStationInfo" rowHeight="61" id="1ct-os-f8f">
+                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GasStationInfo" rowHeight="61" id="1ct-os-f8f" customClass="APGasStationInfoCell">
                                 <rect key="frame" x="0.0" y="119" width="320" height="61"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="1ct-os-f8f" id="lnI-B7-MAu">
@@ -183,8 +183,13 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="gsAddress" destination="W6O-Lg-ptA" id="cKt-V1-IRA"/>
+                                    <outlet property="gsImage" destination="osT-m3-r6f" id="sEv-UT-fpz"/>
+                                    <outlet property="gsName" destination="JVh-Ws-ie4" id="tBO-s0-hDj"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FuelPriceInfo" rowHeight="22" id="hq1-3h-eoh">
+                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FuelPriceInfo" rowHeight="22" id="hq1-3h-eoh" customClass="APFuelPriceCell">
                                 <rect key="frame" x="0.0" y="180" width="320" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hq1-3h-eoh" id="OFX-Jv-ma8">
@@ -192,7 +197,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jMy-0t-5YI">
-                                            <rect key="frame" x="20" y="0.0" width="90" height="21"/>
+                                            <rect key="frame" x="57" y="0.0" width="90" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="highlightedColor"/>
@@ -203,10 +208,19 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j2u-tL-kWN">
+                                            <rect key="frame" x="18" y="0.0" width="21" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="fuelImage" destination="j2u-tL-kWN" id="6rF-gu-Q09"/>
+                                    <outlet property="fuelLabel" destination="jMy-0t-5YI" id="WEs-Gq-NEU"/>
+                                    <outlet property="fuelPrice" destination="li9-gB-BGV" id="Oso-Um-AOP"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PathInfoCell" rowHeight="36" id="Wky-5X-nmz">
+                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PathInfoCell" rowHeight="36" id="Wky-5X-nmz" customClass="APPathInfoCell">
                                 <rect key="frame" x="0.0" y="202" width="320" height="36"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wky-5X-nmz" id="xSX-rk-sST">
@@ -235,8 +249,12 @@
                                         </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="distanceValue" destination="byL-Rj-vXB" id="cFt-xv-If5"/>
+                                    <outlet property="timeValue" destination="oyT-Qr-RFS" id="KYQ-5H-2yh"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MapInfoCell" rowHeight="153" id="eXT-Xq-bo6">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MapInfoCell" rowHeight="153" id="eXT-Xq-bo6" customClass="APMapInfoCell">
                                 <rect key="frame" x="0.0" y="238" width="320" height="153"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eXT-Xq-bo6" id="vQL-k2-GbM">
@@ -244,11 +262,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="D5a-my-sbw">
-                                            <rect key="frame" x="0.0" y="-5" width="320" height="152"/>
+                                            <rect key="frame" x="0.0" y="1" width="320" height="151"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </mapView>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="miniMap" destination="D5a-my-sbw" id="pqh-Pi-xtc"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
