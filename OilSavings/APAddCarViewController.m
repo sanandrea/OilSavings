@@ -141,22 +141,27 @@ int SLIDER_STEP = 5;
 {
     if ([self.brandSearch.text length] == 0) {
         [self.brandSearch resignFirstResponder];
+        self.modelSearch.text = @"";
+        self.modelSet = NO;
     }
     if ([self.modelSearch.text length] == 0) {
         [self.modelSearch resignFirstResponder];
+        
     }
     [self.freindlyNameText resignFirstResponder];
     if ([self.freindlyNameText.text length] > 0) {
         self.nameSet = YES;
-        [self checkifCanSave];
     }
+    [self checkifCanSave];
 }
 - (void) userEnteredName{
     if ([self.freindlyNameText.text length] > 0) {
 //        ALog("Name was set");
         self.nameSet = YES;
-        [self checkifCanSave];
+    }else{
+        self.nameSet = NO;
     }
+    [self checkifCanSave];
 }
 
 -(IBAction)cashSlider:(id)sender{
@@ -259,6 +264,8 @@ int SLIDER_STEP = 5;
 - (void) checkifCanSave{
     if (self.nameSet && self.modelSet) {
         self.saveButton.enabled = YES;
+    }else{
+        self.saveButton.enabled = NO;
     }
 }
 
