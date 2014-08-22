@@ -16,6 +16,8 @@
 #import "APGeocodeClient.h"
 #import "APPathOptimizer.h"
 #import "APGasStationsTableVC.h"
+#import "APPathDetailViewController.h"
+#import "APDirectionsClient.h"
 #import "UINavigationController+M13ProgressViewBar.h"
 
 #define ZOOM_LEVEL 14
@@ -23,6 +25,12 @@ static float kAnnotationPadding = 10.0f;
 static float kCallOutHeight = 40.0f;
 static float kLogoHeightPadding = 14.0f;
 static float kTextPadding = 10.0f;
+
+//When user taps on an annotation on Map we
+//have to find path only for a single Gas Station
+//PorkAround: put index of request to a high static value in order to distinguish it
+
+static int RESOLVE_SINGLE_PATH = 99999;
 
 @interface APMapViewController ()
 
@@ -293,6 +301,14 @@ static float kTextPadding = 10.0f;
 #pragma mark - Path Available
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
 //    ALog("Found path in map is called");
+    
+    //User clicked on annotation
+    if (index == RESOLVE_SINGLE_PATH) {
+        self.bestPath = path;
+        [self performSegueWithIdentifier:@"SinglePathDetail" sender:self];
+        return;
+    }
+    
     //Add to path array
     [self.paths addObject:path];
     
@@ -334,6 +350,19 @@ static float kTextPadding = 10.0f;
     }
 }
 
+-(void)resolveSinglePath:(APGasStation*)gasStation{
+    APPath *path;
+    if (CLLocationCoordinate2DIsValid(self.dstCoord)) {
+        path = [[APPath alloc]initWith:self.srcCoord and:self.dstCoord andGasStation:gasStation];
+        path.hasDestination = YES;
+    }else{
+        path = [[APPath alloc]initWith:self.srcCoord andGasStation:gasStation];
+    }
+    
+    [APDirectionsClient findDirectionsOfPath:path indexOfRequest:RESOLVE_SINGLE_PATH delegateTo:self];
+    
+}
+
 
 #pragma mark - Options Protocol
 - (void)optionsController:(APOptionsViewController*) controller didfinishWithSave:(BOOL)save{
@@ -368,6 +397,8 @@ static float kTextPadding = 10.0f;
     if ([annotation isKindOfClass:[APGSAnnotation class]])
     {
         ALog("clicked Annotation");
+        
+        [self resolveSinglePath:((APGSAnnotation*)annotation).gasStation];
         /*
         APGSAnnotation *gsn = (APGSAnnotation*) annotation;
         [APGasStationClient getDetailsOfGasStation:gsn.gasStation intoDict:nil];
@@ -575,6 +606,9 @@ static float kTextPadding = 10.0f;
         tableGS.gasPaths = self.paths;
         tableGS.sortType = kSortRandom;
         
+    }else if ([[segue identifier] isEqualToString:@"SinglePathDetail"]){
+        APPathDetailViewController *pathDetailVC = (APPathDetailViewController*)[segue destinationViewController];
+        pathDetailVC.path = self.bestPath;
     }
 }
 

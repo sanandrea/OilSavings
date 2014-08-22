@@ -85,6 +85,7 @@
                         <outlet property="showGSButton" destination="vZr-15-qpf" id="6qX-6x-QIl"/>
                         <outlet property="sidebarButton" destination="uFf-jF-wgu" id="W1G-U5-lsJ"/>
                         <segue destination="rHi-go-ngW" kind="push" identifier="OptionsSegue" id="aqP-dL-QcQ"/>
+                        <segue destination="hGh-yB-ROa" kind="push" identifier="SinglePathDetail" id="zLd-2L-Yx3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P2U-pe-OsU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -740,4 +741,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="zLd-2L-Yx3"/>
+    </inferredMetricsTieBreakers>
 </document>
