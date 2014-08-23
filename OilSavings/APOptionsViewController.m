@@ -20,11 +20,17 @@ static int MAX_LINEAR = 40;
 
 @interface APOptionsViewController ()
 
+@property (nonatomic, strong) UISearchBar *selected;
+@property (nonatomic, strong) NSMutableArray *fuelStringsArray;
+
 @property IBOutlet UISearchBar *src;
 @property IBOutlet UISearchBar *dst;
-@property (nonatomic, strong) UISearchBar *selected;
 @property (weak, nonatomic) IBOutlet UISlider* cashSliderControl;
 @property (weak, nonatomic) IBOutlet UILabel* cashLabel;
+@property (weak, nonatomic) IBOutlet UILabel* fuelLabel;
+@property (weak, nonatomic) IBOutlet UILabel* srcLabel;
+@property (weak, nonatomic) IBOutlet UILabel* dstLabel;
+@property (nonatomic, weak) IBOutlet UIPickerView *energyTypeSelect;
 
 @end
 
@@ -44,11 +50,22 @@ static int MAX_LINEAR = 40;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.fuelStringsArray = [[NSMutableArray alloc] initWithCapacity:ENERGIES_COUNT];
+    
+    for (int i = 0; i < ENERGIES_COUNT; i++) {
+        [self.fuelStringsArray addObject:[APConstants getEnergyLongNameForType:(ENERGY_TYPE)i]];
+    }
+    
+
     [self.cashSliderControl setMinimumValue:0];
     [self.cashSliderControl setMaximumValue:(MAX_AMOUNT - MIN_AMOUNT)/INC_STEP + 2];
     
     [self.cashSliderControl setValue:[self convertAmount2Index:self.cashAmount]];
     [self.cashLabel setText:[NSString stringWithFormat:@"%ld",(long)self.cashAmount]];
+    
+    self.srcLabel.text = NSLocalizedString(@"Da", @"Options source address label");
+    self.dstLabel.text = NSLocalizedString(@"A", @"Options destination address label");
+    self.fuelLabel.text = NSLocalizedString(@"Carburante", @"Fuel select label");
     
     if (self.srcAddr != nil) {
         self.src.placeholder = self.srcAddr;
@@ -77,6 +94,7 @@ static int MAX_LINEAR = 40;
                                                         usingSource:[[TRGoogleMapsAutocompleteItemsSource alloc] initWithMinimumCharactersToTrigger:2 apiKey:GOOGLE_API_KEY]
                                                         cellFactory:[[TRGoogleMapsAutocompletionCellFactory alloc] initWithCellForegroundColor:[UIColor lightGrayColor] fontSize:14]
                                                        presentingIn:self];
+    _autocompleteSrc.topMargin = -55.f;
     for (UIView *subView in self.src.subviews){
         for (UIView *secView in subView.subviews){
             if ([secView isKindOfClass:[UITextField class]])
@@ -91,7 +109,7 @@ static int MAX_LINEAR = 40;
                                                         usingSource:[[TRGoogleMapsAutocompleteItemsSource alloc] initWithMinimumCharactersToTrigger:2 apiKey:GOOGLE_API_KEY]
                                                         cellFactory:[[TRGoogleMapsAutocompletionCellFactory alloc] initWithCellForegroundColor:[UIColor lightGrayColor] fontSize:14]
                                                        presentingIn:self];
-    
+    _autocompleteDst.topMargin = -55.f;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
@@ -159,6 +177,35 @@ static int MAX_LINEAR = 40;
 
 - (IBAction)cancel:(id)sender{
     [self.delegate optionsController:self didfinishWithSave:NO];
+}
+
+#pragma mark - Picker View Protocol
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return ENERGIES_COUNT;
+}
+
+//- (NSString *)pickerView:(UIPickerView *)pickerView
+//             titleForRow:(NSInteger)row
+//            forComponent:(NSInteger)component
+//{
+//    return _countryNames[row];
+//}
+
+-(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, 44)];
+//    label.backgroundColor = [UIColor lightGrayColor];
+//    label.textColor = [UIColor colorWithRed:100.f green:122.f blue:162.f alpha:1.f];
+    label.font = [UIFont boldSystemFontOfSize:14.0f];
+    label.text = [self.fuelStringsArray objectAtIndex:row];
+    label.textAlignment = NSTextAlignmentCenter;
+    
+    return label;
 }
 
 

@@ -13,7 +13,8 @@
 @protocol OptimizationOptions;
 
 
-@interface APOptionsViewController : UIViewController<UISearchBarDelegate>{
+@interface APOptionsViewController : UITableViewController<UISearchBarDelegate,
+UIPickerViewDelegate, UIPickerViewDataSource>{
     TRAutocompleteView *_autocompleteSrc;
     TRAutocompleteView *_autocompleteDst;
 }
