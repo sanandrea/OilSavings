@@ -42,6 +42,7 @@
 - (id) initWith:(CLLocationCoordinate2D)source and:(CLLocationCoordinate2D)destination andGasStation:(APGasStation*)gs;
 
 - (void) constructMKPolyLines;
+- (float) calculatePathValueForEnergyType:(ENERGY_TYPE)eType;
 
 //no need to expose this
 //- (void) calculatePathValueWithCar:(APCar*)car;

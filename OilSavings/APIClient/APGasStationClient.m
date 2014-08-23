@@ -96,7 +96,7 @@ static float const AREA_DISTANCE = 2.5;
             gs = [[APGasStation alloc]initWithDict:dict andFuelType:self.fuel];
             [self.gasStations addObject:gs];
         }
-        [self .delegate gasStation:self didFinishWithStations:YES];
+        [self.delegate gasStation:self didFinishWithStations:YES];
         
         for (APGasStation *ags in self.gasStations) {
             [APGasStationClient getDetailsOfGasStation:ags intoDict:nil];

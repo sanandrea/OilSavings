@@ -155,6 +155,9 @@
     
     int time = [self.path getTime];
     cell.timeValue.text = [NSString stringWithFormat:@"%d min", (int)(time / 60)];
+    
+    ALog("Fuel amount %4.2f", [self.path calculatePathValueForEnergyType:self.path.gasStation.type]);
+    cell.fuelValue.text = [NSString stringWithFormat:@"%4.2f Litri", [self.path calculatePathValueForEnergyType:self.path.gasStation.type]];
 }
 
 - (void)customizeFuelPriceCell:(APFuelPriceCell*)cell atIndex:(NSInteger)index{

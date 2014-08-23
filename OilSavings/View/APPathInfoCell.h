@@ -11,4 +11,5 @@
 @interface APPathInfoCell : UITableViewCell
 @property (nonatomic, weak) IBOutlet UILabel *timeValue;
 @property (nonatomic, weak) IBOutlet UILabel *distanceValue;
+@property (nonatomic, weak) IBOutlet UILabel *fuelValue;
 @end

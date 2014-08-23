@@ -305,6 +305,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
     //User clicked on annotation
     if (index == RESOLVE_SINGLE_PATH) {
         self.bestPath = path;
+        path.car = self.myCar;
+        path.import = self.cashAmount;
         [self performSegueWithIdentifier:@"SinglePathDetail" sender:self];
         return;
     }

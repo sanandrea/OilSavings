@@ -106,6 +106,18 @@
     //ALog("Distanze is %d and expense is %f", [self getDistance], self.pathFuelExpense);
 }
 
+
+- (float) calculatePathValueForEnergyType:(ENERGY_TYPE)eType{
+    float expense = 0;
+    for (APLine *line in self.lines) {
+        for (APStep *step in line.steps) {
+            
+            expense += [self calculateExpense:[step getVelocity] forDistance:step.stepDistance withCar:self.car];
+        }
+    }
+    ALog("Expense is %f",expense);
+    return ((float)self.import)/[self.gasStation getPrice:eType] - expense;
+}
 - (float) calculateExpense:(float)velocity forDistance:(APDistance *)distance withCar:(APCar*)car{
     //FC = a/v + b + cv + dv^2
     if (velocity < 0.1) {

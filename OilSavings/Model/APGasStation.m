@@ -33,24 +33,17 @@ static NSDictionary *nameExpansion;
 }
 
 - (id) initWithDict:(NSDictionary*) dict andFuelType:(ENERGY_TYPE) fuelType{
-    self.type = fuelType;
-    
     CLLocationCoordinate2D p;
     p.latitude = [dict[@"lat"] doubleValue];
     p.longitude = [dict[@"lng"] doubleValue];
 
-    if (self.type == kEnergyGasoline) {
-        self.gasolinePrice = [dict[@"price"] floatValue];
-    }else if (self.type == kEnergyDiesel){
-        self.dieselPrice = [dict[@"price"] floatValue];
-    }else if (self.type == kEnergyMethan){
-        self.methanPrice = [dict[@"price"] floatValue];
-    }else if (self.type == kEnergyGPL){
-        self.gplPrice = [dict[@"price"] floatValue];
-    }
+    self = [self initWithPosition:p andName:dict[@"brand"]];
+    self.type = fuelType;
+    
+
+    [self setPrice:[dict[@"price"] floatValue] forEnergyType:self.type];
     self.gasStationID = [dict[@"id"] intValue];
 //    ALog("My Id is: %d",self.gasStationID);
-    self = [self initWithPosition:p andName:dict[@"brand"]];
     return self;
 }
 
@@ -153,10 +146,12 @@ static NSDictionary *nameExpansion;
     [self.energyPrices replaceObjectAtIndex:e withObject:[NSNumber numberWithFloat:p]];
 }
 - (float) getPrice:(ENERGY_TYPE)e{
+    ALog("Price is %f",[[self.energyPrices objectAtIndex:e] floatValue]);
     return [[self.energyPrices objectAtIndex:e] floatValue];
 }
 
 - (float) getPrice{
+    ALog("Type is %d",self.type);
     return [self getPrice:self.type];
 }
 
