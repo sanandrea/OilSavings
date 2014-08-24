@@ -6,16 +6,20 @@
 //  Copyright (c) 2014 Andi Palo. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "APCar.h"
 #import <MapKit/MapKit.h>
-#import "APGasStationClient.h"
-#import "APOptionsViewController.h"
-#import "RNGridMenu.h"
-#import "APNetworkAPI.h"
+#import <Foundation/Foundation.h>
 
-@interface APMapViewController : UIViewController <CLLocationManagerDelegate, APNetworkAPI,
+#import "APCar.h"
+#import "APGasStationClient.h"
+#import "APNetworkAPI.h"
+#import "APOptionsViewController.h"
+
+#import "GAITrackedViewController.h"
+#import "RNGridMenu.h"
+
+
+@interface APMapViewController : GAITrackedViewController <CLLocationManagerDelegate, APNetworkAPI,
 MKMapViewDelegate, OptimizationOptions, RNGridMenuDelegate>
 {
     CLLocationManager *locationManager;

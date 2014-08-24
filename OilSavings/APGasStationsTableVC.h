@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GADInterstitial.h"
 
-@interface APGasStationsTableVC : UITableViewController <UITableViewDelegate>
+@interface APGasStationsTableVC : UITableViewController <UITableViewDelegate, GADInterstitialDelegate>{
+    GADInterstitial *interstitial_;
+}
 
 @property (nonatomic, strong) NSMutableArray *gasPaths;
 @property (nonatomic) SORT_TYPE sortType;
@@ -17,6 +20,8 @@
 - (IBAction)sortByDistance:(id)sender;
 - (IBAction)sortByTime:(id)sender;
 - (IBAction)sortByFuel:(id)sender;
+
+
 
 
 @end

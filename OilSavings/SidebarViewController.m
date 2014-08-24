@@ -76,6 +76,7 @@
 
 #pragma mark - Table view Delegate for Cell Selection
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     //Get MapViewController
     UINavigationController* nvc = (UINavigationController*) self.revealViewController.frontViewController;
     APMapViewController* mvc = (APMapViewController*) nvc.topViewController;

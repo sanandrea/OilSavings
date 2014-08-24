@@ -158,7 +158,7 @@
         querySQL = [NSString stringWithFormat:@"SELECT id,energy FROM models where model = '%@'",model];
         
         const char *query_stmt = [querySQL UTF8String];
-        NSUInteger rowID;
+        int rowID;
         if (sqlite3_prepare_v2(db, query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
             while (sqlite3_step(statement) == SQLITE_ROW) {

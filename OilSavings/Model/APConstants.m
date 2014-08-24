@@ -19,10 +19,15 @@ NSString *const kCashAmount = @"deafultCashAmount";
 NSString *const GOOGLE_API_KEY = @"AIzaSyDk2W4Au5SlQC5WPpcFFEpy8I7PTnZtvno";
 NSString *const kDefaultTankCapacity = @"defaultTankCapa";
 
+NSString *const kAdUnitID = @"ca-app-pub-4611193659291268/2158049908";
+NSString *const kTrackingID = @"UA-54135915-1";
+
 const int REQUEST_BUNDLE = 5;
 
 //
 const int ENERGIES_COUNT = 6;
+
+const int kDEBUG = 0;
 
 const CLLocationDegrees emptyLocation = -1000.0;
 const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, emptyLocation};

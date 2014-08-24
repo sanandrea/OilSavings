@@ -10,9 +10,8 @@
 #import <MapKit/MapKit.h>
 #import "APPath.h"
 
-@interface APPathDetailViewController : UITableViewController<MKMapViewDelegate>
+@interface APPathDetailViewController : UITableViewController<MKMapViewDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, strong) APPath *path;
-
 
 @end

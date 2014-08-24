@@ -116,10 +116,10 @@ static float const AREA_DISTANCE = 2.5;
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [manager.requestSerializer setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
     
-    ALog("Gas station Id is %d",gst.gasStationID);
+    ALog("Gas station Id is %lu",gst.gasStationID);
     
     NSArray* objs = [[NSArray alloc] initWithObjects:
-                     [NSNumber numberWithInt:gst.gasStationID],
+                     [NSNumber numberWithUnsignedInteger:gst.gasStationID],
                      @"getStation",
                      nil];
     NSArray* keys = [[NSArray alloc] initWithObjects:

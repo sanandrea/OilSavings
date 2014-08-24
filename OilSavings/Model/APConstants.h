@@ -17,11 +17,16 @@ extern NSString *const kPreferredCar;
 extern NSString *const kCashAmount;
 extern NSString *const GOOGLE_API_KEY;
 extern NSString *const kDefaultTankCapacity;
+extern NSString *const kAdUnitID;
+extern NSString *const kTrackingID;
 
 //how much directions requests to wait before updating polyline of best path.
 extern const int REQUEST_BUNDLE;
 //Number of energy types
 extern const int ENERGIES_COUNT;
+
+extern const int kDEBUG;
+
 
 extern const CLLocationDegrees emptyLocation;
 extern const CLLocationCoordinate2D emptyLocationCoordinate;

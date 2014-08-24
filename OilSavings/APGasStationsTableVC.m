@@ -31,6 +31,12 @@
 {
     [super viewDidLoad];
     
+    
+    interstitial_ = [[GADInterstitial alloc] init];
+    interstitial_.delegate = self;
+    interstitial_.adUnitID = kAdUnitID;
+    [interstitial_ loadRequest:[GADRequest request]];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -152,6 +158,27 @@
         [self.tableView reloadData];
     }
 }
+
+
+#pragma mark - Google AdMob Delegate
+- (void)interstitialDidReceiveAd:(GADInterstitial *)interstitial {
+    [interstitial_ presentFromRootViewController:self];    
+}
+
+- (void)interstitial:(GADInterstitial *)interstitial
+didFailToReceiveAdWithError:(GADRequestError *)error {
+    
+    // Alert the error.
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GADRequestError"
+                                                    message:[error localizedDescription]
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Drat"
+                                          otherButtonTitles:nil];
+    [alert show];
+    
+    
+}
+
 
 
 /*

@@ -38,6 +38,7 @@
     self.fuels = [self.path.gasStation getAvailableFuelTypes];
 }
 
+#pragma mark - Tableview deledate methods
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -103,6 +104,21 @@
     return sectionName;
 }
 
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 1) {
+        return [self.path.gasStation getNumberOfFuelsAvailable];
+    }else{
+        return 1;
+    }
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 4;
+}
+
+#pragma mark - Custom Cells Building
+
 - (void) customizeMapCell:(APMapInfoCell*)cell{
     [cell.miniMap setDelegate:self];
     
@@ -156,9 +172,9 @@
     int time = [self.path getTime];
     cell.timeValue.text = [NSString stringWithFormat:@"%d min", (int)(time / 60)];
     
-    ALog("Fuel amount %4.2f", [self.path calculatePathValueForEnergyType:self.path.gasStation.type]);
     cell.fuelValue.text = [NSString stringWithFormat:@"%4.2f Litri", [self.path calculatePathValueForEnergyType:self.path.gasStation.type]];
 }
+
 
 - (void)customizeFuelPriceCell:(APFuelPriceCell*)cell atIndex:(NSInteger)index{
     NSInteger fuelIndex = [[self.fuels objectAtIndex:index] intValue];
@@ -168,19 +184,48 @@
 
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (section == 1) {
-        return [self.path.gasStation getNumberOfFuelsAvailable];
-    }else{
-        return 1;
-    }
+#pragma mark - Action sheet
+
+-(IBAction)goToMapApp:(id)sender{
+    NSString *iosMaps = NSLocalizedString(@"Maps", @"Open location in ios maps");
+    NSString *googleMaps = NSLocalizedString(@"Google Maps", @"Open location in google maps");
+
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Apri in", @"open in")
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:iosMaps,googleMaps,nil];
+    actionSheet.actionSheetStyle = UIActionSheetStyleAutomatic;
+    [actionSheet showFromToolbar:self.navigationController.toolbar];
 }
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 4;
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    CLLocationCoordinate2D rdOfficeLocation = CLLocationCoordinate2DMake(31.20691,121.477847);
+    if (buttonIndex==0) {
+        //Apple Maps, using the MKMapItem class
+        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:rdOfficeLocation addressDictionary:nil];
+        MKMapItem *item = [[MKMapItem alloc] initWithPlacemark:placemark];
+        item.name = @"ReignDesign Office";
+        [item openInMapsWithLaunchOptions:nil];
+    } else if (buttonIndex==1) {
+        //Google Maps
+        //construct a URL using the comgooglemaps schema
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"comgooglemaps://?center=%f,%f",rdOfficeLocation.latitude,rdOfficeLocation.longitude]];
+        if (![[UIApplication sharedApplication] canOpenURL:url]) {
+            NSLog(@"Google Maps app is not installed");
+            //left as an exercise for the reader: open the Google Maps mobile website instead!
+        } else {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
+    
+    
+    [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
+- (void)actionSheetCancel:(UIActionSheet *)actionSheet{
+    [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+}
+#pragma mark - Map interactions
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
 {
     MKPolyline *route = overlay;

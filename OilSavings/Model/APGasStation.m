@@ -146,12 +146,10 @@ static NSDictionary *nameExpansion;
     [self.energyPrices replaceObjectAtIndex:e withObject:[NSNumber numberWithFloat:p]];
 }
 - (float) getPrice:(ENERGY_TYPE)e{
-    ALog("Price is %f",[[self.energyPrices objectAtIndex:e] floatValue]);
     return [[self.energyPrices objectAtIndex:e] floatValue];
 }
 
 - (float) getPrice{
-    ALog("Type is %d",self.type);
     return [self getPrice:self.type];
 }
 

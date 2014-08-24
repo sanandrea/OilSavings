@@ -57,6 +57,10 @@
 		A9B7752919A520F600EA6B69 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B7752819A520F600EA6B69 /* Accelerate.framework */; };
 		A9B7752B19A54D3E00EA6B69 /* FuelPriceDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B7752A19A54D3E00EA6B69 /* FuelPriceDetail.xib */; };
 		A9B7752E19A54E1E00EA6B69 /* APFuelPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7752D19A54E1E00EA6B69 /* APFuelPriceCell.m */; };
+		A9C5F06B19AA1AF900466CC2 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C5F06919AA1ADE00466CC2 /* libGoogleAdMobAds.a */; };
+		A9C5F0D319AA1E2C00466CC2 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C5F0D219AA1E2C00466CC2 /* libGoogleAnalyticsServices.a */; };
+		A9C5F0D519AA1EE400466CC2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C5F0D419AA1EE400466CC2 /* SystemConfiguration.framework */; };
+		A9C5F0D719AA1EFC00466CC2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C5F0D619AA1EFC00466CC2 /* libz.dylib */; };
 		A9C711711932284B00E8EEF9 /* APCar.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C711701932284B00E8EEF9 /* APCar.m */; };
 		A9C711721932284B00E8EEF9 /* APCar.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C711701932284B00E8EEF9 /* APCar.m */; };
 		A9C71175193229A300E8EEF9 /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C71174193229A300E8EEF9 /* APConstants.m */; };
@@ -209,6 +213,32 @@
 		A9B7752A19A54D3E00EA6B69 /* FuelPriceDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FuelPriceDetail.xib; sourceTree = "<group>"; };
 		A9B7752C19A54E1E00EA6B69 /* APFuelPriceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APFuelPriceCell.h; sourceTree = "<group>"; };
 		A9B7752D19A54E1E00EA6B69 /* APFuelPriceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APFuelPriceCell.m; sourceTree = "<group>"; };
+		A9C5F05D19AA1ADE00466CC2 /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
+		A9C5F05E19AA1ADE00466CC2 /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
+		A9C5F05F19AA1ADE00466CC2 /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
+		A9C5F06019AA1ADE00466CC2 /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerView.h; sourceTree = "<group>"; };
+		A9C5F06119AA1ADE00466CC2 /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerViewDelegate.h; sourceTree = "<group>"; };
+		A9C5F06219AA1ADE00466CC2 /* GADInAppPurchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInAppPurchase.h; sourceTree = "<group>"; };
+		A9C5F06319AA1ADE00466CC2 /* GADInAppPurchaseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInAppPurchaseDelegate.h; sourceTree = "<group>"; };
+		A9C5F06419AA1ADE00466CC2 /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitial.h; sourceTree = "<group>"; };
+		A9C5F06519AA1ADE00466CC2 /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitialDelegate.h; sourceTree = "<group>"; };
+		A9C5F06619AA1ADE00466CC2 /* GADModules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADModules.h; sourceTree = "<group>"; };
+		A9C5F06719AA1ADE00466CC2 /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequest.h; sourceTree = "<group>"; };
+		A9C5F06819AA1ADE00466CC2 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
+		A9C5F06919AA1ADE00466CC2 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
+		A9C5F0C819AA1E2C00466CC2 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		A9C5F0C919AA1E2C00466CC2 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		A9C5F0CA19AA1E2C00466CC2 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
+		A9C5F0CB19AA1E2C00466CC2 /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProduct.h; sourceTree = "<group>"; };
+		A9C5F0CC19AA1E2C00466CC2 /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProductAction.h; sourceTree = "<group>"; };
+		A9C5F0CD19AA1E2C00466CC2 /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommercePromotion.h; sourceTree = "<group>"; };
+		A9C5F0CE19AA1E2C00466CC2 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		A9C5F0CF19AA1E2C00466CC2 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		A9C5F0D019AA1E2C00466CC2 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		A9C5F0D119AA1E2C00466CC2 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		A9C5F0D219AA1E2C00466CC2 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		A9C5F0D419AA1EE400466CC2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A9C5F0D619AA1EFC00466CC2 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A9C7116F1932284B00E8EEF9 /* APCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCar.h; sourceTree = "<group>"; };
 		A9C711701932284B00E8EEF9 /* APCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCar.m; sourceTree = "<group>"; };
 		A9C71173193229A300E8EEF9 /* APConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APConstants.h; sourceTree = "<group>"; };
@@ -298,6 +328,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9C5F0D719AA1EFC00466CC2 /* libz.dylib in Frameworks */,
+				A9C5F0D519AA1EE400466CC2 /* SystemConfiguration.framework in Frameworks */,
+				A9C5F0D319AA1E2C00466CC2 /* libGoogleAnalyticsServices.a in Frameworks */,
+				A9C5F06B19AA1AF900466CC2 /* libGoogleAdMobAds.a in Frameworks */,
 				A9B7752919A520F600EA6B69 /* Accelerate.framework in Frameworks */,
 				A9B7752719A520F000EA6B69 /* QuartzCore.framework in Frameworks */,
 				A901462B193BEE1C003B826D /* CoreLocation.framework in Frameworks */,
@@ -398,6 +432,8 @@
 		A98D0872192FDC33000DB81D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9C5F0D619AA1EFC00466CC2 /* libz.dylib */,
+				A9C5F0D419AA1EE400466CC2 /* SystemConfiguration.framework */,
 				A9B7752819A520F600EA6B69 /* Accelerate.framework */,
 				A9B7752619A520F000EA6B69 /* QuartzCore.framework */,
 				A9B7752019A51D4E00EA6B69 /* iAd.framework */,
@@ -419,6 +455,7 @@
 		A98D087B192FDC33000DB81D /* OilSavings */ = {
 			isa = PBXGroup;
 			children = (
+				A9C5F05B19AA1ADE00466CC2 /* Google */,
 				A9FC5058193C745800C883B7 /* Images */,
 				A9014629193BEB45003B826D /* APIClient */,
 				A93D9F8719354FDE008B530A /* View */,
@@ -492,6 +529,53 @@
 			);
 			name = RNGrid;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		A9C5F05B19AA1ADE00466CC2 /* Google */ = {
+			isa = PBXGroup;
+			children = (
+				A9C5F0C719AA1E2C00466CC2 /* GoogleAnalytics */,
+				A9C5F05C19AA1ADE00466CC2 /* Admob */,
+			);
+			path = Google;
+			sourceTree = "<group>";
+		};
+		A9C5F05C19AA1ADE00466CC2 /* Admob */ = {
+			isa = PBXGroup;
+			children = (
+				A9C5F05D19AA1ADE00466CC2 /* GADAdMobExtras.h */,
+				A9C5F05E19AA1ADE00466CC2 /* GADAdNetworkExtras.h */,
+				A9C5F05F19AA1ADE00466CC2 /* GADAdSize.h */,
+				A9C5F06019AA1ADE00466CC2 /* GADBannerView.h */,
+				A9C5F06119AA1ADE00466CC2 /* GADBannerViewDelegate.h */,
+				A9C5F06219AA1ADE00466CC2 /* GADInAppPurchase.h */,
+				A9C5F06319AA1ADE00466CC2 /* GADInAppPurchaseDelegate.h */,
+				A9C5F06419AA1ADE00466CC2 /* GADInterstitial.h */,
+				A9C5F06519AA1ADE00466CC2 /* GADInterstitialDelegate.h */,
+				A9C5F06619AA1ADE00466CC2 /* GADModules.h */,
+				A9C5F06719AA1ADE00466CC2 /* GADRequest.h */,
+				A9C5F06819AA1ADE00466CC2 /* GADRequestError.h */,
+				A9C5F06919AA1ADE00466CC2 /* libGoogleAdMobAds.a */,
+			);
+			path = Admob;
+			sourceTree = "<group>";
+		};
+		A9C5F0C719AA1E2C00466CC2 /* GoogleAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				A9C5F0C819AA1E2C00466CC2 /* GAI.h */,
+				A9C5F0C919AA1E2C00466CC2 /* GAIDictionaryBuilder.h */,
+				A9C5F0CA19AA1E2C00466CC2 /* GAIEcommerceFields.h */,
+				A9C5F0CB19AA1E2C00466CC2 /* GAIEcommerceProduct.h */,
+				A9C5F0CC19AA1E2C00466CC2 /* GAIEcommerceProductAction.h */,
+				A9C5F0CD19AA1E2C00466CC2 /* GAIEcommercePromotion.h */,
+				A9C5F0CE19AA1E2C00466CC2 /* GAIFields.h */,
+				A9C5F0CF19AA1E2C00466CC2 /* GAILogger.h */,
+				A9C5F0D019AA1E2C00466CC2 /* GAITrackedViewController.h */,
+				A9C5F0D119AA1E2C00466CC2 /* GAITracker.h */,
+				A9C5F0D219AA1E2C00466CC2 /* libGoogleAnalyticsServices.a */,
+			);
+			path = GoogleAnalytics;
 			sourceTree = "<group>";
 		};
 		A9C7116C1932282000E8EEF9 /* Resources */ = {
@@ -977,6 +1061,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OilSavings/OilSavings-Prefix.pch";
 				INFOPLIST_FILE = "OilSavings/OilSavings-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OilSavings",
+					"$(PROJECT_DIR)/OilSavings/Google/Admob",
+					"$(PROJECT_DIR)/OilSavings/Google/GoogleAnalytics",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -1006,6 +1096,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OilSavings/OilSavings-Prefix.pch";
 				INFOPLIST_FILE = "OilSavings/OilSavings-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OilSavings",
+					"$(PROJECT_DIR)/OilSavings/Google/Admob",
+					"$(PROJECT_DIR)/OilSavings/Google/GoogleAnalytics",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",

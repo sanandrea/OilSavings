@@ -6,19 +6,23 @@
 //  Copyright (c) 2014 Andi Palo. All rights reserved.
 //
 
-#import "APMapViewController.h"
-#import "SWRevealViewController.h"
 #import "APAddCarViewController.h"
 #import "APAppDelegate.h"
-#import "MKMapView+ZoomLevel.h"
-#import "APGasStation.h"
-#import "APGSAnnotation.h"
-#import "APGeocodeClient.h"
-#import "APPathOptimizer.h"
-#import "APGasStationsTableVC.h"
-#import "APPathDetailViewController.h"
 #import "APDirectionsClient.h"
+#import "APGasStation.h"
+#import "APGasStationsTableVC.h"
+#import "APGeocodeClient.h"
+#import "APGSAnnotation.h"
+#import "APMapViewController.h"
+#import "APPathOptimizer.h"
+#import "APPathDetailViewController.h"
+
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+#import "MKMapView+ZoomLevel.h"
+#import "SWRevealViewController.h"
 #import "UINavigationController+M13ProgressViewBar.h"
+
 
 #define ZOOM_LEVEL 14
 static float kAnnotationPadding = 10.0f;
@@ -51,7 +55,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 @property (nonatomic) BOOL bestFound;
 
 //how many directions requests are we making
-@property (nonatomic) int totalRequests;
+@property (nonatomic) NSUInteger totalRequests;
 
 //how many directions requests are processed
 @property (nonatomic) int processedRequests;
@@ -197,6 +201,18 @@ static int RESOLVE_SINGLE_PATH = 99999;
     }
 }
 
+#pragma mark - Reports
+
+-(void)gaiReportKey:(NSString*)k withValue:(NSUInteger)v andLabel:(NSString*)l{
+    // May return nil if a tracker has not yet been initialized with
+    // a property ID.
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UserBehaviour"       // Event category (required)
+                                                          action:k                      // Event action (required)
+                                                           label:l                      // Event label
+                                                           value:[NSNumber numberWithUnsignedLong:v]] build]];    // Event value
+}
 
 #pragma mark - UI Actions
 - (IBAction)options:(id)sender{
@@ -249,7 +265,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 - (void)gridMenu:(RNGridMenu *)gridMenu willDismissWithSelectedItem:(RNGridMenuItem *)item atIndex:(NSInteger)itemIndex{
-    ALog("User selected %d item",itemIndex);
+    ALog("User selected %ld item",(long)itemIndex);
 }
 
 #pragma mark - Network APIs
@@ -414,7 +430,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 {
     if ([annotation isKindOfClass:[APGSAnnotation class]]){
         APGSAnnotation *gsn = (APGSAnnotation*) annotation;
-        NSString *GSAnnotationIdentifier = [NSString stringWithFormat:@"gasStationIdentifier_%d", gsn.gasStation.gasStationID];
+        NSString *GSAnnotationIdentifier = [NSString stringWithFormat:@"gasStationIdentifier_%lu", (unsigned long)gsn.gasStation.gasStationID];
         
         MKAnnotationView *markerView = [theMapView dequeueReusableAnnotationViewWithIdentifier:GSAnnotationIdentifier];
         if (markerView == nil)

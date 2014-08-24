@@ -289,6 +289,15 @@
                             <outlet property="delegate" destination="hGh-yB-ROa" id="UDJ-cr-CLq"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="6js-dO-f20"/>
+                        <barButtonItem systemItem="action" id="Fy4-Es-iYK">
+                            <connections>
+                                <action selector="goToMapApp:" destination="hGh-yB-ROa" id="TlF-Wg-PtN"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="wjT-TG-hvE"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="4qK-oS-IjQ"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sj2-BO-20Z" userLabel="First Responder" sceneMemberID="firstResponder"/>

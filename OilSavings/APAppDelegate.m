@@ -10,6 +10,7 @@
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 #import <AFNetworkActivityLogger.h>
 #import "SWRevealViewController.h"
+#import "GAI.h"
 
 @implementation APAppDelegate
 
@@ -61,21 +62,20 @@
     }
     
     //Override point for customization after application launch.
-    /*
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-        UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-        splitViewController.delegate = (id)navigationController.topViewController;
-        
-        UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
-        APMasterViewController *controller = (APMasterViewController *)masterNavigationController.topViewController;
-        controller.managedObjectContext = self.managedObjectContext;
-    } else {
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle: nil];
-        SidebarViewController *controller = (SidebarViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"MyCarsViewController"];
-        controller.managedObjectContext = self.managedObjectContext;
+    [GAI sharedInstance].dispatchInterval = 120;
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    
+    //careful here before release set to NO
+    if (kDEBUG == 1) {
+        [[GAI sharedInstance] setDryRun:YES];
+    }else if (kDEBUG == 0){
+        [[GAI sharedInstance] setDryRun:NO];
     }
-    */
+    
+    //    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
+    
+    self.tracker = [[GAI sharedInstance] trackerWithName:@"Clubs"
+                                              trackingId:kTrackingID];
     
     // Change the background color of navigation bar
     [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];

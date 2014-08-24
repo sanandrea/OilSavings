@@ -115,7 +115,6 @@
             expense += [self calculateExpense:[step getVelocity] forDistance:step.stepDistance withCar:self.car];
         }
     }
-    ALog("Expense is %f",expense);
     return ((float)self.import)/[self.gasStation getPrice:eType] - expense;
 }
 - (float) calculateExpense:(float)velocity forDistance:(APDistance *)distance withCar:(APCar*)car{
