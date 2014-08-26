@@ -48,7 +48,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 @property (nonatomic) CLLocationCoordinate2D myLocation;
 
 @property (nonatomic) NSInteger cashAmount;
-@property (nonatomic, strong) NSArray *gasStations;
+@property (nonatomic, strong) NSMutableArray *gasStations;
 @property (nonatomic, strong) NSMutableArray *paths;
 
 @property (nonatomic,strong) APPath *bestPath;
@@ -146,7 +146,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
     [locationManager startUpdatingLocation];
     
     if ([locationManager location] !=nil) {
-        [self centerMapInLocation:[locationManager location].coordinate animated:NO];
+        [self centerMapInLocation:[locationManager location].coordinate animated:YES];
     }
     self.mapView.showsUserLocation = YES;
     
@@ -160,7 +160,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
     
     [self findGasStations:self.srcCoord];
     //convert the address so the user has the address in the options VC
-    [APGeocodeClient convertCoordinate:loc ofType:kAddressSrc inDelegate:self];
+    [APGeocodeClient convertCoordinate:loc ofType:kAddressULocation inDelegate:self];
 }
 - (void) viewDidAppear:(BOOL)animated{
     ALog("Map appeared");
@@ -177,9 +177,10 @@ static int RESOLVE_SINGLE_PATH = 99999;
     
     if (!CLLocationCoordinate2DIsValid(self.srcCoord)) {
         self.srcCoord = self.myLocation;
-        [self centerMapInLocation:self.myLocation animated:NO];
     }
-    
+
+    [self centerMapInLocation:self.myLocation animated:YES];
+
     [locationManager stopUpdatingLocation];
 }
 
@@ -262,6 +263,12 @@ static int RESOLVE_SINGLE_PATH = 99999;
         [path setCar:self.myCar];
     }
     
+    //remove existing overlay if any
+    NSArray *pointsArray = [self.mapView overlays];
+    if ([pointsArray count] > 0) {
+        [self.mapView removeOverlays:pointsArray];
+    }
+    
 }
 
 - (void)gridMenu:(RNGridMenu *)gridMenu willDismissWithSelectedItem:(RNGridMenuItem *)item atIndex:(NSInteger)itemIndex{
@@ -280,8 +287,22 @@ static int RESOLVE_SINGLE_PATH = 99999;
 
 - (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations{
     if (newStations) {
-        //remove any existing pin.
-        [self removeAllPinsButUserLocation];
+        
+        if ([self.gasStations count] > 0) {
+            NSMutableArray *toBeDeleted = [[NSMutableArray alloc]init];
+            
+            for (APGasStation *oldGS in self.gasStations) {
+                if (![gsClient.gasStations containsObject:oldGS]) {
+                    [toBeDeleted addObject:oldGS];
+                }
+            }
+            
+            self.gasStations = gsClient.gasStations;
+            
+            
+            //remove any existing pin.
+            [self removeAllPinsExcept:toBeDeleted];
+        }
         
         APGSAnnotation *annotation;
         for (APGasStation *gs in gsClient.gasStations) {
@@ -290,6 +311,15 @@ static int RESOLVE_SINGLE_PATH = 99999;
             [self.mapView addAnnotation:annotation];
         }
         self.gasStations = gsClient.gasStations;
+        
+        if ([self.gasStations count] > 0) {
+            //check if at least one Gas Station is visible
+            [self checkIfAreVisibleGasStations];
+        }else{
+#warning Display pop up or new search
+        }
+    }else{
+#warning Display pop up
     }
     
 }
@@ -311,6 +341,10 @@ static int RESOLVE_SINGLE_PATH = 99999;
 - (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address{
     if (type == kAddressSrc) {
         self.srcAddress = address;
+    }else if (type == kAddressULocation){
+        self.srcAddress = address;
+    }else{
+        self.dstAddress = address;
     }
 }
 
@@ -345,6 +379,9 @@ static int RESOLVE_SINGLE_PATH = 99999;
     if (self.processedRequests == self.totalRequests){
         [self.navigationController finishProgress];
         
+        //Highlight bestGasStation
+        [self setChosenGSRed:self.bestPath.gasStation];
+        
     }
 
 
@@ -353,9 +390,6 @@ static int RESOLVE_SINGLE_PATH = 99999;
 
         //Enable Gas Stations List
         self.showGSButton.enabled = YES;
-        
-        //Test
-        [self setChosenGSRed:self.bestPath.gasStation];
 
         //remove existing overlay if any
         NSArray *pointsArray = [self.mapView overlays];
@@ -508,14 +542,25 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 //removes all annotations except user location
-- (void)removeAllPinsButUserLocation
+- (void)removeAllPinsExcept:(NSArray*)toBeDeletedPins
 {
-    id userLocation = [self.mapView userLocation];
-    NSMutableArray *pins = [[NSMutableArray alloc] initWithArray:[self.mapView annotations]];
-    if ( userLocation != nil ) {
-        [pins removeObject:userLocation]; // avoid removing user location off the map
+    NSMutableArray *pins = [[NSMutableArray alloc] init];
+
+    for (id gsAnnotation in [self.mapView annotations]) {
+        //skip user location
+        if ([gsAnnotation isKindOfClass:[APGSAnnotation class]]) {
+            if ([toBeDeletedPins containsObject:((APGSAnnotation*)gsAnnotation).gasStation]) {
+                [pins addObject:gsAnnotation];
+            }
+        }else{
+            continue;
+        }
     }
     
+//    id userLocation = [self.mapView userLocation];
+//    if ( userLocation != nil ) {
+//        [pins removeObject:userLocation]; // avoid removing user location off the map
+//    }
     [self.mapView removeAnnotations:pins];
 }
 
@@ -601,6 +646,41 @@ static int RESOLVE_SINGLE_PATH = 99999;
     UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return resizedImage;
+}
+
+- (void) checkIfAreVisibleGasStations{
+    //There is at least one Gas Station
+    MKMapRect visibleMapRect = self.mapView.visibleMapRect;
+    NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:visibleMapRect];
+    
+    APGasStation *nearest;
+    CGFloat bestDistance = 999999.f;
+    if ([visibleAnnotations count] == 0) {
+        for (APGasStation *gs in self.gasStations) {
+            CGFloat curDst = [APConstants haversineDistance:self.myLocation.latitude
+                                                           :self.myLocation.longitude
+                                                           :gs.position.latitude
+                                                           :gs.position.longitude];
+            if (curDst < bestDistance) {
+                bestDistance = curDst;
+                nearest = gs;
+            }
+        }
+        
+        //Create a new span that contains this gs plus 15% bigger
+        MKCoordinateSpan span;
+        
+        span.latitudeDelta = (self.myLocation.latitude - nearest.position.latitude) * 2.3f;
+        if (span.latitudeDelta < 0) {
+            span.latitudeDelta = - span.latitudeDelta;
+        }
+        span.longitudeDelta = (self.myLocation.longitude - nearest.position.longitude) * 2.3f;
+        if (span.longitudeDelta < 0) {
+            span.longitudeDelta = - span.longitudeDelta;
+        }
+        MKCoordinateRegion region = MKCoordinateRegionMake(self.myLocation, span);
+        [self.mapView setRegion:region animated:YES];
+    }
 }
 
 #pragma mark - Segues

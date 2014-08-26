@@ -72,7 +72,7 @@
                     <navigationItem key="navigationItem" id="tL6-3j-vWQ">
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" image="carIcon.png" id="uFf-jF-wgu"/>
-                        <barButtonItem key="rightBarButtonItem" image="opzioni.png" id="V7Q-EK-lQF">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="V7Q-EK-lQF">
                             <connections>
                                 <action selector="options:" destination="P8k-qS-1QL" id="W5d-qc-id0"/>
                                 <segue destination="Oaj-Fo-d2y" kind="push" identifier="OptionsSegue" id="BY9-Qa-gw2"/>
@@ -229,33 +229,33 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="byL-Rj-vXB">
-                                            <rect key="frame" x="55" y="7" width="50" height="21"/>
+                                            <rect key="frame" x="48" y="7" width="50" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyT-Qr-RFS">
-                                            <rect key="frame" x="155" y="7" width="66" height="21"/>
+                                            <rect key="frame" x="152" y="7" width="66" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pee-dw-4Mi">
-                                            <rect key="frame" x="253" y="7" width="66" height="21"/>
+                                            <rect key="frame" x="246" y="7" width="66" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="length.png" translatesAutoresizingMaskIntoConstraints="NO" id="jlp-Yn-fPV">
-                                            <rect key="frame" x="20" y="4" width="27" height="27"/>
+                                            <rect key="frame" x="13" y="4" width="27" height="27"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="watch.png" translatesAutoresizingMaskIntoConstraints="NO" id="xs4-VW-BWl">
-                                            <rect key="frame" x="120" y="4" width="27" height="27"/>
+                                            <rect key="frame" x="117" y="4" width="27" height="27"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="oil.png" translatesAutoresizingMaskIntoConstraints="NO" id="JGg-Wc-6jq">
-                                            <rect key="frame" x="218" y="4" width="27" height="27"/>
+                                            <rect key="frame" x="211" y="4" width="27" height="27"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
@@ -369,7 +369,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Le Mie Auto" id="XuM-f0-dCF">
-                        <barButtonItem key="leftBarButtonItem" title="Add" id="3WS-IH-Jgz">
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="3WS-IH-Jgz">
                             <connections>
                                 <segue destination="ETI-87-ckD" kind="modal" identifier="AddNewCar" id="KpQ-sa-Cyn"/>
                             </connections>
@@ -796,7 +796,6 @@
         <image name="location.png" width="25" height="25"/>
         <image name="oil.png" width="25" height="25"/>
         <image name="oil_drop.png" width="30" height="41"/>
-        <image name="opzioni.png" width="26" height="26"/>
         <image name="route.png" width="25" height="25"/>
         <image name="watch.png" width="25" height="25"/>
     </resources>

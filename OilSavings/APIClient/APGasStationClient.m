@@ -116,7 +116,7 @@ static float const AREA_DISTANCE = 2.5;
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [manager.requestSerializer setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
     
-    ALog("Gas station Id is %lu",gst.gasStationID);
+//    ALog("Gas station Id is %lu",(unsigned long)gst.gasStationID);
     
     NSArray* objs = [[NSArray alloc] initWithObjects:
                      [NSNumber numberWithUnsignedInteger:gst.gasStationID],
@@ -136,6 +136,9 @@ static float const AREA_DISTANCE = 2.5;
             return;
         }
         NSDictionary *gasStationInfo = (NSDictionary*) objects[0];
+        
+        gst.street = gasStationInfo[@"address"];
+        gst.postalCode = gasStationInfo[@"street_code"];
         NSArray *fuels = gasStationInfo[@"fuels"];
         NSMutableDictionary *availableFuels = [[NSMutableDictionary alloc]init];
         for (NSDictionary* fuelInfo in fuels) {

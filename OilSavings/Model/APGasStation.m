@@ -174,6 +174,14 @@ static NSDictionary *nameExpansion;
     return result;
 }
 
+- (BOOL)isEqual:(APGasStation*)anObject{
+    if (self.gasStationID == anObject.gasStationID) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
 + (NSString*) logoPath:(NSString*) key{
     NSMutableString * ret = [[NSMutableString alloc] initWithString:imagePrefix];
     [ret appendString:[key lowercaseString]];

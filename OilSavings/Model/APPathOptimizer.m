@@ -88,11 +88,13 @@ static const int SLEEP_INTERVAL = 150000; // 150ms
 }
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
 
-    [APGeocodeClient convertCoordinate:path.gasStation.position found:^(NSString *street, NSString* capCity){
-        path.gasStation.street = street;
-        path.gasStation.postalCode = capCity;
-        
-    }];
+    // The address is retrieved from APGasStationClient
+    
+//    [APGeocodeClient convertCoordinate:path.gasStation.position found:^(NSString *street, NSString* capCity){
+//        path.gasStation.street = street;
+//        path.gasStation.postalCode = capCity;
+//        
+//    }];
 
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate foundPath:path withIndex:0];

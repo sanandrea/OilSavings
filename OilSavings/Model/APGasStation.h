@@ -35,5 +35,6 @@
 - (id) initWithDict:(NSDictionary*) dict andFuelType:(ENERGY_TYPE) e;
 - (NSInteger) getNumberOfFuelsAvailable;
 - (NSArray*) getAvailableFuelTypes;
+- (BOOL)isEqual:(APGasStation*)anObject;
 
 @end

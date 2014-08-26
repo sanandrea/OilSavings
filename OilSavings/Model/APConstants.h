@@ -43,7 +43,8 @@ typedef enum{
 
 typedef enum{
     kAddressSrc,
-    kAddressDst
+    kAddressDst,
+    kAddressULocation
 }ADDRESS_TYPE;
 
 typedef enum{
