@@ -65,6 +65,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *showGSButton;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *recalculate;
 
+
 @end
 
 @implementation APMapViewController
@@ -259,9 +260,13 @@ static int RESOLVE_SINGLE_PATH = 99999;
     
     [self findGasStations:self.srcCoord];
     
-    for (APPath *path in self.paths) {
-        [path setCar:self.myCar];
-    }
+    APGasStation *toBeReverted = self.bestPath.gasStation;
+    
+    [self.paths removeAllObjects];
+    self.bestPath = nil;
+    
+    [self revertChosenGS:toBeReverted];
+    
     
     //remove existing overlay if any
     NSArray *pointsArray = [self.mapView overlays];
@@ -464,7 +469,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 {
     if ([annotation isKindOfClass:[APGSAnnotation class]]){
         APGSAnnotation *gsn = (APGSAnnotation*) annotation;
-        NSString *GSAnnotationIdentifier = [NSString stringWithFormat:@"gasStationIdentifier_%lu", (unsigned long)gsn.gasStation.gasStationID];
+        NSString *GSAnnotationIdentifier = [NSString stringWithFormat:@"gid_%@_%@", gsn.gasStation.name, self.myCar.energy];
         
         MKAnnotationView *markerView = [theMapView dequeueReusableAnnotationViewWithIdentifier:GSAnnotationIdentifier];
         if (markerView == nil)
@@ -577,6 +582,21 @@ static int RESOLVE_SINGLE_PATH = 99999;
         }
     }
 }
+
+- (void)revertChosenGS:(APGasStation *)gs{
+    for (id<MKAnnotation> annotation in self.mapView.annotations){
+        if ([annotation isKindOfClass:[APGSAnnotation class]]){
+            
+            APGSAnnotation *agn = (APGSAnnotation*) annotation;
+            if (agn.gasStation.gasStationID == gs.gasStationID) {
+                MKAnnotationView* anView = [self.mapView viewForAnnotation: annotation];
+                anView.image = [self customizeAnnotationImage:agn.gasStation];
+            }
+            
+        }
+    }
+}
+
 
 - (UIImage*)customizeAnnotationImage:(APGasStation*)gasStation{
     UIImage *markerImage;
