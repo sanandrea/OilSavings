@@ -181,6 +181,8 @@
 
     cell.fuelLabel.text = [APConstants getEnergyLongNameForType:(ENERGY_TYPE)fuelIndex];
     cell.fuelPrice.text = [NSString stringWithFormat:@"%4.3f €/l",[self.path.gasStation getPrice:(ENERGY_TYPE)fuelIndex]];
+    cell.fuelImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"barrel_%@",
+                                                [APConstants getEnergyStringForType:(ENERGY_TYPE) fuelIndex]]];
 
 }
 

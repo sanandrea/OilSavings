@@ -469,7 +469,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 {
     if ([annotation isKindOfClass:[APGSAnnotation class]]){
         APGSAnnotation *gsn = (APGSAnnotation*) annotation;
-        NSString *GSAnnotationIdentifier = [NSString stringWithFormat:@"gid_%@_%@", gsn.gasStation.name, self.myCar.energy];
+        NSString *GSAnnotationIdentifier = [NSString stringWithFormat:@"gid_%lu", (unsigned long)gsn.gasStation.gasStationID];
         
         MKAnnotationView *markerView = [theMapView dequeueReusableAnnotationViewWithIdentifier:GSAnnotationIdentifier];
         if (markerView == nil)
