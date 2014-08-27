@@ -276,6 +276,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
     
     [self revertChosenGS:toBeReverted];
     
+    //Disable Path List
+    self.showGSButton.enabled = NO;
     
     //remove existing overlay if any
     NSArray *pointsArray = [self.mapView overlays];
@@ -396,6 +398,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
         //Highlight bestGasStation
         [self setChosenGSRed:self.bestPath.gasStation];
         
+        //Center map in to include all path
+        [self resizeMapToDiagonalPoints:self.bestPath.southWestBound :self.bestPath.northEastBound];
     }
 
 
@@ -697,20 +701,40 @@ static int RESOLVE_SINGLE_PATH = 99999;
             }
         }
         
-        //Create a new span that contains this gs plus 15% bigger
-        MKCoordinateSpan span;
-        
-        span.latitudeDelta = (self.myLocation.latitude - nearest.position.latitude) * 2.3f;
-        if (span.latitudeDelta < 0) {
-            span.latitudeDelta = - span.latitudeDelta;
-        }
-        span.longitudeDelta = (self.myLocation.longitude - nearest.position.longitude) * 2.3f;
-        if (span.longitudeDelta < 0) {
-            span.longitudeDelta = - span.longitudeDelta;
-        }
-        MKCoordinateRegion region = MKCoordinateRegionMake(self.myLocation, span);
-        [self.mapView setRegion:region animated:YES];
+        [self resizeMapToIncludePoint:nearest.position];
     }
+}
+
+- (void)resizeMapToIncludePoint:(CLLocationCoordinate2D) point{
+    //Create a new span that contains this gs plus 15% bigger
+    MKCoordinateSpan span;
+    
+    span.latitudeDelta = (self.myLocation.latitude - point.latitude) * 2.3f;
+    if (span.latitudeDelta < 0) {
+        span.latitudeDelta = - span.latitudeDelta;
+    }
+    span.longitudeDelta = (self.myLocation.longitude - point.longitude) * 2.3f;
+    if (span.longitudeDelta < 0) {
+        span.longitudeDelta = - span.longitudeDelta;
+    }
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.myLocation, span);
+    [self.mapView setRegion:region animated:YES];
+}
+
+- (void) resizeMapToDiagonalPoints:(CLLocationCoordinate2D)sw :(CLLocationCoordinate2D)ne{
+    CLLocationCoordinate2D center;
+    center.latitude = sw.latitude + (ne.latitude - sw.latitude)/2;
+    center.longitude = sw.longitude + (ne.longitude - sw.longitude)/2;
+    MKCoordinateSpan span;
+    span.latitudeDelta = ne.latitude - sw.latitude;
+    span.longitudeDelta = ne.longitude - sw.longitude;
+    
+    //Make span a little bigger for annotations
+    span.latitudeDelta = span.latitudeDelta + span.latitudeDelta * .4;
+    span.longitudeDelta = span.longitudeDelta + span.longitudeDelta * .25;
+    MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
+    
+    [self.mapView setRegion:region animated:YES];
 }
 
 #pragma mark - Segues

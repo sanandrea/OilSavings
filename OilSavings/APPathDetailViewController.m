@@ -201,22 +201,33 @@
     [actionSheet showFromToolbar:self.navigationController.toolbar];
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    CLLocationCoordinate2D rdOfficeLocation = CLLocationCoordinate2DMake(31.20691,121.477847);
+    CLLocationCoordinate2D destination;
+    
+    
+    if (self.path.hasDestination) {
+        destination = self.path.dst;
+    }else{
+        destination = self.path.gasStation.position;
+    }
+    
     if (buttonIndex==0) {
         //Apple Maps, using the MKMapItem class
-        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:rdOfficeLocation addressDictionary:nil];
+        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:destination addressDictionary:nil];
         MKMapItem *item = [[MKMapItem alloc] initWithPlacemark:placemark];
-        item.name = @"ReignDesign Office";
-        [item openInMapsWithLaunchOptions:nil];
+        item.name = self.path.gasStation.name;
+        
+        NSDictionary *options = @{MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving};
+        [item openInMapsWithLaunchOptions:options];
     } else if (buttonIndex==1) {
         //Google Maps
         //construct a URL using the comgooglemaps schema
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"comgooglemaps://?center=%f,%f",rdOfficeLocation.latitude,rdOfficeLocation.longitude]];
-        if (![[UIApplication sharedApplication] canOpenURL:url]) {
+        NSString *googleMapsURLString = [NSString stringWithFormat:@"http://maps.google.com/?saddr=%1.6f,%1.6f&daddr=%1.6f,%1.6f",self.path.src.latitude, self.path.src.longitude, destination.latitude, destination.latitude];
+        
+        if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:googleMapsURLString]]) {
             NSLog(@"Google Maps app is not installed");
             //left as an exercise for the reader: open the Google Maps mobile website instead!
         } else {
-            [[UIApplication sharedApplication] openURL:url];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:googleMapsURLString]];
         }
     }
     
