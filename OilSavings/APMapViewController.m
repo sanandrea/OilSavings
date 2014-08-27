@@ -17,9 +17,11 @@
 #import "APPathOptimizer.h"
 #import "APPathDetailViewController.h"
 
+#import "Chameleon.h"
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
 #import "MKMapView+ZoomLevel.h"
+#import "SIAlertView.h"
 #import "SWRevealViewController.h"
 #import "UINavigationController+M13ProgressViewBar.h"
 
@@ -248,6 +250,35 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 - (IBAction) optimizeAgain:(id)sender{
+    if (self.gasStations == nil) {
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"SIAlertView" andMessage:@"Sumi Interactive"];
+        
+        [alertView addButtonWithTitle:@"Button1"
+                                 type:SIAlertViewButtonTypeDestructive
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Button1 Clicked");
+                              }];
+        alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+        
+        [alertView setTitleColor:[UIColor flatBlueColorDark]];
+        [alertView setMessageColor:[UIColor flatBlueColorDark]];
+        [alertView setButtonColor:[UIColor flatBlueColorDark]];
+        [alertView setViewBackgroundColor:[UIColor flatWhiteColor]];
+        
+        [alertView show];
+        return;
+    }
+    if ([self.gasStations count] == 0) {
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"SIAlertView" andMessage:@"Sumi Interactive"];
+
+        [alertView addButtonWithTitle:@"Button1"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Button1 Clicked");
+                              }];
+        return;
+    }
+    
     self.bestPath = nil;
     self.totalRequests = [self.gasStations count];
     self.processedRequests = 0;

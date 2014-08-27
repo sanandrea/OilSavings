@@ -46,6 +46,14 @@
 		A98D08A1192FDC33000DB81D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98D0879192FDC33000DB81D /* CoreData.framework */; };
 		A98D08A9192FDC33000DB81D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A98D08A7192FDC33000DB81D /* InfoPlist.strings */; };
 		A98D08AB192FDC33000DB81D /* OilSavingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A98D08AA192FDC33000DB81D /* OilSavingsTests.m */; };
+		A99F4F5619AE7BB60037BA12 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A99F4F5119AE7BB60037BA12 /* SIAlertView.bundle */; };
+		A99F4F5719AE7BB60037BA12 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = A99F4F5319AE7BB60037BA12 /* SIAlertView.m */; };
+		A99F4F5819AE7BB60037BA12 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A99F4F5519AE7BB60037BA12 /* UIWindow+SIUtils.m */; };
+		A99F4F6619AE7FA50037BA12 /* ChameleonStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A99F4F5D19AE7FA50037BA12 /* ChameleonStatusBar.m */; };
+		A99F4F6719AE7FA50037BA12 /* NSArray+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = A99F4F5F19AE7FA50037BA12 /* NSArray+Chameleon.m */; };
+		A99F4F6819AE7FA50037BA12 /* UIColor+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = A99F4F6119AE7FA50037BA12 /* UIColor+Chameleon.m */; };
+		A99F4F6919AE7FA50037BA12 /* UIColor+CIELAB.m in Sources */ = {isa = PBXBuildFile; fileRef = A99F4F6319AE7FA50037BA12 /* UIColor+CIELAB.m */; };
+		A99F4F6A19AE7FA50037BA12 /* UIViewController+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = A99F4F6519AE7FA50037BA12 /* UIViewController+Chameleon.m */; };
 		A99FCCD7193248DF00B26D6A /* car.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = A99FCCD6193248DF00B26D6A /* car.sqlite */; };
 		A99FCCDB19327AE300B26D6A /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FCCDA19327AE300B26D6A /* SWRevealViewController.m */; };
 		A99FCCDD19327C7E00B26D6A /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A99FCCDC19327C7E00B26D6A /* libsqlite3.0.dylib */; };
@@ -201,6 +209,23 @@
 		A98D08A6192FDC33000DB81D /* OilSavingsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OilSavingsTests-Info.plist"; sourceTree = "<group>"; };
 		A98D08A8192FDC33000DB81D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A98D08AA192FDC33000DB81D /* OilSavingsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OilSavingsTests.m; sourceTree = "<group>"; };
+		A99F4F5119AE7BB60037BA12 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
+		A99F4F5219AE7BB60037BA12 /* SIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIAlertView.h; sourceTree = "<group>"; };
+		A99F4F5319AE7BB60037BA12 /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
+		A99F4F5419AE7BB60037BA12 /* UIWindow+SIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+SIUtils.h"; sourceTree = "<group>"; };
+		A99F4F5519AE7BB60037BA12 /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
+		A99F4F5A19AE7FA50037BA12 /* Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon.h; sourceTree = "<group>"; };
+		A99F4F5B19AE7FA50037BA12 /* ChameleonMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChameleonMacros.h; sourceTree = "<group>"; };
+		A99F4F5C19AE7FA50037BA12 /* ChameleonStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChameleonStatusBar.h; sourceTree = "<group>"; };
+		A99F4F5D19AE7FA50037BA12 /* ChameleonStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChameleonStatusBar.m; sourceTree = "<group>"; };
+		A99F4F5E19AE7FA50037BA12 /* NSArray+Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Chameleon.h"; sourceTree = "<group>"; };
+		A99F4F5F19AE7FA50037BA12 /* NSArray+Chameleon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Chameleon.m"; sourceTree = "<group>"; };
+		A99F4F6019AE7FA50037BA12 /* UIColor+Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Chameleon.h"; sourceTree = "<group>"; };
+		A99F4F6119AE7FA50037BA12 /* UIColor+Chameleon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Chameleon.m"; sourceTree = "<group>"; };
+		A99F4F6219AE7FA50037BA12 /* UIColor+CIELAB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CIELAB.h"; sourceTree = "<group>"; };
+		A99F4F6319AE7FA50037BA12 /* UIColor+CIELAB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CIELAB.m"; sourceTree = "<group>"; };
+		A99F4F6419AE7FA50037BA12 /* UIViewController+Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Chameleon.h"; sourceTree = "<group>"; };
+		A99F4F6519AE7FA50037BA12 /* UIViewController+Chameleon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Chameleon.m"; sourceTree = "<group>"; };
 		A99FCCD1193246C300B26D6A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A99FCCD6193248DF00B26D6A /* car.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = car.sqlite; sourceTree = "<group>"; };
 		A99FCCD919327AE300B26D6A /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -390,6 +415,8 @@
 		A93D9F8719354FDE008B530A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A99F4F5919AE7FA50037BA12 /* Chameleon */,
+				A99F4F5019AE7BB60037BA12 /* SIAlertView */,
 				A9FC06B919A68D2800AC0558 /* CustomStaticCells */,
 				A99FCCD819327AE300B26D6A /* SideViewC */,
 				A9B7752219A5201800EA6B69 /* RNGrid */,
@@ -535,6 +562,37 @@
 				A98D08A7192FDC33000DB81D /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A99F4F5019AE7BB60037BA12 /* SIAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				A99F4F5119AE7BB60037BA12 /* SIAlertView.bundle */,
+				A99F4F5219AE7BB60037BA12 /* SIAlertView.h */,
+				A99F4F5319AE7BB60037BA12 /* SIAlertView.m */,
+				A99F4F5419AE7BB60037BA12 /* UIWindow+SIUtils.h */,
+				A99F4F5519AE7BB60037BA12 /* UIWindow+SIUtils.m */,
+			);
+			path = SIAlertView;
+			sourceTree = "<group>";
+		};
+		A99F4F5919AE7FA50037BA12 /* Chameleon */ = {
+			isa = PBXGroup;
+			children = (
+				A99F4F5A19AE7FA50037BA12 /* Chameleon.h */,
+				A99F4F5B19AE7FA50037BA12 /* ChameleonMacros.h */,
+				A99F4F5C19AE7FA50037BA12 /* ChameleonStatusBar.h */,
+				A99F4F5D19AE7FA50037BA12 /* ChameleonStatusBar.m */,
+				A99F4F5E19AE7FA50037BA12 /* NSArray+Chameleon.h */,
+				A99F4F5F19AE7FA50037BA12 /* NSArray+Chameleon.m */,
+				A99F4F6019AE7FA50037BA12 /* UIColor+Chameleon.h */,
+				A99F4F6119AE7FA50037BA12 /* UIColor+Chameleon.m */,
+				A99F4F6219AE7FA50037BA12 /* UIColor+CIELAB.h */,
+				A99F4F6319AE7FA50037BA12 /* UIColor+CIELAB.m */,
+				A99F4F6419AE7FA50037BA12 /* UIViewController+Chameleon.h */,
+				A99F4F6519AE7FA50037BA12 /* UIViewController+Chameleon.m */,
+			);
+			path = Chameleon;
 			sourceTree = "<group>";
 		};
 		A99FCCD819327AE300B26D6A /* SideViewC */ = {
@@ -824,6 +882,7 @@
 				A9B773D2195E32E200441B42 /* watch@2x.png in Resources */,
 				A9B773D3195E32E200441B42 /* route@2x.png in Resources */,
 				A9B773D1195E32E200441B42 /* oil@2x.png in Resources */,
+				A99F4F5619AE7BB60037BA12 /* SIAlertView.bundle in Resources */,
 				A9F7C47A193E614F0092FCA2 /* logo_cf@2x.png in Resources */,
 				A9F7C474193E614F0092FCA2 /* logo_ap@2x.png in Resources */,
 				A9F8DFFD19805D750098DAA8 /* marker_red@2x.png in Resources */,
@@ -934,14 +993,19 @@
 				A94392CE19328DF000439E89 /* SidebarViewController.m in Sources */,
 				A93D9F8A1935500F008B530A /* APTableViewCell.m in Sources */,
 				A919D0EF1932B8120052A47F /* APAddCarViewController.m in Sources */,
+				A99F4F6719AE7FA50037BA12 /* NSArray+Chameleon.m in Sources */,
 				A919D0F21932BD900052A47F /* APInfoCarViewController.m in Sources */,
 				A9C71175193229A300E8EEF9 /* APConstants.m in Sources */,
 				A9FF939D197BB8E600D4CCB0 /* APPathDetailViewController.m in Sources */,
 				A9FC966219434EC40067875B /* APDirectionsClient.m in Sources */,
+				A99F4F6619AE7FA50037BA12 /* ChameleonStatusBar.m in Sources */,
+				A99F4F6919AE7FA50037BA12 /* UIColor+CIELAB.m in Sources */,
 				A9B7752E19A54E1E00EA6B69 /* APFuelPriceCell.m in Sources */,
 				A901461E193BCE36003B826D /* APLine.m in Sources */,
+				A99F4F5819AE7BB60037BA12 /* UIWindow+SIUtils.m in Sources */,
 				A9FC06BF19A68D7D00AC0558 /* APPathInfoCell.m in Sources */,
 				A9FC06BC19A68D6700AC0558 /* APGasStationInfoCell.m in Sources */,
+				A99F4F6A19AE7FA50037BA12 /* UIViewController+Chameleon.m in Sources */,
 				A9FC5057193C70D900C883B7 /* MKMapView+ZoomLevel.m in Sources */,
 				A9FC507C193CDC4E00C883B7 /* APGSAnnotation.m in Sources */,
 				A9FC06C219A68D8D00AC0558 /* APMapInfoCell.m in Sources */,
@@ -953,8 +1017,10 @@
 				A98D0882192FDC33000DB81D /* main.m in Sources */,
 				A9FC965C19432C780067875B /* APGeocodeClient.m in Sources */,
 				A9014627193BE7AD003B826D /* APGasStation.m in Sources */,
+				A99F4F6819AE7FA50037BA12 /* UIColor+Chameleon.m in Sources */,
 				A99FCCE019327CA400B26D6A /* APMapViewController.m in Sources */,
 				A98D0886192FDC33000DB81D /* APAppDelegate.m in Sources */,
+				A99F4F5719AE7BB60037BA12 /* SIAlertView.m in Sources */,
 				A919D0EC1932B7200052A47F /* APEditCarViewController.m in Sources */,
 				A99FCCDB19327AE300B26D6A /* SWRevealViewController.m in Sources */,
 				A9FC966519434FD80067875B /* APPathOptimizer.m in Sources */,

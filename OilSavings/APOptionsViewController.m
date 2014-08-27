@@ -179,6 +179,24 @@ static int MAX_LINEAR = 40;
     [self.delegate optionsController:self didfinishWithSave:NO];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionName;
+    switch (section)
+    {
+        case 0:
+            sectionName = NSLocalizedString(@"RICERCA", @"Titolo sezione ricerca");
+            break;
+        case 1:
+            sectionName = NSLocalizedString(@"Budget", @"Titolo quantità carburante");
+            break;
+        default:
+            sectionName = @"";
+            break;
+    }
+    return sectionName;
+}
+
 #pragma mark - Picker View Protocol
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
