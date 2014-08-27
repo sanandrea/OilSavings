@@ -54,6 +54,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
 @property (nonatomic,strong) APPath *bestPath;
 @property (nonatomic) BOOL bestFound;
 
+@property (nonatomic) BOOL usingGPS;
+
 //how many directions requests are we making
 @property (nonatomic) NSUInteger totalRequests;
 
@@ -138,6 +140,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
     //now alloc optimizer
     self.optimizer = [[APPathOptimizer alloc] initWithCar:self.myCar cash:self.cashAmount andDelegate:self];
     
+    //Use gps info
+    self.usingGPS = YES;
     
     //begin listening location
     locationManager = [[CLLocationManager alloc] init];
@@ -159,27 +163,27 @@ static int RESOLVE_SINGLE_PATH = 99999;
 - (void) centerMapInLocation:(CLLocationCoordinate2D)loc animated:(BOOL)anime{
     [self.mapView setCenterCoordinate:loc zoomLevel:ZOOM_LEVEL animated:anime];
     
-    [self findGasStations:self.srcCoord];
+    [self findGasStations:loc];
     //convert the address so the user has the address in the options VC
     [APGeocodeClient convertCoordinate:loc ofType:kAddressULocation inDelegate:self];
 }
 - (void) viewDidAppear:(BOOL)animated{
-    ALog("Map appeared");
-    if (self.myCar != nil) {
-        ALog("Car name is: %@", self.myCar.friendlyName);
-    }
+//    ALog("Map appeared");
+//    if (self.myCar != nil) {
+//        ALog("Car name is: %@", self.myCar.friendlyName);
+//    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+//    NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
     CLLocation *newLocation = [locations lastObject];
     
-    NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+    self.usingGPS = YES;
     self.myLocation = newLocation.coordinate;
     
     if (!CLLocationCoordinate2DIsValid(self.srcCoord)) {
         self.srcCoord = self.myLocation;
     }
-
     [self centerMapInLocation:self.myLocation animated:YES];
 
     [locationManager stopUpdatingLocation];
@@ -258,7 +262,12 @@ static int RESOLVE_SINGLE_PATH = 99999;
 - (void) carChanged{
     [self.optimizer changeCar:self.myCar];
     
-    [self findGasStations:self.srcCoord];
+    
+    if (self.usingGPS) {
+        [self findGasStations:self.myLocation];
+    }else{
+        [self findGasStations:self.srcCoord];
+    }
     
     APGasStation *toBeReverted = self.bestPath.gasStation;
     
@@ -428,6 +437,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
         if (([controller.srcAddr length] > 0) && ![controller.srcAddr isEqualToString:self.srcAddress]) {
             self.srcAddress = controller.srcAddr;
             [APGeocodeClient convertAddress:self.srcAddress ofType:kAddressSrc inDelegate:self];
+            self.usingGPS = NO;
         }
         
         if (([controller.dstAddr length] > 0) && ![self.dstAddress isEqualToString:controller.dstAddr]) {
