@@ -136,6 +136,7 @@
 		A9FC505D193C786800C883B7 /* APGasStationClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC505C193C786800C883B7 /* APGasStationClient.m */; };
 		A9FC507C193CDC4E00C883B7 /* APGSAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC507B193CDC4E00C883B7 /* APGSAnnotation.m */; };
 		A9FC6DF11958CA30007959CA /* APGasStationsTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC6DF01958CA30007959CA /* APGasStationsTableVC.m */; };
+		A9FC829119AFD0E60002F43A /* APPinAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC829019AFD0E60002F43A /* APPinAnnotation.m */; };
 		A9FC965C19432C780067875B /* APGeocodeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC965B19432C780067875B /* APGeocodeClient.m */; };
 		A9FC966219434EC40067875B /* APDirectionsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC966119434EC40067875B /* APDirectionsClient.m */; };
 		A9FC966519434FD80067875B /* APPathOptimizer.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC966419434FD80067875B /* APPathOptimizer.m */; };
@@ -348,6 +349,8 @@
 		A9FC507B193CDC4E00C883B7 /* APGSAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGSAnnotation.m; sourceTree = "<group>"; };
 		A9FC6DEF1958CA30007959CA /* APGasStationsTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGasStationsTableVC.h; sourceTree = "<group>"; };
 		A9FC6DF01958CA30007959CA /* APGasStationsTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGasStationsTableVC.m; sourceTree = "<group>"; };
+		A9FC828F19AFD0E60002F43A /* APPinAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPinAnnotation.h; sourceTree = "<group>"; };
+		A9FC829019AFD0E60002F43A /* APPinAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPinAnnotation.m; sourceTree = "<group>"; };
 		A9FC965A19432C780067875B /* APGeocodeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APGeocodeClient.h; sourceTree = "<group>"; };
 		A9FC965B19432C780067875B /* APGeocodeClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APGeocodeClient.m; sourceTree = "<group>"; };
 		A9FC965F194343730067875B /* APNetworkAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APNetworkAPI.h; sourceTree = "<group>"; };
@@ -420,6 +423,7 @@
 				A9FC06B919A68D2800AC0558 /* CustomStaticCells */,
 				A99FCCD819327AE300B26D6A /* SideViewC */,
 				A9B7752219A5201800EA6B69 /* RNGrid */,
+				A9FC828E19AFD0AD0002F43A /* Annotations */,
 				A93D9F881935500F008B530A /* APTableViewCell.h */,
 				A93D9F891935500F008B530A /* APTableViewCell.m */,
 				A989555E1958D04E0079FBD9 /* APGSTableViewCell.h */,
@@ -429,8 +433,6 @@
 				A9B7752A19A54D3E00EA6B69 /* FuelPriceDetail.xib */,
 				A9FC5055193C70D900C883B7 /* MKMapView+ZoomLevel.h */,
 				A9FC5056193C70D900C883B7 /* MKMapView+ZoomLevel.m */,
-				A9FC507A193CDC4E00C883B7 /* APGSAnnotation.h */,
-				A9FC507B193CDC4E00C883B7 /* APGSAnnotation.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -785,6 +787,17 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		A9FC828E19AFD0AD0002F43A /* Annotations */ = {
+			isa = PBXGroup;
+			children = (
+				A9FC507A193CDC4E00C883B7 /* APGSAnnotation.h */,
+				A9FC507B193CDC4E00C883B7 /* APGSAnnotation.m */,
+				A9FC828F19AFD0E60002F43A /* APPinAnnotation.h */,
+				A9FC829019AFD0E60002F43A /* APPinAnnotation.m */,
+			);
+			name = Annotations;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1013,6 +1026,7 @@
 				A9FC505D193C786800C883B7 /* APGasStationClient.m in Sources */,
 				A9014618193BCC00003B826D /* APDistance.m in Sources */,
 				A9014612193BCA66003B826D /* APDuration.m in Sources */,
+				A9FC829119AFD0E60002F43A /* APPinAnnotation.m in Sources */,
 				A9B7752519A5203C00EA6B69 /* RNGridMenu.m in Sources */,
 				A98D0882192FDC33000DB81D /* main.m in Sources */,
 				A9FC965C19432C780067875B /* APGeocodeClient.m in Sources */,

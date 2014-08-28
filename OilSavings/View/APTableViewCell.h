@@ -12,6 +12,7 @@
 
 @property (nonatomic, weak) IBOutlet UILabel *friendlyName;
 @property (nonatomic, weak) IBOutlet UIButton *infoButton;
+@property (nonatomic, weak) IBOutlet UIImageView *fuelLogo;
 @property (nonatomic, strong) APCar *editedObject;
 
 @end

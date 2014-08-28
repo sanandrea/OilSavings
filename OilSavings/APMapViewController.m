@@ -24,7 +24,7 @@
 #import "SIAlertView.h"
 #import "SWRevealViewController.h"
 #import "UINavigationController+M13ProgressViewBar.h"
-
+#import "APPinAnnotation.h"
 
 #define ZOOM_LEVEL 14
 static float kAnnotationPadding = 10.0f;
@@ -183,9 +183,12 @@ static int RESOLVE_SINGLE_PATH = 99999;
     self.usingGPS = YES;
     self.myLocation = newLocation.coordinate;
     
+    
+    //This is needed for the options view controller to display current src address
     if (!CLLocationCoordinate2DIsValid(self.srcCoord)) {
         self.srcCoord = self.myLocation;
     }
+
     [self centerMapInLocation:self.myLocation animated:YES];
 
     [locationManager stopUpdatingLocation];
@@ -286,7 +289,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
     
     [self.paths removeAllObjects];
     
-    CLLocationCoordinate2D origin = CLLocationCoordinate2DIsValid(self.srcCoord) ? self.srcCoord : self.myLocation;
+    CLLocationCoordinate2D origin = self.usingGPS ? self.myLocation : self.srcCoord;
     [self.optimizer optimizeRouteFrom:origin to:self.dstCoord withGasStations:self.gasStations];
 }
 
@@ -374,15 +377,23 @@ static int RESOLVE_SINGLE_PATH = 99999;
 #pragma mark - Geocoding Convertions Protocol
 
 - (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord{
+    NSString *address;
     ALog("Address converted");
     if (type == kAddressSrc) {
         self.srcCoord = coord;
+        address = self.srcAddress;
         [self centerMapInLocation:coord animated:YES];
     }else{
         ALog("It is destination");
+        address = self.dstAddress;
         self.dstCoord = coord;
     }
-    
+
+    APPinAnnotation *pin = [[APPinAnnotation alloc] initWithLocation:coord];
+    pin.address = address;
+    pin.type = type;
+    [self.mapView addAnnotation:pin];
+
 }
 
 - (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address{
@@ -480,6 +491,9 @@ static int RESOLVE_SINGLE_PATH = 99999;
             self.dstAddress = controller.dstAddr;
             [APGeocodeClient convertAddress:self.dstAddress ofType:kAddressDst inDelegate:self];
         }
+        if ([controller.dstAddr length] == 0) {
+#warning todo
+        }
        
         
         self.cashAmount = controller.cashAmount;
@@ -512,13 +526,17 @@ static int RESOLVE_SINGLE_PATH = 99999;
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
+    // in case it's the user location, we already have an annotation, so just return nil
+    if ([annotation isKindOfClass:[MKUserLocation class]])
+    {
+        return nil;
+    }
     if ([annotation isKindOfClass:[APGSAnnotation class]]){
         APGSAnnotation *gsn = (APGSAnnotation*) annotation;
         NSString *GSAnnotationIdentifier = [NSString stringWithFormat:@"gid_%lu", (unsigned long)gsn.gasStation.gasStationID];
         
         MKAnnotationView *markerView = [theMapView dequeueReusableAnnotationViewWithIdentifier:GSAnnotationIdentifier];
-        if (markerView == nil)
-        {
+        if (markerView == nil) {
             MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation
                                                                             reuseIdentifier:GSAnnotationIdentifier];
             annotationView.canShowCallout = YES;
@@ -552,12 +570,27 @@ static int RESOLVE_SINGLE_PATH = 99999;
             annotationView.rightCalloutAccessoryView = rightButton;
             
             return annotationView;
-        }else
-        {
+        }else{
             markerView.annotation = annotation;
             //TODO change logo
         }
         return markerView;
+    } else if ([annotation isKindOfClass:[APPinAnnotation class]]){
+        APPinAnnotation *pin = (APPinAnnotation*) annotation;
+        NSString *pinID = [NSString stringWithFormat:@"pin_%d",(pin.type == kAddressSrc) ? 1 : 2];
+        MKAnnotationView *markerPin = [theMapView dequeueReusableAnnotationViewWithIdentifier:pinID];
+        if (markerPin == nil) {
+            MKPinAnnotationView *result = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
+                                                                          reuseIdentifier:pinID];
+            if (pin.type == kAddressSrc) {
+                result.pinColor = MKPinAnnotationColorGreen;
+            }
+            result.canShowCallout = YES;
+            return result;
+        }else{
+            markerPin.annotation = annotation;
+        }
+        return markerPin;
     }
     return nil;
 }
@@ -714,6 +747,13 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 - (void) checkIfAreVisibleGasStations{
+    CLLocationCoordinate2D center = self.usingGPS ? self.myLocation : self.srcCoord;
+    
+    if (! CLLocationCoordinate2DIsValid(center)) {
+        //no info about position yet
+        return;
+    }
+    
     //There is at least one Gas Station
     MKMapRect visibleMapRect = self.mapView.visibleMapRect;
     NSSet *visibleAnnotations = [self.mapView annotationsInMapRect:visibleMapRect];
@@ -722,8 +762,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
     CGFloat bestDistance = 999999.f;
     if ([visibleAnnotations count] == 0) {
         for (APGasStation *gs in self.gasStations) {
-            CGFloat curDst = [APConstants haversineDistance:self.myLocation.latitude
-                                                           :self.myLocation.longitude
+            CGFloat curDst = [APConstants haversineDistance:center.latitude
+                                                           :center.longitude
                                                            :gs.position.latitude
                                                            :gs.position.longitude];
             if (curDst < bestDistance) {
@@ -739,16 +779,17 @@ static int RESOLVE_SINGLE_PATH = 99999;
 - (void)resizeMapToIncludePoint:(CLLocationCoordinate2D) point{
     //Create a new span that contains this gs plus 15% bigger
     MKCoordinateSpan span;
+    CLLocationCoordinate2D center = self.usingGPS ? self.myLocation : self.srcCoord;
     
-    span.latitudeDelta = (self.myLocation.latitude - point.latitude) * 2.3f;
+    span.latitudeDelta = (center.latitude - point.latitude) * 2.3f;
     if (span.latitudeDelta < 0) {
         span.latitudeDelta = - span.latitudeDelta;
     }
-    span.longitudeDelta = (self.myLocation.longitude - point.longitude) * 2.3f;
+    span.longitudeDelta = (center.longitude - point.longitude) * 2.3f;
     if (span.longitudeDelta < 0) {
         span.longitudeDelta = - span.longitudeDelta;
     }
-    MKCoordinateRegion region = MKCoordinateRegionMake(self.myLocation, span);
+    MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
     [self.mapView setRegion:region animated:YES];
 }
 

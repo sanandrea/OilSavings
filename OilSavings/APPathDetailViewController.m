@@ -221,7 +221,7 @@
     } else if (buttonIndex==1) {
         //Google Maps
         //construct a URL using the comgooglemaps schema
-        NSString *googleMapsURLString = [NSString stringWithFormat:@"http://maps.google.com/?saddr=%1.6f,%1.6f&daddr=%1.6f,%1.6f",self.path.src.latitude, self.path.src.longitude, destination.latitude, destination.latitude];
+        NSString *googleMapsURLString = [NSString stringWithFormat:@"http://maps.google.com/?saddr=%1.6f,%1.6f&daddr=%1.6f,%1.6f",self.path.src.latitude, self.path.src.longitude, destination.latitude, destination.longitude];
         
         if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:googleMapsURLString]]) {
             NSLog(@"Google Maps app is not installed");

@@ -123,6 +123,9 @@
     
     //Add target for Info button press
     [cell.infoButton addTarget:self action:@selector(startInfoPush:) forControlEvents:UIControlEventTouchUpInside];
+    
+    cell.fuelLogo.image = [UIImage imageNamed:[NSString stringWithFormat:@"barrel_%@",
+                                               [APConstants getEnergyStringForType:(ENERGY_TYPE) [car.energy intValue]]]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
