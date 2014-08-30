@@ -20,6 +20,8 @@
 @property (nonatomic, strong) NSNumber *pB;
 @property (nonatomic, strong) NSNumber *pC;
 @property (nonatomic, strong) NSNumber *pD;
+@property (nonatomic, strong) NSNumber *urbanConsumption;
+@property (nonatomic, strong) NSNumber *extraUrbanConsumption;
 
 - (ENERGY_TYPE) getEnergyType;
 @end

@@ -10,7 +10,7 @@
 
 @implementation APCar
 
-@dynamic brand,model,friendlyName,pA,pB,pC,pD,modelID,energy;
+@dynamic brand,model,friendlyName,pA,pB,pC,pD,modelID,energy,urbanConsumption, extraUrbanConsumption;
 
 - (ENERGY_TYPE) getEnergyType{
     return [self.energy intValue];

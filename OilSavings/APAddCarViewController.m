@@ -37,6 +37,9 @@ int SLIDER_STEP = 5;
 @property (nonatomic, weak) IBOutlet UILabel *tankCapacityTilte;
 @property (nonatomic, weak) IBOutlet UILabel *tankCapacityValue;
 
+@property (nonatomic, weak) IBOutlet UITextField *urbanConsumption;
+@property (nonatomic, weak) IBOutlet UITextField *extraUrbanConsumption;
+
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *saveButton;
 
 @property (nonatomic) BOOL modelSet;
@@ -85,6 +88,14 @@ int SLIDER_STEP = 5;
                              action:@selector(userEnteredName)
                    forControlEvents:UIControlEventEditingDidEndOnExit];
 
+    [self.urbanConsumption addTarget:self
+                              action:nil
+                    forControlEvents:UIControlEventEditingDidEndOnExit];
+    
+    [self.extraUrbanConsumption addTarget:self
+                                   action:nil
+                         forControlEvents:UIControlEventEditingDidEndOnExit];
+    
     UITextField* txt;
     for (UIView *subView in self.brandSearch.subviews){
         for (UIView *secView in subView.subviews){
@@ -149,6 +160,9 @@ int SLIDER_STEP = 5;
         
     }
     [self.freindlyNameText resignFirstResponder];
+    [self.urbanConsumption resignFirstResponder];
+    [self.extraUrbanConsumption resignFirstResponder];
+    
     if ([self.freindlyNameText.text length] > 0) {
         self.nameSet = YES;
     }

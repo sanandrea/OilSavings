@@ -3,6 +3,7 @@
     <entity name="Car" syncable="YES">
         <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="energy" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="extraUrbanConsumption" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="friendlyName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="model" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="modelID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -10,12 +11,13 @@
         <attribute name="pB" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="pC" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="pD" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="urbanConsumption" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <entity name="Event" syncable="YES">
         <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Car" positionX="-9" positionY="45" width="128" height="180"/>
+        <element name="Car" positionX="-9" positionY="45" width="128" height="210"/>
         <element name="Event" positionX="-9" positionY="36" width="128" height="60"/>
     </elements>
 </model>

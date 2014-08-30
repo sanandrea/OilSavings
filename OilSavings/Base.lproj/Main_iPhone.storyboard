@@ -543,11 +543,11 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Dettagli" id="Tbs-l2-sMZ">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="172" id="dpc-uE-f0W">
-                                        <rect key="frame" x="0.0" y="313" width="320" height="172"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="222" id="dpc-uE-f0W">
+                                        <rect key="frame" x="0.0" y="313" width="320" height="222"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dpc-uE-f0W" id="Aea-MA-kiQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="171"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="221"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rbg-jd-8F5">
@@ -568,26 +568,52 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Serbatoio" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldR-HW-UGe">
-                                                    <rect key="frame" x="117" y="88" width="87" height="28"/>
+                                                    <rect key="frame" x="117" y="147" width="87" height="28"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <color key="textColor" red="0.32156862749999998" green="0.40000000000000002" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Consumo Urbano" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lnl-9o-Vgq">
+                                                    <rect key="frame" x="20" y="73" width="116" height="28"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <color key="textColor" red="0.32156862749999998" green="0.40000000000000002" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Consumo extra urbano" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZC-9T-hLd">
+                                                    <rect key="frame" x="163" y="73" width="151" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" red="0.32156862749999998" green="0.40000000000000002" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10 L" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KfD-TL-Rdf">
-                                                    <rect key="frame" x="262" y="120" width="38" height="22"/>
+                                                    <rect key="frame" x="262" y="187" width="38" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" red="0.32156862749999998" green="0.40000000000000002" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="lPM-cJ-vTh">
-                                                    <rect key="frame" x="18" y="116" width="225" height="31"/>
+                                                    <rect key="frame" x="18" y="183" width="225" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
                                                         <action selector="cashSlider:" destination="ZSu-HK-tQz" eventType="valueChanged" id="Ses-3r-ca1"/>
                                                     </connections>
                                                 </slider>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="8 Litri/Km" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jrR-JL-tsd">
+                                                    <rect key="frame" x="30" y="109" width="97" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                                </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="6 Litri/km" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tlm-8S-8bX">
+                                                    <rect key="frame" x="190" y="109" width="97" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                                </textField>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -614,6 +640,7 @@
                     <connections>
                         <outlet property="brandSearch" destination="8iV-Y5-rzG" id="c9v-8z-Da9"/>
                         <outlet property="energyTypeSelect" destination="rbg-jd-8F5" id="Sbf-aK-O7E"/>
+                        <outlet property="extraUrbanConsumption" destination="Tlm-8S-8bX" id="JP6-Ii-WEK"/>
                         <outlet property="freindlyNameText" destination="yeF-PQ-YdV" id="928-3A-xbZ"/>
                         <outlet property="gasCapacityLabel" destination="ldR-HW-UGe" id="1eh-4b-QuO"/>
                         <outlet property="gasTankCapacity" destination="lPM-cJ-vTh" id="2ep-On-8Qz"/>
@@ -623,6 +650,7 @@
                         <outlet property="selectEnergyLabel" destination="3mA-Qu-du6" id="dig-3h-tVU"/>
                         <outlet property="tankCapacityTilte" destination="ldR-HW-UGe" id="Hos-Gw-ftH"/>
                         <outlet property="tankCapacityValue" destination="KfD-TL-Rdf" id="xrl-TG-9Jg"/>
+                        <outlet property="urbanConsumption" destination="jrR-JL-tsd" id="cLv-Md-EHZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n0P-CP-DfQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
