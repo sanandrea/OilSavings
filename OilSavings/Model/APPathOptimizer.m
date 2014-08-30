@@ -86,7 +86,7 @@ static const int SLEEP_INTERVAL = 150000; // 150ms
     }
     
 }
-- (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
+- (void) foundPath:(APPath*)path withIndex:(NSInteger)index error:(NSError *)er{
 
     // The address is retrieved from APGasStationClient
     
@@ -97,7 +97,7 @@ static const int SLEEP_INTERVAL = 150000; // 150ms
 //    }];
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.delegate foundPath:path withIndex:0];
+        [self.delegate foundPath:path withIndex:0 error:er];
     });
 }
 

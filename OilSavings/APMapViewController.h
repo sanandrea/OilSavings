@@ -16,11 +16,10 @@
 #import "APOptionsViewController.h"
 
 #import "GAITrackedViewController.h"
-#import "RNGridMenu.h"
 
 
 @interface APMapViewController : GAITrackedViewController <CLLocationManagerDelegate, APNetworkAPI,
-MKMapViewDelegate, OptimizationOptions, RNGridMenuDelegate>
+MKMapViewDelegate, OptimizationOptions>
 {
     CLLocationManager *locationManager;
 }

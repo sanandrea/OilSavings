@@ -65,9 +65,6 @@
 		A9B773D1195E32E200441B42 /* oil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B773CD195E32E200441B42 /* oil@2x.png */; };
 		A9B773D2195E32E200441B42 /* watch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B773CE195E32E200441B42 /* watch@2x.png */; };
 		A9B773D3195E32E200441B42 /* route@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B773CF195E32E200441B42 /* route@2x.png */; };
-		A9B7752519A5203C00EA6B69 /* RNGridMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7752419A5203C00EA6B69 /* RNGridMenu.m */; };
-		A9B7752719A520F000EA6B69 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B7752619A520F000EA6B69 /* QuartzCore.framework */; };
-		A9B7752919A520F600EA6B69 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B7752819A520F600EA6B69 /* Accelerate.framework */; };
 		A9B7752B19A54D3E00EA6B69 /* FuelPriceDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B7752A19A54D3E00EA6B69 /* FuelPriceDetail.xib */; };
 		A9B7752E19A54E1E00EA6B69 /* APFuelPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7752D19A54E1E00EA6B69 /* APFuelPriceCell.m */; };
 		A9C5F06B19AA1AF900466CC2 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C5F06919AA1ADE00466CC2 /* libGoogleAdMobAds.a */; };
@@ -243,8 +240,6 @@
 		A9B773CF195E32E200441B42 /* route@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "route@2x.png"; sourceTree = "<group>"; };
 		A9B7751E19A51D1D00EA6B69 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		A9B7752019A51D4E00EA6B69 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
-		A9B7752319A5203C00EA6B69 /* RNGridMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNGridMenu.h; sourceTree = "<group>"; };
-		A9B7752419A5203C00EA6B69 /* RNGridMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNGridMenu.m; sourceTree = "<group>"; };
 		A9B7752619A520F000EA6B69 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A9B7752819A520F600EA6B69 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		A9B7752A19A54D3E00EA6B69 /* FuelPriceDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FuelPriceDetail.xib; sourceTree = "<group>"; };
@@ -374,8 +369,6 @@
 				A9C5F0D519AA1EE400466CC2 /* SystemConfiguration.framework in Frameworks */,
 				A9C5F0D319AA1E2C00466CC2 /* libGoogleAnalyticsServices.a in Frameworks */,
 				A9C5F06B19AA1AF900466CC2 /* libGoogleAdMobAds.a in Frameworks */,
-				A9B7752919A520F600EA6B69 /* Accelerate.framework in Frameworks */,
-				A9B7752719A520F000EA6B69 /* QuartzCore.framework in Frameworks */,
 				A901462B193BEE1C003B826D /* CoreLocation.framework in Frameworks */,
 				A99FCCE6193284E900B26D6A /* MapKit.framework in Frameworks */,
 				A99FCCDD19327C7E00B26D6A /* libsqlite3.0.dylib in Frameworks */,
@@ -422,7 +415,6 @@
 				A99F4F5019AE7BB60037BA12 /* SIAlertView */,
 				A9FC06B919A68D2800AC0558 /* CustomStaticCells */,
 				A99FCCD819327AE300B26D6A /* SideViewC */,
-				A9B7752219A5201800EA6B69 /* RNGrid */,
 				A9FC828E19AFD0AD0002F43A /* Annotations */,
 				A93D9F881935500F008B530A /* APTableViewCell.h */,
 				A93D9F891935500F008B530A /* APTableViewCell.m */,
@@ -605,16 +597,6 @@
 			);
 			name = SideViewC;
 			path = ../SideViewC;
-			sourceTree = "<group>";
-		};
-		A9B7752219A5201800EA6B69 /* RNGrid */ = {
-			isa = PBXGroup;
-			children = (
-				A9B7752319A5203C00EA6B69 /* RNGridMenu.h */,
-				A9B7752419A5203C00EA6B69 /* RNGridMenu.m */,
-			);
-			name = RNGrid;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		A9C5F05B19AA1ADE00466CC2 /* Google */ = {
@@ -1027,7 +1009,6 @@
 				A9014618193BCC00003B826D /* APDistance.m in Sources */,
 				A9014612193BCA66003B826D /* APDuration.m in Sources */,
 				A9FC829119AFD0E60002F43A /* APPinAnnotation.m in Sources */,
-				A9B7752519A5203C00EA6B69 /* RNGridMenu.m in Sources */,
 				A98D0882192FDC33000DB81D /* main.m in Sources */,
 				A9FC965C19432C780067875B /* APGeocodeClient.m in Sources */,
 				A9014627193BE7AD003B826D /* APGasStation.m in Sources */,
@@ -1184,6 +1165,7 @@
 					"$(PROJECT_DIR)/OilSavings/Google/Admob",
 					"$(PROJECT_DIR)/OilSavings/Google/GoogleAnalytics",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -1199,7 +1181,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "arm64 armv7";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1236,7 +1218,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "arm64 armv7";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

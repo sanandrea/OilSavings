@@ -84,7 +84,7 @@ static NSString * const DIRECTIONS_URL = @"https://maps.googleapis.com/maps/api/
                 path.southWestBound = CLLocationCoordinate2DMake([routeDict[@"bounds"][@"southwest"][@"lat"] floatValue],[routeDict[@"bounds"][@"southwest"][@"lng"] floatValue]);
             }
             //[path constructMKPolyLines];
-            [delegate foundPath:path withIndex:index];
+            [delegate foundPath:path withIndex:index error:nil];
         }else if ([response[@"status"] isEqualToString:@"OVER_QUERY_LIMIT"]){
             ALog("OVER QUERY LIMIT reached in index %ld",(long)index);
         }

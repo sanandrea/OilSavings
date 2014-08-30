@@ -53,7 +53,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
 @property (nonatomic, strong) NSMutableArray *gasStations;
 @property (nonatomic, strong) NSMutableArray *paths;
 
-@property (nonatomic,strong) APPath *bestPath;
+@property (nonatomic, strong) APPath *bestPath;
+@property (nonatomic, strong) APPath *nearestPath;
 @property (nonatomic) BOOL bestFound;
 
 @property (nonatomic) BOOL usingGPS;
@@ -165,8 +166,11 @@ static int RESOLVE_SINGLE_PATH = 99999;
     [self.mapView setCenterCoordinate:loc zoomLevel:ZOOM_LEVEL animated:anime];
     
     [self findGasStations:loc];
-    //convert the address so the user has the address in the options VC
-    [APGeocodeClient convertCoordinate:loc ofType:kAddressULocation inDelegate:self];
+    
+    if (self.usingGPS) {
+        //convert the address so the user has the address in the options VC
+        [APGeocodeClient convertCoordinate:loc ofType:kAddressULocation inDelegate:self];        
+    }
 }
 - (void) viewDidAppear:(BOOL)animated{
 //    ALog("Map appeared");
@@ -286,7 +290,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 - (void) showNoGasStationsNearYou{
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:NSLocalizedString(@"Attenzione", @"Attention")
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:NSLocalizedString(@"Ricerca", @"Ricerca")
                                                      andMessage:NSLocalizedString(@"Siamo spiacenti, ma non sono stati trovati distributori di carburante nelle vicinanze.", @"")];
     
     [alertView addButtonWithTitle:@"OK"
@@ -310,7 +314,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
                           handler:^(SIAlertView *alert) {
                               [self performSegueWithIdentifier:@"OptionsSegue" sender:self];
                           }];
-    [alertView addButtonWithTitle:NSLocalizedString(@"Attendi", @"Cerca posizione")
+    [alertView addButtonWithTitle:NSLocalizedString(@"Attendi", @"Attendi")
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               //Do nothing
@@ -332,13 +336,13 @@ static int RESOLVE_SINGLE_PATH = 99999;
                                                      andMessage:message];
     
     [alertView addButtonWithTitle:@"OK"
-                             type:SIAlertViewButtonTypeDefault
+                             type:SIAlertViewButtonTypeDestructive
                           handler:^(SIAlertView *alert) {
                               NSLog(@"Button1 Clicked");
                           }];
-    [alertView setTitleColor:[UIColor flatSkyBlueColorDark]];
-    [alertView setMessageColor:[UIColor flatSkyBlueColorDark]];
-    [alertView setButtonColor:[UIColor flatPowderBlueColor]];
+    [alertView setTitleColor:[UIColor flatBlackColor]];
+    [alertView setMessageColor:[UIColor flatBlackColor]];
+    [alertView setButtonColor:[UIColor flatBrownColorDark]];
     [alertView setViewBackgroundColor:[UIColor flatWhiteColor]];
     [alertView show];
     return;
@@ -431,8 +435,11 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 #pragma mark - Path Available
-- (void) foundPath:(APPath*)path withIndex:(NSInteger)index{
-//    ALog("Found path in map is called");
+- (void) foundPath:(APPath*)path withIndex:(NSInteger)index error:(NSError *)er{
+    if (er != nil) {
+#warning todo
+        return;
+    }
     
     //User clicked on annotation
     if (index == RESOLVE_SINGLE_PATH) {
