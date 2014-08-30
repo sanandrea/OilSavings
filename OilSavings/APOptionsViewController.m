@@ -245,22 +245,23 @@ static int MAX_LINEAR = 40;
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
-    if (searchBar == self.src) {
-        ALog("Source is set");
-    }else{
-        ALog("Destination is set");
-    }
 }
 
-/*
+
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
-    ALog("Begin search");
-    if (self.selected != nil && searchBar != self.selected) {
-        [self.selected endEditing:YES];
+    int rowIndex;
+    
+    if (searchBar == self.src) {
+        rowIndex = 0;
+    }else{
+        rowIndex = 1;
     }
-    self.selected = searchBar;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIndex inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath
+                          atScrollPosition:UITableViewScrollPositionTop
+                                  animated:YES];
 }
-*/
+
 /*
 #pragma mark - Navigation
 
