@@ -16,6 +16,7 @@
 #import "APMapViewController.h"
 #import "APPathOptimizer.h"
 #import "APPathDetailViewController.h"
+#import "APPinAnnotation.h"
 
 #import "Chameleon.h"
 #import "GAI.h"
@@ -24,7 +25,6 @@
 #import "SIAlertView.h"
 #import "SWRevealViewController.h"
 #import "UINavigationController+M13ProgressViewBar.h"
-#import "APPinAnnotation.h"
 
 #define ZOOM_LEVEL 14
 static float kAnnotationPadding = 10.0f;
@@ -54,7 +54,6 @@ static int RESOLVE_SINGLE_PATH = 99999;
 @property (nonatomic, strong) NSMutableArray *paths;
 
 @property (nonatomic, strong) APPath *bestPath;
-@property (nonatomic, strong) APPath *nearestPath;
 @property (nonatomic) BOOL bestFound;
 
 @property (nonatomic) BOOL usingGPS;
@@ -167,9 +166,13 @@ static int RESOLVE_SINGLE_PATH = 99999;
     
     [self findGasStations:loc];
     
+    if ([self.paths count] > 0) {
+        [self.paths removeAllObjects];
+    }
+    
     if (self.usingGPS) {
         //convert the address so the user has the address in the options VC
-        [APGeocodeClient convertCoordinate:loc ofType:kAddressULocation inDelegate:self];        
+        [APGeocodeClient convertCoordinate:loc ofType:kAddressULocation inDelegate:self];
     }
 }
 - (void) viewDidAppear:(BOOL)animated{
@@ -183,7 +186,6 @@ static int RESOLVE_SINGLE_PATH = 99999;
 //    NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
     CLLocation *newLocation = [locations lastObject];
     self.myLocation = newLocation.coordinate;
-    
     
     //This is needed for the options view controller to display current src address
     if (!CLLocationCoordinate2DIsValid(self.srcCoord)) {
@@ -405,13 +407,11 @@ static int RESOLVE_SINGLE_PATH = 99999;
         return;
     }
     NSString *address;
-    ALog("Address converted");
     if (type == kAddressSrc) {
         self.srcCoord = coord;
         address = self.srcAddress;
         [self centerMapInLocation:coord animated:YES];
     }else{
-        ALog("It is destination");
         address = self.dstAddress;
         self.dstCoord = coord;
     }
@@ -436,6 +436,9 @@ static int RESOLVE_SINGLE_PATH = 99999;
 
 #pragma mark - Path Available
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index error:(NSError *)er{
+    self.processedRequests ++;
+    [self.navigationController setProgress:((float)self.processedRequests/self.totalRequests) animated:YES];
+    
     if (er != nil) {
 #warning todo
         return;
@@ -461,9 +464,6 @@ static int RESOLVE_SINGLE_PATH = 99999;
         self.bestFound = YES;
 //        ALog("Found best path");
     }
-    self.processedRequests ++;
-    
-    [self.navigationController setProgress:((float)self.processedRequests/self.totalRequests) animated:YES];
     
     if (self.processedRequests == self.totalRequests){
         [self.navigationController finishProgress];
@@ -473,6 +473,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
         
         //Center map in to include all path
         [self resizeMapToDiagonalPoints:self.bestPath.southWestBound :self.bestPath.northEastBound];
+        
+        [self findCheapestAndNearest];
     }
 
 
@@ -504,6 +506,22 @@ static int RESOLVE_SINGLE_PATH = 99999;
     
     [APDirectionsClient findDirectionsOfPath:path indexOfRequest:RESOLVE_SINGLE_PATH delegateTo:self];
     
+}
+
+- (void) findCheapestAndNearest{
+    APPath *nearest;
+    APPath *cheapest;
+    
+    [self.paths sortUsingSelector:@selector(compareAir:)];
+    nearest = [self.paths objectAtIndex:0];
+    
+    [self.paths sortUsingSelector:@selector(comparePricePath:)];
+    cheapest = [self.paths objectAtIndex:0];
+    
+    for (APPath *p in self.paths) {
+        p.savingRespectCheapest = [p compareSavingTo:cheapest];
+        p.savingRespectNearest = [p compareSavingTo:nearest];
+    }
 }
 
 
@@ -550,12 +568,21 @@ static int RESOLVE_SINGLE_PATH = 99999;
     id <MKAnnotation> annotation = [view annotation];
     if ([annotation isKindOfClass:[APGSAnnotation class]])
     {
-        ALog("clicked Annotation");
-        
-        [self resolveSinglePath:((APGSAnnotation*)annotation).gasStation];
+        if (self.paths == nil || [self.paths count] == 0) {
+            //Before Optimization
+            [self resolveSinglePath:((APGSAnnotation*)annotation).gasStation];
+        }else{
+            //After optimization
+            APGSAnnotation *gsa = (APGSAnnotation*)annotation;
+            for (APPath *p in self.paths) {
+                if (p.gasStation.gasStationID == gsa.gasStation.gasStationID) {
+                    [self performSegueWithIdentifier:@"SinglePathDetail" sender:self];
+                    break;
+                }
+            }
+        }
         /*
         APGSAnnotation *gsn = (APGSAnnotation*) annotation;
-        [APGasStationClient getDetailsOfGasStation:gsn.gasStation intoDict:nil];
         */
     }
     

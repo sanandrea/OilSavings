@@ -26,6 +26,10 @@
 @property (nonatomic, strong) MKPolyline *overallPolyline;
 @property (nonatomic, strong) APCar *car;
 @property (nonatomic) NSUInteger import;
+
+@property (nonatomic) float savingRespectCheapest;
+@property (nonatomic) float savingRespectNearest;
+
 //Distance of GasStation from Source plus Distance of GasStation to Destination
 @property (nonatomic) float haversineDistance;
 
@@ -53,4 +57,6 @@
 - (NSComparisonResult)compareTimePath:(APPath*)inObject;
 - (NSComparisonResult)compareDistancePath:(APPath*)inObject;
 - (NSComparisonResult)comparePricePath:(APPath*)inObject;
+
+- (float) compareSavingTo:(APPath*)other;
 @end

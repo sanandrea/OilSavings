@@ -91,8 +91,7 @@ static NSString * const DIRECTIONS_URL = @"https://maps.googleapis.com/maps/api/
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        // Handle Error
-        ALog("Error here");
+        [delegate foundPath:path withIndex:index error:error];
     }];
     
 }

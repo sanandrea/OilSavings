@@ -11,9 +11,11 @@
 #import "APGasStationInfoCell.h"
 #import "APMapInfoCell.h"
 #import "APFuelPriceCell.h"
-
 #import "APGSAnnotation.h"
 #import "APPinAnnotation.h"
+
+#import "SIAlertView.h"
+#import "Chameleon.h"
 
 @interface APPathDetailViewController ()
 
@@ -196,9 +198,13 @@
 #pragma mark - Action sheet
 
 -(IBAction)goToMapApp:(id)sender{
+    [self congratulateUser];
+}
+
+- (void)openActionsSheet{
     NSString *iosMaps = NSLocalizedString(@"Maps", @"Open location in ios maps");
     NSString *googleMaps = NSLocalizedString(@"Google Maps", @"Open location in google maps");
-
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Apri in", @"open in")
                                                              delegate:self
                                                     cancelButtonTitle:@"Cancel"
@@ -206,6 +212,38 @@
                                                     otherButtonTitles:iosMaps,googleMaps,nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleAutomatic;
     [actionSheet showFromToolbar:self.navigationController.toolbar];
+}
+- (void) congratulateUser{
+    ALog("Risparmi %f %f",self.path.savingRespectCheapest, self.path.savingRespectNearest);
+    
+    if (self.path.savingRespectNearest > 0 || self.path.savingRespectCheapest > 0) {
+        
+        NSString *userMessage;
+        NSString *stringB = [NSString stringWithFormat:@"Con questo percorso risparmi %3.2f€ rispetto al distributore con il prezzo più basso",self.path.savingRespectCheapest];
+        NSString *stringA = [NSString stringWithFormat:@"Con questo percorso risparmi %3.2f€ rispetto al distributore più vicino in linea d'aria ",self.path.savingRespectNearest];
+        
+        if (self.path.savingRespectNearest > self.path.savingRespectCheapest) {
+            userMessage = NSLocalizedString(stringA, nil);
+        }else{
+           userMessage = NSLocalizedString(stringB, nil);
+        }
+        
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:NSLocalizedString(@"Complimenti", @"Complimenti")
+                                                         andMessage:userMessage];
+        
+        [alertView addButtonWithTitle:NSLocalizedString(@"Buon viaggio", "Buon viaggio")
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  [self openActionsSheet];
+                              }];
+        [alertView setTitleColor:[UIColor flatSkyBlueColorDark]];
+        [alertView setMessageColor:[UIColor flatSkyBlueColorDark]];
+        [alertView setButtonColor:[UIColor flatPowderBlueColor]];
+        [alertView setViewBackgroundColor:[UIColor flatWhiteColor]];
+        [alertView show];
+    }else{
+        [self openActionsSheet];
+    }
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     CLLocationCoordinate2D destination;

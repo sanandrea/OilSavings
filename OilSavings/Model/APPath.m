@@ -208,5 +208,9 @@
         return [self comparePath:inObject byType:kSortPrice];
 }
 
+- (float) compareSavingTo:(APPath*)other{
+    float fuelDiff = self.pathFuelRemaining - other.pathFuelRemaining;
+    return fuelDiff/[self.gasStation getPrice];
+}
 
 @end
