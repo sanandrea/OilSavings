@@ -19,6 +19,9 @@
     }
     return self;
 }
+- (void) setCoordinate:(CLLocationCoordinate2D)newCoordinate{
+    coordinate = newCoordinate;
+}
 
 - (NSString *)subtitle{
     return self.address;

@@ -13,8 +13,8 @@
 @protocol APNetworkAPI <NSObject>
 
 @optional
-- (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord;
-- (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address;
+- (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord error:(NSError*)er;
+- (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address error:(NSError*)er;
 
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index;
 

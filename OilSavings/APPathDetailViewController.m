@@ -13,6 +13,7 @@
 #import "APFuelPriceCell.h"
 
 #import "APGSAnnotation.h"
+#import "APPinAnnotation.h"
 
 @interface APPathDetailViewController ()
 
@@ -144,10 +145,16 @@
     annotation.gasStation = self.path.gasStation;
     [cell.miniMap addAnnotation:annotation];
     
-    MKPointAnnotation *start = [[MKPointAnnotation alloc] init];
-    [start setCoordinate:self.path.src];
-    [start setTitle:@"Start"];
-    [cell.miniMap addAnnotation:start];
+    
+    APPinAnnotation *pin = [[APPinAnnotation alloc] initWithLocation:self.path.src];
+    pin.type = kAddressSrc;
+    [cell.miniMap addAnnotation:pin];
+    
+    if (self.path.hasDestination) {
+        APPinAnnotation *dst = [[APPinAnnotation alloc] initWithLocation:self.path.dst];
+        dst.type = kAddressDst;
+        [cell.miniMap addAnnotation:dst];
+    }
     
     
     [cell.miniMap addOverlay:self.path.overallPolyline];
@@ -368,6 +375,22 @@
             //TODO change logo
         }
         return markerView;
+    }else if ([annotation isKindOfClass:[APPinAnnotation class]]){
+        APPinAnnotation *pin = (APPinAnnotation*) annotation;
+        NSString *pinID = [NSString stringWithFormat:@"pin_%d",(pin.type == kAddressSrc) ? 1 : 2];
+        MKAnnotationView *markerPin = [theMapView dequeueReusableAnnotationViewWithIdentifier:pinID];
+        if (markerPin == nil) {
+            MKPinAnnotationView *result = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
+                                                                          reuseIdentifier:pinID];
+            if (pin.type == kAddressSrc) {
+                result.pinColor = MKPinAnnotationColorGreen;
+            }
+            result.canShowCallout = YES;
+            return result;
+        }else{
+            markerPin.annotation = annotation;
+        }
+        return markerPin;
     }
     return nil;
 }

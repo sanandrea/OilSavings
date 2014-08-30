@@ -68,12 +68,12 @@ static int MAX_LINEAR = 40;
     self.fuelLabel.text = NSLocalizedString(@"Carburante", @"Fuel select label");
     
     if (self.srcAddr != nil) {
-        self.src.placeholder = self.srcAddr;
+        self.src.text = self.srcAddr;
     }else{
         self.src.placeholder = NSLocalizedString(@"Indirizzo di partenza", @"indirizzo di partenza");
     }
     if (self.dstAddr != nil) {
-        self.dst.placeholder = self.dstAddr;
+        self.dst.text = self.dstAddr;
     }else{
         self.dst.placeholder = NSLocalizedString(@"Indirizzo di destinazione", @"indirizzo di destinazione");
     }
@@ -233,9 +233,11 @@ static int MAX_LINEAR = 40;
     if ([searchText length] == 0) {
         ALog("Canceled");
         if (searchBar == self.src){
+            self.src.placeholder = NSLocalizedString(@"Indirizzo di partenza", @"indirizzo di partenza");
             [_autocompleteSrc hidesuggestions];
             [_src endEditing:YES];
         }else{
+            self.dst.placeholder = NSLocalizedString(@"Indirizzo di destinazione", @"indirizzo di destinazione");
             [_autocompleteDst hidesuggestions];
             [_dst endEditing:YES];
         }

@@ -15,7 +15,9 @@
 
 @property (nonatomic) ADDRESS_TYPE type;
 @property (nonatomic, strong) NSString *address;
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
 - (id) initWithLocation:(CLLocationCoordinate2D)coord;
+- (void) setCoordinate:(CLLocationCoordinate2D)newCoordinate;
 
 @end

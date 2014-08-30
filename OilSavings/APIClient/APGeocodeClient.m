@@ -47,12 +47,13 @@ static NSString * const GEOCODE_URL = @"https://maps.googleapis.com/maps/api/geo
             coord.latitude = lat;
             coord.longitude = lng;
             
-            [delegate convertedAddressType:type to:coord];
+            [delegate convertedAddressType:type to:coord error:nil];
             
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-#warning In case of failure report a message to UI
+        CLLocationCoordinate2D coord;
+        [delegate convertedAddressType:type to:coord error:error];
         
     }];
     
@@ -77,12 +78,12 @@ static NSString * const GEOCODE_URL = @"https://maps.googleapis.com/maps/api/geo
             
             NSArray* results = (NSArray*) response[@"results"];
             NSDictionary *contents = [results objectAtIndex:0];
-            [delegate convertedCoordinateType:type to:contents[@"formatted_address"]];
+            [delegate convertedCoordinateType:type to:contents[@"formatted_address"] error:nil];
             
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        // Handle Error
+        [delegate convertedCoordinateType:type to:nil error:error];
         
     }];
 }

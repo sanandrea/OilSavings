@@ -74,8 +74,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 
 @implementation APMapViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
     
     self.title = @"Mappa";
@@ -179,8 +178,6 @@ static int RESOLVE_SINGLE_PATH = 99999;
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
 //    NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
     CLLocation *newLocation = [locations lastObject];
-    
-    self.usingGPS = YES;
     self.myLocation = newLocation.coordinate;
     
     
@@ -188,8 +185,9 @@ static int RESOLVE_SINGLE_PATH = 99999;
     if (!CLLocationCoordinate2DIsValid(self.srcCoord)) {
         self.srcCoord = self.myLocation;
     }
-
-    [self centerMapInLocation:self.myLocation animated:YES];
+    if (self.usingGPS) {
+        [self centerMapInLocation:self.myLocation animated:YES];
+    }
 
     [locationManager stopUpdatingLocation];
 }
@@ -231,21 +229,9 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 - (IBAction) gotoCurrentLocation:(id)sender{
+    self.usingGPS = YES;
+    [self removePin:kAddressSrc];
     [locationManager startUpdatingLocation];
-    /*
-    NSArray *items = [[NSArray alloc] initWithObjects:
-                      @"Benzina",
-                      @"Diesel",
-                      nil];
-    RNGridMenu *av = [[RNGridMenu alloc] initWithTitles:items];
-    CGPoint center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
-    CGSize itemsize = CGSizeMake(100, 50);
-    av.delegate = self;
-    av.itemSize = itemsize;
-    av.blurLevel = 0.1f;
-    
-    [av showInViewController:self center:center];
-    */
 }
 
 - (IBAction) showGasStationList:(id)sender{
@@ -254,31 +240,11 @@ static int RESOLVE_SINGLE_PATH = 99999;
 
 - (IBAction) optimizeAgain:(id)sender{
     if (self.gasStations == nil) {
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"SIAlertView" andMessage:@"Sumi Interactive"];
-        
-        [alertView addButtonWithTitle:@"Button1"
-                                 type:SIAlertViewButtonTypeDestructive
-                              handler:^(SIAlertView *alert) {
-                                  NSLog(@"Button1 Clicked");
-                              }];
-        alertView.transitionStyle = SIAlertViewTransitionStyleFade;
-        
-        [alertView setTitleColor:[UIColor flatBlueColorDark]];
-        [alertView setMessageColor:[UIColor flatBlueColorDark]];
-        [alertView setButtonColor:[UIColor flatBlueColorDark]];
-        [alertView setViewBackgroundColor:[UIColor flatWhiteColor]];
-        
-        [alertView show];
+        [self showWaitingForGPSSignal];
         return;
     }
     if ([self.gasStations count] == 0) {
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"SIAlertView" andMessage:@"Sumi Interactive"];
-
-        [alertView addButtonWithTitle:@"Button1"
-                                 type:SIAlertViewButtonTypeDefault
-                              handler:^(SIAlertView *alert) {
-                                  NSLog(@"Button1 Clicked");
-                              }];
+        [self showNoGasStationsNearYou];
         return;
     }
     
@@ -291,6 +257,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
     
     CLLocationCoordinate2D origin = self.usingGPS ? self.myLocation : self.srcCoord;
     [self.optimizer optimizeRouteFrom:origin to:self.dstCoord withGasStations:self.gasStations];
+    
+    [self removePathOverlayOnMap];
 }
 
 - (void) carChanged{
@@ -313,16 +281,67 @@ static int RESOLVE_SINGLE_PATH = 99999;
     //Disable Path List
     self.showGSButton.enabled = NO;
     
-    //remove existing overlay if any
-    NSArray *pointsArray = [self.mapView overlays];
-    if ([pointsArray count] > 0) {
-        [self.mapView removeOverlays:pointsArray];
-    }
+    [self removePathOverlayOnMap];
     
 }
 
-- (void)gridMenu:(RNGridMenu *)gridMenu willDismissWithSelectedItem:(RNGridMenuItem *)item atIndex:(NSInteger)itemIndex{
-    ALog("User selected %ld item",(long)itemIndex);
+- (void) showNoGasStationsNearYou{
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:NSLocalizedString(@"Attenzione", @"Attention")
+                                                     andMessage:NSLocalizedString(@"Siamo spiacenti, ma non sono stati trovati distributori di carburante nelle vicinanze.", @"")];
+    
+    [alertView addButtonWithTitle:@"OK"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              NSLog(@"Button1 Clicked");
+                          }];
+    [alertView setTitleColor:[UIColor flatSkyBlueColorDark]];
+    [alertView setMessageColor:[UIColor flatSkyBlueColorDark]];
+    [alertView setButtonColor:[UIColor flatPowderBlueColor]];
+    [alertView setViewBackgroundColor:[UIColor flatWhiteColor]];
+    [alertView show];
+}
+
+- (void) showWaitingForGPSSignal{
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:NSLocalizedString(@"Attenzione", @"Attention")
+                                                     andMessage:NSLocalizedString(@"In attesa della posizione corrente...", @"")];
+    
+    [alertView addButtonWithTitle:NSLocalizedString(@"Cerca", @"Cerca posizione")
+                             type:SIAlertViewButtonTypeCancel
+                          handler:^(SIAlertView *alert) {
+                              [self performSegueWithIdentifier:@"OptionsSegue" sender:self];
+                          }];
+    [alertView addButtonWithTitle:NSLocalizedString(@"Attendi", @"Cerca posizione")
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              //Do nothing
+                          }];
+    alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+    
+    [alertView setTitleColor:[UIColor flatSkyBlueColorDark]];
+    [alertView setMessageColor:[UIColor flatSkyBlueColorDark]];
+    
+    [alertView setButtonColor:[UIColor flatPowderBlueColor]];
+    [alertView setCancelButtonColor:[UIColor flatWhiteColor]];
+    [alertView setViewBackgroundColor:[UIColor flatWhiteColor]];
+    
+    [alertView show];
+}
+
+- (void) showErrorHappened:(NSString*)message{
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:NSLocalizedString(@"Attenzione", @"Attention")
+                                                     andMessage:message];
+    
+    [alertView addButtonWithTitle:@"OK"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              NSLog(@"Button1 Clicked");
+                          }];
+    [alertView setTitleColor:[UIColor flatSkyBlueColorDark]];
+    [alertView setMessageColor:[UIColor flatSkyBlueColorDark]];
+    [alertView setButtonColor:[UIColor flatPowderBlueColor]];
+    [alertView setViewBackgroundColor:[UIColor flatWhiteColor]];
+    [alertView show];
+    return;
 }
 
 #pragma mark - Network APIs
@@ -366,17 +385,21 @@ static int RESOLVE_SINGLE_PATH = 99999;
             //check if at least one Gas Station is visible
             [self checkIfAreVisibleGasStations];
         }else{
-#warning Display pop up or new search
+            [self showNoGasStationsNearYou];
         }
     }else{
-#warning Display pop up
+        [self showErrorHappened:NSLocalizedString(@"Errore generico nei sistemi", @"")];
     }
     
 }
 
 #pragma mark - Geocoding Convertions Protocol
 
-- (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord{
+- (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord error:(NSError *)er{
+    if (er != nil) {
+        [self showErrorHappened:[er localizedDescription]];
+        return;
+    }
     NSString *address;
     ALog("Address converted");
     if (type == kAddressSrc) {
@@ -389,14 +412,15 @@ static int RESOLVE_SINGLE_PATH = 99999;
         self.dstCoord = coord;
     }
 
-    APPinAnnotation *pin = [[APPinAnnotation alloc] initWithLocation:coord];
-    pin.address = address;
-    pin.type = type;
-    [self.mapView addAnnotation:pin];
+    [self addOrUpdatePin:type atLocation:coord withAddress:address];
 
 }
 
-- (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address{
+- (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address error:(NSError *)er{
+    if (er != nil) {
+        [self showErrorHappened:[er localizedDescription]];
+        return;
+    }
     if (type == kAddressSrc) {
         self.srcAddress = address;
     }else if (type == kAddressULocation){
@@ -484,17 +508,24 @@ static int RESOLVE_SINGLE_PATH = 99999;
             self.srcAddress = controller.srcAddr;
             [APGeocodeClient convertAddress:self.srcAddress ofType:kAddressSrc inDelegate:self];
             self.usingGPS = NO;
+            [self removePathOverlayOnMap];
         }
         
+        
         if (([controller.dstAddr length] > 0) && ![self.dstAddress isEqualToString:controller.dstAddr]) {
-            ALog("Set dest");
             self.dstAddress = controller.dstAddr;
             [APGeocodeClient convertAddress:self.dstAddress ofType:kAddressDst inDelegate:self];
+            [self removePathOverlayOnMap];
         }
+        
         if ([controller.dstAddr length] == 0) {
-#warning todo
+            self.dstAddress = nil;
+            self.dstCoord = emptyLocationCoordinate;
+            
+            //Remove pin if any
+            [self removePin:kAddressDst];
+            
         }
-       
         
         self.cashAmount = controller.cashAmount;
     }
@@ -524,8 +555,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 //    [self.navigationController pushViewController:self.detailViewController animated:YES];
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
-{
+- (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation{
     // in case it's the user location, we already have an annotation, so just return nil
     if ([annotation isKindOfClass:[MKUserLocation class]])
     {
@@ -594,23 +624,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
     }
     return nil;
 }
--(void) gasStationInfoTapped{
-    ALog("Tapped");
-    
-}
-/*
-- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay {
-    MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
-    polylineView.strokeColor = [UIColor blueColor];
-    polylineView.fillColor = [UIColor redColor];
-    polylineView.lineWidth = 5.0;
-    polylineView.lineCap = kCGLineCapRound;
-    
-    return polylineView;
-}
- */
-- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
-{
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay{
     MKPolyline *route = overlay;
     
     MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithPolyline:route];
@@ -625,8 +640,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 //removes all annotations except user location
-- (void)removeAllPinsExcept:(NSArray*)toBeDeletedPins
-{
+- (void)removeAllPinsExcept:(NSArray*)toBeDeletedPins{
     NSMutableArray *pins = [[NSMutableArray alloc] init];
 
     for (id gsAnnotation in [self.mapView annotations]) {
@@ -675,6 +689,48 @@ static int RESOLVE_SINGLE_PATH = 99999;
     }
 }
 
+- (void) addOrUpdatePin:(ADDRESS_TYPE)type atLocation:(CLLocationCoordinate2D)coord withAddress:(NSString*)address{
+    APPinAnnotation *desiredPin = nil;
+    for (id<MKAnnotation> pin  in [self.mapView annotations]) {
+        
+        if ([pin isKindOfClass:[APPinAnnotation class]]) {
+            if (((APPinAnnotation*)pin).type == type) {
+                desiredPin = pin;
+                break;
+            }
+        }
+    }
+    
+    if (desiredPin == nil) {
+        APPinAnnotation *pin = [[APPinAnnotation alloc] initWithLocation:coord];
+        pin.address = address;
+        pin.type = type;
+        [self.mapView addAnnotation:pin];
+    }else{
+        desiredPin.coordinate = coord;
+        desiredPin.address = address;
+    }
+}
+
+- (void) removePin:(ADDRESS_TYPE)type{
+    for (id<MKAnnotation> pin  in [self.mapView annotations]) {
+        
+        if ([pin isKindOfClass:[APPinAnnotation class]]) {
+            if (((APPinAnnotation*)pin).type == type) {
+                [self.mapView removeAnnotation:pin];
+                return;
+            }
+        }
+    }
+}
+
+- (void)removePathOverlayOnMap{
+    //remove existing overlay if any
+    NSArray *pointsArray = [self.mapView overlays];
+    if ([pointsArray count] > 0) {
+        [self.mapView removeOverlays:pointsArray];
+    }
+}
 
 - (UIImage*)customizeAnnotationImage:(APGasStation*)gasStation{
     UIImage *markerImage;
@@ -810,8 +866,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 #pragma mark - Segues
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([[segue identifier] isEqualToString:@"OptionsSegue"]) {
         
         APOptionsViewController *optController = (APOptionsViewController *)[segue destinationViewController];
