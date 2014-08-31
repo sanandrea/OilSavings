@@ -305,11 +305,14 @@ static int RESOLVE_SINGLE_PATH = 99999;
 - (void) carChanged{
     [self.optimizer changeCar:self.myCar];
     
-    
     if (self.usingGPS) {
-        [self findGasStations:self.myLocation];
+        if (CLLocationCoordinate2DIsValid(self.myLocation)) {
+            [self findGasStations:self.myLocation];
+        }
     }else{
-        [self findGasStations:self.srcCoord];
+        if (CLLocationCoordinate2DIsValid(self.srcCoord)) {
+            [self findGasStations:self.srcCoord];
+        }
     }
     
     APGasStation *toBeReverted = self.bestPath.gasStation;

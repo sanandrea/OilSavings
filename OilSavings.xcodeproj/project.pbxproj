@@ -67,6 +67,7 @@
 		A9B773D3195E32E200441B42 /* route@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B773CF195E32E200441B42 /* route@2x.png */; };
 		A9B7752B19A54D3E00EA6B69 /* FuelPriceDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B7752A19A54D3E00EA6B69 /* FuelPriceDetail.xib */; };
 		A9B7752E19A54E1E00EA6B69 /* APFuelPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7752D19A54E1E00EA6B69 /* APFuelPriceCell.m */; };
+		A9C30CB519B37CD000349743 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C30CB419B37CD000349743 /* libAdIdAccess.a */; };
 		A9C5F06B19AA1AF900466CC2 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C5F06919AA1ADE00466CC2 /* libGoogleAdMobAds.a */; };
 		A9C5F0D319AA1E2C00466CC2 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C5F0D219AA1E2C00466CC2 /* libGoogleAnalyticsServices.a */; };
 		A9C5F0D519AA1EE400466CC2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C5F0D419AA1EE400466CC2 /* SystemConfiguration.framework */; };
@@ -245,6 +246,7 @@
 		A9B7752A19A54D3E00EA6B69 /* FuelPriceDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FuelPriceDetail.xib; sourceTree = "<group>"; };
 		A9B7752C19A54E1E00EA6B69 /* APFuelPriceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APFuelPriceCell.h; sourceTree = "<group>"; };
 		A9B7752D19A54E1E00EA6B69 /* APFuelPriceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APFuelPriceCell.m; sourceTree = "<group>"; };
+		A9C30CB419B37CD000349743 /* libAdIdAccess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAdIdAccess.a; sourceTree = "<group>"; };
 		A9C5F05D19AA1ADE00466CC2 /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
 		A9C5F05E19AA1ADE00466CC2 /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
 		A9C5F05F19AA1ADE00466CC2 /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9C30CB519B37CD000349743 /* libAdIdAccess.a in Frameworks */,
 				A9C5F0D719AA1EFC00466CC2 /* libz.dylib in Frameworks */,
 				A9C5F0D519AA1EE400466CC2 /* SystemConfiguration.framework in Frameworks */,
 				A9C5F0D319AA1E2C00466CC2 /* libGoogleAnalyticsServices.a in Frameworks */,
@@ -611,6 +614,7 @@
 		A9C5F05C19AA1ADE00466CC2 /* Admob */ = {
 			isa = PBXGroup;
 			children = (
+				A9C30CB419B37CD000349743 /* libAdIdAccess.a */,
 				A9C5F05D19AA1ADE00466CC2 /* GADAdMobExtras.h */,
 				A9C5F05E19AA1ADE00466CC2 /* GADAdNetworkExtras.h */,
 				A9C5F05F19AA1ADE00466CC2 /* GADAdSize.h */,
@@ -1159,6 +1163,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OilSavings/OilSavings-Prefix.pch";
 				INFOPLIST_FILE = "OilSavings/OilSavings-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/OilSavings",
@@ -1196,6 +1201,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OilSavings/OilSavings-Prefix.pch";
 				INFOPLIST_FILE = "OilSavings/OilSavings-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/OilSavings",
