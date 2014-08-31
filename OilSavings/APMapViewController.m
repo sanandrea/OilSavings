@@ -55,6 +55,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 @property (nonatomic, strong) NSMutableArray *paths;
 
 @property (nonatomic, strong) APPath *bestPath;
+@property (nonatomic, strong) APPath *relayDetailPath;
 @property (nonatomic) BOOL bestFound;
 
 @property (nonatomic) BOOL usingGPS;
@@ -398,20 +399,10 @@ static int RESOLVE_SINGLE_PATH = 99999;
     if (newStations) {
         
         if ([self.gasStations count] > 0) {
-            NSMutableArray *toBeDeleted = [[NSMutableArray alloc]init];
-            
-            for (APGasStation *oldGS in self.gasStations) {
-                if (![gsClient.gasStations containsObject:oldGS]) {
-                    [toBeDeleted addObject:oldGS];
-                }
-            }
-            
-            self.gasStations = gsClient.gasStations;
-            
-            [self removeAllPinsExcept:toBeDeleted];
-            
             //remove any existing pin.
+            [self removeAllPinsExcept:self.gasStations];
         }
+        self.gasStations = gsClient.gasStations;
         
         APGSAnnotation *annotation;
         for (APGasStation *gs in gsClient.gasStations) {
@@ -492,7 +483,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
     
     //User clicked on annotation
     if (index == RESOLVE_SINGLE_PATH) {
-        self.bestPath = path;
+        self.relayDetailPath = path;
         path.car = self.myCar;
         path.import = self.cashAmount;
         [self performSegueWithIdentifier:@"SinglePathDetail" sender:self];
@@ -637,6 +628,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
             APGSAnnotation *gsa = (APGSAnnotation*)annotation;
             for (APPath *p in self.paths) {
                 if (p.gasStation.gasStationID == gsa.gasStation.gasStationID) {
+                    self.relayDetailPath = p;
                     [self performSegueWithIdentifier:@"SinglePathDetail" sender:self];
                     break;
                 }
@@ -981,7 +973,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
         
     }else if ([[segue identifier] isEqualToString:@"SinglePathDetail"]){
         APPathDetailViewController *pathDetailVC = (APPathDetailViewController*)[segue destinationViewController];
-        pathDetailVC.path = self.bestPath;
+        pathDetailVC.path = self.relayDetailPath;
     }
 }
 
