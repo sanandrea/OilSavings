@@ -92,7 +92,7 @@ static int MAX_LINEAR = 40;
     }
     _autocompleteSrc = [TRAutocompleteView autocompleteViewBindedTo:txt
                                                         havingSpace:kLeftSearchBarPadding
-                                                        usingSource:[[TRGoogleMapsAutocompleteItemsSource alloc] initWithMinimumCharactersToTrigger:2 apiKey:GOOGLE_API_KEY]
+                                                        usingSource:[[TRGoogleMapsAutocompleteItemsSource alloc] initWithMinimumCharactersToTrigger:2 language:@"it" apiKey:GOOGLE_API_KEY]
                                                         cellFactory:[[TRGoogleMapsAutocompletionCellFactory alloc] initWithCellForegroundColor:[UIColor lightGrayColor] fontSize:14]
                                                        presentingIn:self];
     //_autocompleteSrc.topMargin = -55.f;
@@ -107,7 +107,7 @@ static int MAX_LINEAR = 40;
     }
     _autocompleteDst = [TRAutocompleteView autocompleteViewBindedTo:txt
                                                         havingSpace:kLeftSearchBarPadding
-                                                        usingSource:[[TRGoogleMapsAutocompleteItemsSource alloc] initWithMinimumCharactersToTrigger:2 apiKey:GOOGLE_API_KEY]
+                                                        usingSource:[[TRGoogleMapsAutocompleteItemsSource alloc] initWithMinimumCharactersToTrigger:2 language:@"it" apiKey:GOOGLE_API_KEY]
                                                         cellFactory:[[TRGoogleMapsAutocompletionCellFactory alloc] initWithCellForegroundColor:[UIColor lightGrayColor] fontSize:14]
                                                        presentingIn:self];
     //_autocompleteDst.topMargin = -55.f;

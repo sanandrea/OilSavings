@@ -169,6 +169,7 @@
 didFailToReceiveAdWithError:(GADRequestError *)error {
     
     // Alert the error.
+    /*
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GADRequestError"
                                                     message:[error localizedDescription]
                                                    delegate:nil
@@ -176,7 +177,7 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
                                           otherButtonTitles:nil];
     [alert show];
     
-    
+    */
 }
 
 

@@ -25,6 +25,7 @@
 #import "SIAlertView.h"
 #import "SWRevealViewController.h"
 #import "UINavigationController+M13ProgressViewBar.h"
+#import "AFHTTPRequestOperationManager.h"
 
 #define ZOOM_LEVEL 14
 static float kAnnotationPadding = 10.0f;
@@ -64,6 +65,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
 //how many directions requests are processed
 @property (nonatomic) int processedRequests;
 
+@property (nonatomic) AFNetworkReachabilityStatus networkStatus;
+
 @property (nonatomic, strong) APPathOptimizer *optimizer;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *centerMap;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *showGSButton;
@@ -77,7 +80,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    self.title = @"Mappa";
+//    self.title = @"Mappa";
     [self.mapView setDelegate:self];
     
     //Set all coordinates to invalid locations
@@ -158,6 +161,15 @@ static int RESOLVE_SINGLE_PATH = 99999;
     
     //Progress
     [self.navigationController showProgress];
+    
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    //check for internet reachability
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        self.networkStatus = status;
+        if (status == AFNetworkReachabilityStatusNotReachable){
+            [self showErrorHappened:NSLocalizedString(@"Nessuna connessione a internet", nil) withTitle:NSLocalizedString(@"Connessione Internet", nil)];
+        }
+    }];
 }
 
 
@@ -202,12 +214,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
     if(error.code == kCLErrorDenied) {
         
         // alert user
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Access to location services is disabled"
-                                                            message:@"You can turn Location Services on in Settings -> Privacy -> Location Services"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
+        [self showErrorHappened:NSLocalizedString(@"L'accesso ai Servizi di Localizzazione è stato disabilitato. Puoi abilitare i Servizi di Localizzazione in Impostazioni -> Privacy -> Posizione", nil)
+                      withTitle:NSLocalizedString(@"Errore di localizzazione", nil)];
         
     } else if(error.code == kCLErrorLocationUnknown) {
         NSLog(@"Error: location unknown");
@@ -229,6 +237,28 @@ static int RESOLVE_SINGLE_PATH = 99999;
                                                            value:[NSNumber numberWithUnsignedLong:v]] build]];    // Event value
 }
 
+#pragma mark - Reachability
+- (void) startNetworkMonitoring{
+    NSURL *baseURL = [NSURL URLWithString:@"http://example.com/"];
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    
+    NSOperationQueue *operationQueue = manager.operationQueue;
+    [manager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                [operationQueue setSuspended:NO];
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+            default:
+                [operationQueue setSuspended:YES];
+                break;
+        }
+    }];
+    
+    [manager.reachabilityManager startMonitoring];
+}
+
 #pragma mark - UI Actions
 - (IBAction)options:(id)sender{
     [self performSegueWithIdentifier: @"OptionsSegue" sender: self];
@@ -245,6 +275,10 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 - (IBAction) optimizeAgain:(id)sender{
+    if (self.networkStatus == AFNetworkReachabilityStatusNotReachable){
+        [self showErrorHappened:NSLocalizedString(@"Nessuna connessione a internet", nil) withTitle:NSLocalizedString(@"Connessione Internet", nil)];
+        return;
+    }
     if (self.gasStations == nil) {
         [self showWaitingForGPSSignal];
         return;
@@ -333,8 +367,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
     [alertView show];
 }
 
-- (void) showErrorHappened:(NSString*)message{
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:NSLocalizedString(@"Attenzione", @"Attention")
+- (void) showErrorHappened:(NSString*)message withTitle:(NSString*)title{
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:title
                                                      andMessage:message];
     
     [alertView addButtonWithTitle:@"OK"
@@ -374,9 +408,9 @@ static int RESOLVE_SINGLE_PATH = 99999;
             
             self.gasStations = gsClient.gasStations;
             
+            [self removeAllPinsExcept:toBeDeleted];
             
             //remove any existing pin.
-            [self removeAllPinsExcept:toBeDeleted];
         }
         
         APGSAnnotation *annotation;
@@ -394,7 +428,11 @@ static int RESOLVE_SINGLE_PATH = 99999;
             [self showNoGasStationsNearYou];
         }
     }else{
-        [self showErrorHappened:NSLocalizedString(@"Errore generico nei sistemi", @"")];
+        if (self.networkStatus == AFNetworkReachabilityStatusReachableViaWWAN ||
+            self.networkStatus == AFNetworkReachabilityStatusReachableViaWiFi) {
+            [self showErrorHappened:NSLocalizedString(@"Errore generico nei sistemi", @"")
+                          withTitle:NSLocalizedString(@"Attenzione", @"Attention")];
+        }
     }
     
 }
@@ -403,7 +441,11 @@ static int RESOLVE_SINGLE_PATH = 99999;
 
 - (void) convertedAddressType:(ADDRESS_TYPE)type to:(CLLocationCoordinate2D)coord error:(NSError *)er{
     if (er != nil) {
-        [self showErrorHappened:[er localizedDescription]];
+        if (self.networkStatus == AFNetworkReachabilityStatusReachableViaWWAN ||
+            self.networkStatus == AFNetworkReachabilityStatusReachableViaWiFi) {
+            [self showErrorHappened:[er localizedDescription]
+                          withTitle:NSLocalizedString(@"Attenzione", @"Attention")];
+        }
         return;
     }
     NSString *address;
@@ -422,7 +464,11 @@ static int RESOLVE_SINGLE_PATH = 99999;
 
 - (void) convertedCoordinateType:(ADDRESS_TYPE)type to:(NSString*) address error:(NSError *)er{
     if (er != nil) {
-        [self showErrorHappened:[er localizedDescription]];
+        if (self.networkStatus == AFNetworkReachabilityStatusReachableViaWWAN ||
+            self.networkStatus == AFNetworkReachabilityStatusReachableViaWiFi) {
+            [self showErrorHappened:[er localizedDescription]
+                          withTitle:NSLocalizedString(@"Attenzione", @"Attention")];
+        }
         return;
     }
     if (type == kAddressSrc) {
@@ -527,9 +573,11 @@ static int RESOLVE_SINGLE_PATH = 99999;
 
 #pragma mark - Options Protocol
 - (void)optionsController:(APOptionsViewController*) controller didfinishWithSave:(BOOL)save{
+    BOOL changes = NO;
     if (save) {
         
         if (([controller.srcAddr length] > 0) && ![controller.srcAddr isEqualToString:self.srcAddress]) {
+            changes = YES;
             self.srcAddress = controller.srcAddr;
             [APGeocodeClient convertAddress:self.srcAddress ofType:kAddressSrc inDelegate:self];
             self.usingGPS = NO;
@@ -538,6 +586,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
         
         
         if (([controller.dstAddr length] > 0) && ![self.dstAddress isEqualToString:controller.dstAddr]) {
+            changes = YES;
             self.dstAddress = controller.dstAddr;
             [APGeocodeClient convertAddress:self.dstAddress ofType:kAddressDst inDelegate:self];
             [self removePathOverlayOnMap];
@@ -552,7 +601,19 @@ static int RESOLVE_SINGLE_PATH = 99999;
             
         }
         
+        if (self.cashAmount != controller.cashAmount) {
+            changes = YES;
+        }
         self.cashAmount = controller.cashAmount;
+        
+        if (changes) {
+            APGasStation *toBeReverted = self.bestPath.gasStation;
+            self.bestPath = nil;
+            [self revertChosenGS:toBeReverted];
+            self.showGSButton.enabled = NO;
+            [self removePathOverlayOnMap];
+        }
+        
     }
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -597,31 +658,25 @@ static int RESOLVE_SINGLE_PATH = 99999;
     }
     if ([annotation isKindOfClass:[APGSAnnotation class]]){
         APGSAnnotation *gsn = (APGSAnnotation*) annotation;
-        NSString *GSAnnotationIdentifier = [NSString stringWithFormat:@"gid_%lu", (unsigned long)gsn.gasStation.gasStationID];
+        NSString *GSAnnotationIdentifier = [NSString stringWithFormat:@"gid_%lu_%@", (unsigned long)gsn.gasStation.gasStationID,self.myCar.energy];
         
         MKAnnotationView *markerView = [theMapView dequeueReusableAnnotationViewWithIdentifier:GSAnnotationIdentifier];
         if (markerView == nil) {
-            MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation
+            markerView = [[MKAnnotationView alloc] initWithAnnotation:annotation
                                                                             reuseIdentifier:GSAnnotationIdentifier];
-            annotationView.canShowCallout = YES;
+            markerView.canShowCallout = YES;
             
-            
-            annotationView.image = [self customizeAnnotationImage:gsn.gasStation];
-            annotationView.opaque = NO;
-            
-            
+            markerView.opaque = NO;
             
             UIImageView *sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:gsn.gasStation.logo]];
-            annotationView.leftCalloutAccessoryView = sfIconView;
+            markerView.leftCalloutAccessoryView = sfIconView;
             
             // offset the flag annotation so that the flag pole rests on the map coordinate
             //annotationView.centerOffset = CGPointMake( annotationView.centerOffset.x + annotationView.image.size.width/2, annotationView.centerOffset.y - annotationView.image.size.height/2 );
             
             // http://stackoverflow.com/questions/8165262/mkannotation-image-offset-with-custom-pin-image
-            annotationView.centerOffset = CGPointMake(0,-annotationView.image.size.height/2);
+            markerView.centerOffset = CGPointMake(0,-markerView.image.size.height/2);
             
-            
-
             // add a detail disclosure button to the callout which will open a new view controller page
             //
             // note: when the detail disclosure button is tapped, we respond to it via:
@@ -631,14 +686,15 @@ static int RESOLVE_SINGLE_PATH = 99999;
             //
             UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
             [rightButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
-            annotationView.rightCalloutAccessoryView = rightButton;
+            markerView.rightCalloutAccessoryView = rightButton;
             
-            return annotationView;
         }else{
             markerView.annotation = annotation;
-            //TODO change logo
         }
+        
+        markerView.image = [self customizeAnnotationImage:gsn.gasStation];
         return markerView;
+
     } else if ([annotation isKindOfClass:[APPinAnnotation class]]){
         APPinAnnotation *pin = (APPinAnnotation*) annotation;
         NSString *pinID = [NSString stringWithFormat:@"pin_%d",(pin.type == kAddressSrc) ? 1 : 2];
@@ -710,6 +766,9 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 - (void)revertChosenGS:(APGasStation *)gs{
+    if (gs == nil) {
+        return;
+    }
     for (id<MKAnnotation> annotation in self.mapView.annotations){
         if ([annotation isKindOfClass:[APGSAnnotation class]]){
             
@@ -721,6 +780,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
             
         }
     }
+    [self.mapView reloadInputViews];
 }
 
 - (void) addOrUpdatePin:(ADDRESS_TYPE)type atLocation:(CLLocationCoordinate2D)coord withAddress:(NSString*)address{
