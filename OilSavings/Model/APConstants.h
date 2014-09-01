@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+
+#define USE_IOS_MAPS 1
+
 extern NSString *const kDBDowloaded;
 extern NSString *const kDBVersion;
 extern NSString *const kResVersion;
@@ -26,6 +29,7 @@ extern const int REQUEST_BUNDLE;
 extern const int ENERGIES_COUNT;
 
 extern const int kDEBUG;
+
 
 
 extern const CLLocationDegrees emptyLocation;

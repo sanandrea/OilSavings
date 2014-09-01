@@ -512,7 +512,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
         [self setChosenGSRed:self.bestPath.gasStation];
         
         //Center map in to include all path
-        [self resizeMapToDiagonalPoints:self.bestPath.southWestBound :self.bestPath.northEastBound];
+#warning TODO
+        //[self resizeMapToDiagonalPoints:self.bestPath.southWestBound :self.bestPath.northEastBound];
         
         [self findCheapestAndNearest];
     }
@@ -532,6 +533,9 @@ static int RESOLVE_SINGLE_PATH = 99999;
         
         //Add new polyline
         [self.mapView addOverlay:self.bestPath.overallPolyline];
+        if (self.bestPath.hasDestination) {
+            [self.mapView addOverlay:self.bestPath.secondaryPolyline];
+        }
     }
 }
 

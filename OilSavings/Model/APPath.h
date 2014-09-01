@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 #import "APGasStation.h"
+
+
 #import "APLine.h"
+
+
 #import "APCar.h"
 
 @interface APPath : NSObject
@@ -24,6 +28,7 @@
 @property (nonatomic, strong) APGasStation *gasStation;
 @property (nonatomic) BOOL hasDestination;
 @property (nonatomic, strong) MKPolyline *overallPolyline;
+@property (nonatomic, strong) MKPolyline *secondaryPolyline;
 @property (nonatomic, strong) APCar *car;
 @property (nonatomic) NSUInteger import;
 
@@ -33,10 +38,17 @@
 //Distance of GasStation from Source plus Distance of GasStation to Destination
 @property (nonatomic) float haversineDistance;
 
+
 - (void) addLine:(APLine*) line;
+- (void) constructMKPolyLines;
+
 
 - (int) getDistance;
 - (int) getTime;
+
+- (void) setNewDistance:(int)newDistance;
+- (void) setNewTime:(int)newTime;
+
 - (float) getFuelExpense;
 
 - (void) setTheCar:(APCar*)car;
@@ -45,7 +57,6 @@
 - (id) initWith:(CLLocationCoordinate2D)source andGasStation:(APGasStation*)gs;
 - (id) initWith:(CLLocationCoordinate2D)source and:(CLLocationCoordinate2D)destination andGasStation:(APGasStation*)gs;
 
-- (void) constructMKPolyLines;
 - (float) calculatePathValueForEnergyType:(ENERGY_TYPE)eType;
 
 //no need to expose this

@@ -8,6 +8,7 @@
 
 #import "APDirectionsClient.h"
 #import "AFNetworking.h"
+#import "APLine.h"
 
 static NSString * const DIRECTIONS_URL = @"https://maps.googleapis.com/maps/api/directions/json";
 

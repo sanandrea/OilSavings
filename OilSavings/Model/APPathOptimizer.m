@@ -10,8 +10,9 @@
 #import "APGasStation.h"
 #import "APDirectionsClient.h"
 #import "APGeocodeClient.h"
+#import "APDirectionsIOS.h"
 
-static const int SLEEP_INTERVAL = 150000; // 150ms
+static const int SLEEP_INTERVAL = 250000; // 150ms
 
 @implementation APPathOptimizer
 
@@ -77,7 +78,11 @@ static const int SLEEP_INTERVAL = 150000; // 150ms
         
         while (index < counter * REQUEST_BUNDLE && index < [self.paths count]) {
 //            ALog("Internal while: counter is %d and index is %d",counter, index);
+#ifdef USE_IOS_MAPS
+            [APDirectionsIOS findDirectionsOfPath:[self.paths objectAtIndex:index] indexOfRequest:index delegateTo:self];
+#else
             [APDirectionsClient findDirectionsOfPath:[self.paths objectAtIndex:index] indexOfRequest:index delegateTo:self];
+#endif
             usleep(SLEEP_INTERVAL);
             index++;
         }

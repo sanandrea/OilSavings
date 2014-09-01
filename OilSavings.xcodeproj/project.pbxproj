@@ -21,6 +21,7 @@
 		A93D9F8A1935500F008B530A /* APTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A93D9F891935500F008B530A /* APTableViewCell.m */; };
 		A93D9F8E193550E0008B530A /* CarCellDesign.xib in Resources */ = {isa = PBXBuildFile; fileRef = A93D9F8D193550E0008B530A /* CarCellDesign.xib */; };
 		A94392CE19328DF000439E89 /* SidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A94392CC19328DF000439E89 /* SidebarViewController.m */; };
+		A949160519B4E1AA00CC437E /* APDirectionsIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = A949160419B4E1AA00CC437E /* APDirectionsIOS.m */; };
 		A9574D7919AD3E97002A0EF3 /* barrel_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9574D7319AD3E97002A0EF3 /* barrel_b@2x.png */; };
 		A9574D7A19AD3E97002A0EF3 /* barrel_c@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9574D7419AD3E97002A0EF3 /* barrel_c@2x.png */; };
 		A9574D7B19AD3E97002A0EF3 /* barrel_d@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9574D7519AD3E97002A0EF3 /* barrel_d@2x.png */; };
@@ -180,6 +181,8 @@
 		A93D9F8D193550E0008B530A /* CarCellDesign.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarCellDesign.xib; sourceTree = "<group>"; };
 		A94392CC19328DF000439E89 /* SidebarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarViewController.m; sourceTree = "<group>"; };
 		A94392CD19328DF000439E89 /* SidebarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarViewController.h; sourceTree = "<group>"; };
+		A949160319B4E1AA00CC437E /* APDirectionsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDirectionsIOS.h; sourceTree = "<group>"; };
+		A949160419B4E1AA00CC437E /* APDirectionsIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDirectionsIOS.m; sourceTree = "<group>"; };
 		A9574D7319AD3E97002A0EF3 /* barrel_b@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barrel_b@2x.png"; sourceTree = "<group>"; };
 		A9574D7419AD3E97002A0EF3 /* barrel_c@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barrel_c@2x.png"; sourceTree = "<group>"; };
 		A9574D7519AD3E97002A0EF3 /* barrel_d@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barrel_d@2x.png"; sourceTree = "<group>"; };
@@ -409,6 +412,8 @@
 				A9FC965B19432C780067875B /* APGeocodeClient.m */,
 				A9FC966019434EC40067875B /* APDirectionsClient.h */,
 				A9FC966119434EC40067875B /* APDirectionsClient.m */,
+				A949160319B4E1AA00CC437E /* APDirectionsIOS.h */,
+				A949160419B4E1AA00CC437E /* APDirectionsIOS.m */,
 			);
 			path = APIClient;
 			sourceTree = "<group>";
@@ -1019,6 +1024,7 @@
 				A9FC829119AFD0E60002F43A /* APPinAnnotation.m in Sources */,
 				A98D0882192FDC33000DB81D /* main.m in Sources */,
 				A9FC965C19432C780067875B /* APGeocodeClient.m in Sources */,
+				A949160519B4E1AA00CC437E /* APDirectionsIOS.m in Sources */,
 				A9014627193BE7AD003B826D /* APGasStation.m in Sources */,
 				A99F4F6819AE7FA50037BA12 /* UIColor+Chameleon.m in Sources */,
 				A99FCCE019327CA400B26D6A /* APMapViewController.m in Sources */,

@@ -12,6 +12,10 @@
 
 @property (nonatomic) float pathFuelExpense;
 @property (nonatomic) float pathFuelRemaining;
+
+@property (nonatomic) int distance;
+@property (nonatomic) int time;
+
 @end
 
 @implementation APPath
@@ -40,24 +44,61 @@
     return self;
 }
 
+#ifndef USE_IOS_MAPS
 - (void) addLine:(APLine*) line;{
     [self.lines addObject:line];
 }
 
+- (void) constructMKPolyLines{
+    for (APLine *line in self.lines) {
+        
+        //add all src positions of steps then add the destination position
+        CLLocationCoordinate2D *coords = calloc([line.steps count] + 1, sizeof(CLLocationCoordinate2D));
+        int index = 0;
+        
+        for (APStep *step in line.steps) {
+            coords[index++] = step.srcPos;
+            //            ALog("lat is %f and lng is %f",step.srcPos.latitude,step.srcPos.longitude);
+        }
+        coords[index++] = line.dstPos;
+        line.polyline = [MKPolyline polylineWithCoordinates:coords count:index];
+        
+        //don't forget to free
+        free(coords);
+    }
+}
+#else
+- (void) setNewDistance:(int)newDistance{
+    self.distance = newDistance;
+}
+- (void) setNewTime:(int)newTime{
+    self.time = newTime;
+}
+
+#endif
+
 - (int) getDistance{
+#ifdef USE_IOS_MAPS
+    return self.distance;
+#else
     int distance = 0;
     for (APLine* ll in self.lines) {
         distance += ll.distance.distance;
     }
     return distance;
+#endif
 }
 
 - (int) getTime{
+#ifdef USE_IOS_MAPS
+    return self.time;
+#else
     int time = 0;
     for (APLine *ll in self.lines) {
         time += ll.duration.duration;
     }
     return time;
+#endif
 }
 
 
@@ -75,33 +116,20 @@
     self.import = im;
     self.pathFuelRemaining = self.import/self.gasStation.getPrice - self.pathFuelExpense;
 }
-- (void) constructMKPolyLines{
-    for (APLine *line in self.lines) {
-        
-        //add all src positions of steps then add the destination position
-        CLLocationCoordinate2D *coords = calloc([line.steps count] + 1, sizeof(CLLocationCoordinate2D));
-        int index = 0;
-        
-        for (APStep *step in line.steps) {
-            coords[index++] = step.srcPos;
-//            ALog("lat is %f and lng is %f",step.srcPos.latitude,step.srcPos.longitude);
-        }
-        coords[index++] = line.dstPos;
-        line.polyline = [MKPolyline polylineWithCoordinates:coords count:index];
-        
-        //don't forget to free
-        free(coords);
-    }
-}
+
 
 - (void) calculatePathValueWithCar:(APCar*)car{
     float expense = 0;
+#ifdef USE_IOS_MAPS
+    expense += [self calculateExpense:(self.distance/self.time) forDistance:self.distance withCar:car];
+#else
     for (APLine *line in self.lines) {
         for (APStep *step in line.steps) {
             
             expense += [self calculateExpense:[step getVelocity] forDistance:step.stepDistance withCar:car];
         }
     }
+#endif
     self.pathFuelExpense = expense;
     //ALog("Distanze is %d and expense is %f", [self getDistance], self.pathFuelExpense);
 }
@@ -109,22 +137,26 @@
 
 - (float) calculatePathValueForEnergyType:(ENERGY_TYPE)eType{
     float expense = 0;
+#ifdef USE_IOS_MAPS
+    expense += [self calculateExpense:(self.distance/self.time) forDistance:self.distance withCar:self.car];
+#else
     for (APLine *line in self.lines) {
         for (APStep *step in line.steps) {
             
             expense += [self calculateExpense:[step getVelocity] forDistance:step.stepDistance withCar:self.car];
         }
     }
+#endif
     return ((float)self.import)/[self.gasStation getPrice:eType] - expense;
 }
-- (float) calculateExpense:(float)velocity forDistance:(APDistance *)distance withCar:(APCar*)car{
+- (float) calculateExpense:(float)velocity forDistance:(int)distance withCar:(APCar*)car{
     //FC = a/v + b + cv + dv^2
     if (velocity < 0.1) {
         velocity = 1;
     }
     
     float velocityKmPH = velocity * 3.6f;
-    float distanceIn100Km = (float)distance.distance / 100000;
+    float distanceIn100Km = (float)distance / 100000;
     float expenseIn100Km = (float)[car.pA integerValue]/ velocityKmPH + [car.pB integerValue] + [car.pC integerValue] * velocityKmPH + [car.pD integerValue] * velocityKmPH * velocityKmPH;
 //    ALog("Expense in 100Km is: %f",expenseIn100Km);
 //    ALog("Distance in 100Km is: %f",distanceIn100Km);
