@@ -61,6 +61,7 @@
 		A99FCCE31932823500B26D6A /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FCCE11932823500B26D6A /* menu.png */; };
 		A99FCCE41932823500B26D6A /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FCCE21932823500B26D6A /* menu@2x.png */; };
 		A99FCCE6193284E900B26D6A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99FCCE5193284E900B26D6A /* MapKit.framework */; };
+		A9B15D0119B3967F00A34A04 /* powered-by-google-on-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B15D0019B3967F00A34A04 /* powered-by-google-on-white@2x.png */; };
 		A9B773D0195E32E200441B42 /* eur@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B773CC195E32E200441B42 /* eur@2x.png */; };
 		A9B773D1195E32E200441B42 /* oil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B773CD195E32E200441B42 /* oil@2x.png */; };
 		A9B773D2195E32E200441B42 /* watch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B773CE195E32E200441B42 /* watch@2x.png */; };
@@ -235,6 +236,7 @@
 		A99FCCE11932823500B26D6A /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = ../../../../Downloads/SidebarDemo/SidebarDemo/menu.png; sourceTree = "<group>"; };
 		A99FCCE21932823500B26D6A /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu@2x.png"; path = "../../../../Downloads/SidebarDemo/SidebarDemo/menu@2x.png"; sourceTree = "<group>"; };
 		A99FCCE5193284E900B26D6A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A9B15D0019B3967F00A34A04 /* powered-by-google-on-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "powered-by-google-on-white@2x.png"; sourceTree = "<group>"; };
 		A9B773CC195E32E200441B42 /* eur@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eur@2x.png"; sourceTree = "<group>"; };
 		A9B773CD195E32E200441B42 /* oil@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oil@2x.png"; sourceTree = "<group>"; };
 		A9B773CE195E32E200441B42 /* watch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "watch@2x.png"; sourceTree = "<group>"; };
@@ -712,6 +714,7 @@
 		A9FC5058193C745800C883B7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A9B15D0019B3967F00A34A04 /* powered-by-google-on-white@2x.png */,
 				A9574D6619AD3D63002A0EF3 /* barrels */,
 				A9C5F0DA19AA952300466CC2 /* icon */,
 				A9F8DFF719805D750098DAA8 /* marker_brown@2x.png */,
@@ -889,6 +892,7 @@
 				A9F7C492193E614F0092FCA2 /* logo_t2@2x.png in Resources */,
 				A9F7C496193E614F0092FCA2 /* logo_to@2x.png in Resources */,
 				A9F7C485193E614F0092FCA2 /* logo_is@2x.png in Resources */,
+				A9B15D0119B3967F00A34A04 /* powered-by-google-on-white@2x.png in Resources */,
 				A9574D7A19AD3E97002A0EF3 /* barrel_c@2x.png in Resources */,
 				A9B7752B19A54D3E00EA6B69 /* FuelPriceDetail.xib in Resources */,
 				A9574D7E19AD3E97002A0EF3 /* barrel_m@2x.png in Resources */,

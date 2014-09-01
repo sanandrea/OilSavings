@@ -716,12 +716,26 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="31" id="DUS-gn-eGy">
+                                        <rect key="frame" x="0.0" y="187" width="320" height="31"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DUS-gn-eGy" id="42R-5I-NdV">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="powered-by-google-on-white.png" translatesAutoresizingMaskIntoConstraints="NO" id="7J3-3o-Gku">
+                                                    <rect key="frame" x="191" y="8" width="109" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="bQl-ef-2VS">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="110" id="4Yc-l6-6bl">
-                                        <rect key="frame" x="0.0" y="207" width="320" height="110"/>
+                                        <rect key="frame" x="0.0" y="238" width="320" height="110"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Yc-l6-6bl" id="3sT-op-Bqr">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
@@ -759,6 +773,10 @@
                             <outlet property="delegate" destination="Oaj-Fo-d2y" id="X80-jR-iDW"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="IID-J7-JJm"/>
+                        <barButtonItem title="Info" id="8iH-YU-vxP"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="QJX-pa-jpp">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="pCF-Wp-V3j">
                             <connections>
@@ -824,6 +842,7 @@
         <image name="location.png" width="25" height="25"/>
         <image name="oil.png" width="25" height="25"/>
         <image name="oil_drop.png" width="30" height="41"/>
+        <image name="powered-by-google-on-white.png" width="104" height="16"/>
         <image name="route.png" width="25" height="25"/>
         <image name="watch.png" width="25" height="25"/>
     </resources>
@@ -833,6 +852,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Wgi-4r-0Wq"/>
+        <segue reference="zLd-2L-Yx3"/>
     </inferredMetricsTieBreakers>
 </document>
