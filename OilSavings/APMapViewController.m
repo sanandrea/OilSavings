@@ -266,8 +266,10 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 - (IBAction) gotoCurrentLocation:(id)sender{
-    self.usingGPS = YES;
-    [self removePin:kAddressSrc];
+    if (!self.usingGPS) {
+        self.usingGPS = YES;
+        [self removePin:kAddressSrc];
+    }
     [locationManager startUpdatingLocation];
 }
 
@@ -480,30 +482,31 @@ static int RESOLVE_SINGLE_PATH = 99999;
     [self.navigationController setProgress:((float)self.processedRequests/self.totalRequests) animated:YES];
     
     if (er != nil) {
-#warning todo
-        return;
+        ALog("Why error??? %@", er );
+    }else{
+        //User clicked on annotation
+        if (index == RESOLVE_SINGLE_PATH) {
+            self.relayDetailPath = path;
+            path.car = self.myCar;
+            path.import = self.cashAmount;
+            [self performSegueWithIdentifier:@"SinglePathDetail" sender:self];
+            return;
+        }
+        
+        //Add to path array
+        [self.paths addObject:path];
+        
+        [path setTheCar:self.myCar];
+        [path setTheImport:self.cashAmount];
+        
+        if ([path compareFuelPath:self.bestPath] == NSOrderedAscending){
+            self.bestPath = path;
+            self.bestFound = YES;
+            //        ALog("Found best path");
+        }
     }
     
-    //User clicked on annotation
-    if (index == RESOLVE_SINGLE_PATH) {
-        self.relayDetailPath = path;
-        path.car = self.myCar;
-        path.import = self.cashAmount;
-        [self performSegueWithIdentifier:@"SinglePathDetail" sender:self];
-        return;
-    }
-    
-    //Add to path array
-    [self.paths addObject:path];
-    
-    [path setTheCar:self.myCar];
-    [path setTheImport:self.cashAmount];
-
-    if ([path compareFuelPath:self.bestPath] == NSOrderedAscending){
-        self.bestPath = path;
-        self.bestFound = YES;
-//        ALog("Found best path");
-    }
+    //we should recover here
     
     if (self.processedRequests == self.totalRequests){
         [self.navigationController finishProgress];
@@ -512,8 +515,11 @@ static int RESOLVE_SINGLE_PATH = 99999;
         [self setChosenGSRed:self.bestPath.gasStation];
         
         //Center map in to include all path
-#warning TODO
-        //[self resizeMapToDiagonalPoints:self.bestPath.southWestBound :self.bestPath.northEastBound];
+#ifdef USE_IOS_MAPS
+        [self resizeMapToIncludePolyline:self.bestPath.overallPolyline];
+#else
+        [self resizeMapToDiagonalPoints:self.bestPath.southWestBound :self.bestPath.northEastBound];
+#endif
         
         [self findCheapestAndNearest];
     }
@@ -670,11 +676,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
             UIImageView *sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:gsn.gasStation.logo]];
             markerView.leftCalloutAccessoryView = sfIconView;
             
-            // offset the flag annotation so that the flag pole rests on the map coordinate
-            //annotationView.centerOffset = CGPointMake( annotationView.centerOffset.x + annotationView.image.size.width/2, annotationView.centerOffset.y - annotationView.image.size.height/2 );
             
-            // http://stackoverflow.com/questions/8165262/mkannotation-image-offset-with-custom-pin-image
-            markerView.centerOffset = CGPointMake(0,-markerView.image.size.height/2);
             
             // add a detail disclosure button to the callout which will open a new view controller page
             //
@@ -692,6 +694,12 @@ static int RESOLVE_SINGLE_PATH = 99999;
         }
         
         markerView.image = [self customizeAnnotationImage:gsn.gasStation];
+
+        // offset the flag annotation so that the flag pole rests on the map coordinate
+        //annotationView.centerOffset = CGPointMake( annotationView.centerOffset.x + annotationView.image.size.width/2, annotationView.centerOffset.y - annotationView.image.size.height/2 );
+        // http://stackoverflow.com/questions/8165262/mkannotation-image-offset-with-custom-pin-image
+        markerView.centerOffset = CGPointMake(0,-markerView.image.size.height/2);
+        
         return markerView;
 
     } else if ([annotation isKindOfClass:[APPinAnnotation class]]){
@@ -942,22 +950,23 @@ static int RESOLVE_SINGLE_PATH = 99999;
     [self.mapView setRegion:region animated:YES];
 }
 
-- (void) resizeMapToDiagonalPoints:(CLLocationCoordinate2D)sw :(CLLocationCoordinate2D)ne{
-    CLLocationCoordinate2D center;
-    center.latitude = sw.latitude + (ne.latitude - sw.latitude)/2;
-    center.longitude = sw.longitude + (ne.longitude - sw.longitude)/2;
-    MKCoordinateSpan span;
-    span.latitudeDelta = ne.latitude - sw.latitude;
-    span.longitudeDelta = ne.longitude - sw.longitude;
+- (void) resizeMapToIncludePolyline:(MKPolyline*)line{
+    MKCoordinateRegion givenRect = MKCoordinateRegionForMapRect([line boundingMapRect]);
     
-    //Make span a little bigger for annotations
-    span.latitudeDelta = span.latitudeDelta + span.latitudeDelta * .4;
-    span.longitudeDelta = span.longitudeDelta + span.longitudeDelta * .25;
-    MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
-    
-    [self.mapView setRegion:region animated:YES];
+    [self.mapView setRegion:[self zoomMapRegion:givenRect inScale:1.2f] animated:YES];
+
 }
 
+
+- (MKCoordinateRegion) zoomMapRegion:(MKCoordinateRegion)original inScale:(float)zoom{
+    MKCoordinateRegion result;
+    result.center = original.center;
+    MKCoordinateSpan newSpan;
+    newSpan.latitudeDelta = original.span.latitudeDelta * zoom;
+    newSpan.longitudeDelta = original.span.longitudeDelta * zoom;
+    result.span = newSpan;
+    return result;
+}
 #pragma mark - Segues
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([[segue identifier] isEqualToString:@"OptionsSegue"]) {

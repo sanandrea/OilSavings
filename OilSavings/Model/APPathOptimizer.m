@@ -12,7 +12,7 @@
 #import "APGeocodeClient.h"
 #import "APDirectionsIOS.h"
 
-static const int SLEEP_INTERVAL = 250000; // 150ms
+static const int SLEEP_INTERVAL = 250000; // 250ms
 
 @implementation APPathOptimizer
 
