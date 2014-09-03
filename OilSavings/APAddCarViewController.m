@@ -23,7 +23,6 @@ int SLIDER_STEP = 5;
 
 @interface APAddCarViewController ()
 
-@property (nonatomic) BOOL brandSet;
 @property (nonatomic, weak) IBOutlet UISearchBar *brandSearch;
 @property (nonatomic, weak) IBOutlet UISearchBar *modelSearch;
 @property (nonatomic, weak) IBOutlet UITextField *freindlyNameText;
@@ -42,6 +41,7 @@ int SLIDER_STEP = 5;
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *saveButton;
 
+@property (nonatomic) BOOL brandSet;
 @property (nonatomic) BOOL modelSet;
 @property (nonatomic) BOOL nameSet;
 @property (nonatomic) BOOL gasCapSet;
@@ -152,11 +152,15 @@ int SLIDER_STEP = 5;
 {
     if ([self.brandSearch.text length] == 0) {
         [self.brandSearch resignFirstResponder];
-        self.modelSearch.text = @"";
-        self.modelSet = NO;
+        if (self.brandSet) {
+            self.brandSet = NO;
+                self.modelSearch.text = @"";
+                self.modelSet = NO;
+        }
     }
     if ([self.modelSearch.text length] == 0) {
         [self.modelSearch resignFirstResponder];
+        self.modelSet = NO;
         
     }
     [self.freindlyNameText resignFirstResponder];
@@ -165,6 +169,8 @@ int SLIDER_STEP = 5;
     
     if ([self.freindlyNameText.text length] > 0) {
         self.nameSet = YES;
+    }else{
+        self.nameSet = NO;
     }
     [self checkifCanSave];
 }
@@ -246,6 +252,7 @@ int SLIDER_STEP = 5;
         }
         [self checkifCanSave];
     }else if (searchBar == self.brandSearch && [self.brandSearch.text length] > 0){
+        self.brandSet = YES;
         [self.itemSource setBrandString:self.brandSearch.text];
     }
 }

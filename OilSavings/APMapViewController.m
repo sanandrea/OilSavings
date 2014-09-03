@@ -225,7 +225,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
                       withTitle:NSLocalizedString(@"Errore di localizzazione", nil)];
         
     } else if(error.code == kCLErrorLocationUnknown) {
-        NSLog(@"Error: location unknown");
+        [self showErrorHappened:NSLocalizedString(@"Impossibile trovare la posizione", nil)
+                      withTitle:@""];
     } else {
         NSLog(@"Error retrieving location");
     }
