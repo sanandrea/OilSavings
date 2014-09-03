@@ -92,4 +92,14 @@
     [self setRegion:region animated:animated];
 }
 
+- (MKCoordinateRegion) zoomMapRegion:(MKCoordinateRegion)original inScale:(float)zoom{
+    MKCoordinateRegion result;
+    result.center = original.center;
+    MKCoordinateSpan newSpan;
+    newSpan.latitudeDelta = original.span.latitudeDelta * zoom;
+    newSpan.longitudeDelta = original.span.longitudeDelta * zoom;
+    result.span = newSpan;
+    return result;
+}
+
 @end

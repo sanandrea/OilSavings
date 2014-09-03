@@ -14,4 +14,5 @@
 - (void)setCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate
                   zoomLevel:(NSUInteger)zoomLevel
                    animated:(BOOL)animated;
+- (MKCoordinateRegion) zoomMapRegion:(MKCoordinateRegion)original inScale:(float)zoom;
 @end

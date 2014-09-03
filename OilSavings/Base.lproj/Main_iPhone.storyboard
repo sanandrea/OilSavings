@@ -776,6 +776,7 @@
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="IID-J7-JJm"/>
                         <barButtonItem title="Info" id="8iH-YU-vxP"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Dj7-Zq-KQC"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="QJX-pa-jpp">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="pCF-Wp-V3j">
@@ -783,7 +784,7 @@
                                 <action selector="cancel:" destination="Oaj-Fo-d2y" id="Nld-2W-o7D"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="fUE-Pf-dcW">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="fUE-Pf-dcW">
                             <connections>
                                 <action selector="save:" destination="Oaj-Fo-d2y" id="71g-Vp-JUj"/>
                             </connections>

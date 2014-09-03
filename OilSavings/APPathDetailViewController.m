@@ -16,6 +16,7 @@
 
 #import "SIAlertView.h"
 #import "Chameleon.h"
+#import "MKMapView+ZoomLevel.h"
 
 @interface APPathDetailViewController ()
 
@@ -125,20 +126,8 @@
 - (void) customizeMapCell:(APMapInfoCell*)cell{
     [cell.miniMap setDelegate:self];
     
-    CLLocationCoordinate2D center;
-    center.latitude = self.path.southWestBound.latitude + (self.path.northEastBound.latitude - self.path.southWestBound.latitude)/2;
-    center.longitude = self.path.southWestBound.longitude + (self.path.northEastBound.longitude - self.path.southWestBound.longitude)/2;
-    MKCoordinateSpan span;
-    span.latitudeDelta = self.path.northEastBound.latitude - self.path.southWestBound.latitude;
-    span.longitudeDelta = self.path.northEastBound.longitude - self.path.southWestBound.longitude;
-    //    ALog("Map bounds SIZE: %f %f",self.miniMap.bounds.size.height, self.miniMap.bounds.size.width);
-    
-    //Make span a little bigger for annotations
-    span.latitudeDelta = span.latitudeDelta + span.latitudeDelta * .4;
-    span.longitudeDelta = span.longitudeDelta + span.longitudeDelta * .25;
-    MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
-    
-    [cell.miniMap setRegion:region];
+    MKCoordinateRegion givenRect = MKCoordinateRegionForMapRect([self.path.overallPolyline boundingMapRect]);
+    [cell.miniMap setRegion:[cell.miniMap zoomMapRegion:givenRect inScale:1.4f] animated:YES];
     
     
     APGSAnnotation *annotation;

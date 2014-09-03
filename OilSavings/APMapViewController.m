@@ -8,7 +8,13 @@
 
 #import "APAddCarViewController.h"
 #import "APAppDelegate.h"
+
+#ifdef USE_IOS_MAPS
+#import "APDirectionsIOS.h"
+#else
 #import "APDirectionsClient.h"
+#endif
+
 #import "APGasStation.h"
 #import "APGasStationsTableVC.h"
 #import "APGeocodeClient.h"
@@ -553,9 +559,12 @@ static int RESOLVE_SINGLE_PATH = 99999;
     }else{
         path = [[APPath alloc]initWith:self.srcCoord andGasStation:gasStation];
     }
-    
+
+#ifdef USE_IOS_MAPS
+    [APDirectionsIOS findDirectionsOfPath:path indexOfRequest:RESOLVE_SINGLE_PATH delegateTo:self];
+#else
     [APDirectionsClient findDirectionsOfPath:path indexOfRequest:RESOLVE_SINGLE_PATH delegateTo:self];
-    
+#endif
 }
 
 - (void) findCheapestAndNearest{
@@ -953,20 +962,10 @@ static int RESOLVE_SINGLE_PATH = 99999;
 - (void) resizeMapToIncludePolyline:(MKPolyline*)line{
     MKCoordinateRegion givenRect = MKCoordinateRegionForMapRect([line boundingMapRect]);
     
-    [self.mapView setRegion:[self zoomMapRegion:givenRect inScale:1.2f] animated:YES];
+    [self.mapView setRegion:[self.mapView zoomMapRegion:givenRect inScale:1.2f] animated:YES];
 
 }
 
-
-- (MKCoordinateRegion) zoomMapRegion:(MKCoordinateRegion)original inScale:(float)zoom{
-    MKCoordinateRegion result;
-    result.center = original.center;
-    MKCoordinateSpan newSpan;
-    newSpan.latitudeDelta = original.span.latitudeDelta * zoom;
-    newSpan.longitudeDelta = original.span.longitudeDelta * zoom;
-    result.span = newSpan;
-    return result;
-}
 #pragma mark - Segues
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([[segue identifier] isEqualToString:@"OptionsSegue"]) {
