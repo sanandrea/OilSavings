@@ -162,7 +162,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
     [locationManager startUpdatingLocation];
     
     if ([locationManager location] !=nil) {
-        [self centerMapInLocation:[locationManager location].coordinate animated:YES];
+        [self setOriginPoint:[locationManager location].coordinate];
     }
     self.mapView.showsUserLocation = YES;
     
@@ -180,8 +180,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 
-- (void) centerMapInLocation:(CLLocationCoordinate2D)loc animated:(BOOL)anime{
-    [self.mapView setCenterCoordinate:loc zoomLevel:ZOOM_LEVEL animated:anime];
+- (void) setOriginPoint:(CLLocationCoordinate2D)loc{
+    [self.mapView setCenterCoordinate:loc zoomLevel:ZOOM_LEVEL animated:YES];
     
     [self findGasStations:loc];
     
@@ -211,7 +211,10 @@ static int RESOLVE_SINGLE_PATH = 99999;
         self.srcCoord = self.myLocation;
     }
     if (self.usingGPS) {
-        [self centerMapInLocation:self.myLocation animated:YES];
+        [self setOriginPoint:self.myLocation];
+    }else{
+        //we are using the searched address just move the map to origin
+        [self.mapView setCenterCoordinate:self.myLocation zoomLevel:ZOOM_LEVEL animated:YES];
     }
 
     [locationManager stopUpdatingLocation];
@@ -273,10 +276,6 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 - (IBAction) gotoCurrentLocation:(id)sender{
-    if (!self.usingGPS) {
-        self.usingGPS = YES;
-        [self removePin:kAddressSrc];
-    }
     [locationManager startUpdatingLocation];
 }
 
@@ -455,7 +454,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
     if (type == kAddressSrc) {
         self.srcCoord = coord;
         address = self.srcAddress;
-        [self centerMapInLocation:coord animated:YES];
+        [self setOriginPoint:coord];
     }else{
         address = self.dstAddress;
         self.dstCoord = coord;
@@ -589,13 +588,20 @@ static int RESOLVE_SINGLE_PATH = 99999;
 - (void)optionsController:(APOptionsViewController*) controller didfinishWithSave:(BOOL)save{
     BOOL changes = NO;
     if (save) {
-        
+        //user searched an address
         if (([controller.srcAddr length] > 0) && ![controller.srcAddr isEqualToString:self.srcAddress]) {
             changes = YES;
             self.srcAddress = controller.srcAddr;
             [APGeocodeClient convertAddress:self.srcAddress ofType:kAddressSrc inDelegate:self];
             self.usingGPS = NO;
             [self removePathOverlayOnMap];
+        }
+        //user saved src address as empty means use GPS
+        if (([controller.srcAddr length] == 0) && (!self.usingGPS)) {
+            changes = YES;
+            self.usingGPS = YES;
+            [self removePin:kAddressSrc];
+            [locationManager startUpdatingLocation];
         }
         
         

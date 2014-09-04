@@ -47,6 +47,26 @@ static NSString * const GEOCODE_URL = @"https://maps.googleapis.com/maps/api/geo
             coord.latitude = lat;
             coord.longitude = lng;
             
+            
+            NSArray* addressComponents = contents[@"address_components"];
+            NSString *country;
+            
+            for (NSDictionary *component in addressComponents) {
+                //find type of component
+                NSArray *types = component[@"types"];
+                if ([types containsObject:@"country"]) {
+                    country = component[@"short_name"];
+                    if (![country isEqualToString:@"IT"]) {
+                        NSMutableDictionary* details = [NSMutableDictionary dictionary];
+                        [details setValue:@"Impossibile cercare distributori fuori dal territorio Italiano"
+                                   forKey:NSLocalizedDescriptionKey];
+                        NSError *error = [NSError errorWithDomain:@"saveoil" code:1001 userInfo:details];
+                        [delegate convertedAddressType:type to:coord error:error];
+                        return;
+                    }
+                }
+            }
+            
             [delegate convertedAddressType:type to:coord error:nil];
             
         }
