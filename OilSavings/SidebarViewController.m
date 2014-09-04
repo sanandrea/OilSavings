@@ -13,11 +13,13 @@
 #import "APCar.h"
 #import "APTableViewCell.h"
 #import "APMapViewController.h"
+#import "Chameleon.h"
+
 @interface SidebarViewController ()
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic,strong) NSIndexPath* selectedPath;
-
+@property (nonatomic) NSInteger mySelectedIndexSection;
 @end
 
 #pragma mark -
@@ -53,6 +55,8 @@
     }
     [self.tableView setDelegate:self];
     
+    self.mySelectedIndexSection = -1;
+    
 }
 - (void) viewDidAppear:(BOOL)animated{
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -76,6 +80,9 @@
 
 #pragma mark - Table view Delegate for Cell Selection
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    self.mySelectedIndexSection = indexPath.section;
     
     //Get MapViewController
     UINavigationController* nvc = (UINavigationController*) self.revealViewController.frontViewController;
@@ -126,6 +133,8 @@
     
     cell.fuelLogo.image = [UIImage imageNamed:[NSString stringWithFormat:@"barrel_%@",
                                                [APConstants getEnergyStringForType:(ENERGY_TYPE) [car.energy intValue]]]];
+    
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -168,6 +177,48 @@
             abort();
         }
     }
+}
+
+
+
+#pragma mark - Cell higlighting
+/*
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldUnHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Add your Colour.
+    APTableViewCell *cell = (APTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [self setCellColor:[UIColor flatPowderBlueColor] ForCell:cell];  //highlight colour
+}
+
+- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Reset Colour.
+    APTableViewCell *cell = (APTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [self setCellColor:[UIColor flatWhiteColor] ForCell:cell]; //normal color
+    
+}
+*/
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (self.mySelectedIndexSection >= 0)
+    {
+        NSIndexPath *old = [NSIndexPath indexPathForRow:0 inSection:self.mySelectedIndexSection];
+        [[tableView cellForRowAtIndexPath:old] setBackgroundColor:[UIColor whiteColor]];
+    }
+    [[tableView cellForRowAtIndexPath:indexPath] setBackgroundColor:[UIColor flatPowderBlueColor]];
+    return indexPath;
+}
+
+- (void)setCellColor:(UIColor *)color ForCell:(UITableViewCell *)cell {
+    cell.contentView.backgroundColor = color;
+    cell.backgroundColor = color;
 }
 
 
