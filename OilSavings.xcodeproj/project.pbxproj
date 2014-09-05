@@ -140,6 +140,8 @@
 		A9FC965C19432C780067875B /* APGeocodeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC965B19432C780067875B /* APGeocodeClient.m */; };
 		A9FC966219434EC40067875B /* APDirectionsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC966119434EC40067875B /* APDirectionsClient.m */; };
 		A9FC966519434FD80067875B /* APPathOptimizer.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC966419434FD80067875B /* APPathOptimizer.m */; };
+		A9FDDB3719BA47470001ACBE /* APLegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FDDB3619BA47470001ACBE /* APLegalViewController.m */; };
+		A9FDDB3919BA48550001ACBE /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = A9FDDB3819BA48550001ACBE /* help.html */; };
 		A9FE180719715A6D006ECBDA /* table_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FE180619715A6D006ECBDA /* table_indicator.png */; };
 		A9FE180919715DBE006ECBDA /* oil_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9FE180819715DBE006ECBDA /* oil_drop@2x.png */; };
 		A9FF939D197BB8E600D4CCB0 /* APPathDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FF939C197BB8E600D4CCB0 /* APPathDetailViewController.m */; };
@@ -360,6 +362,9 @@
 		A9FC966119434EC40067875B /* APDirectionsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDirectionsClient.m; sourceTree = "<group>"; };
 		A9FC966319434FD80067875B /* APPathOptimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPathOptimizer.h; sourceTree = "<group>"; };
 		A9FC966419434FD80067875B /* APPathOptimizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPathOptimizer.m; sourceTree = "<group>"; };
+		A9FDDB3519BA47470001ACBE /* APLegalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLegalViewController.h; sourceTree = "<group>"; };
+		A9FDDB3619BA47470001ACBE /* APLegalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLegalViewController.m; sourceTree = "<group>"; };
+		A9FDDB3819BA48550001ACBE /* help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
 		A9FE180619715A6D006ECBDA /* table_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = table_indicator.png; sourceTree = "<group>"; };
 		A9FE180819715DBE006ECBDA /* oil_drop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oil_drop@2x.png"; sourceTree = "<group>"; };
 		A9FF939B197BB8E600D4CCB0 /* APPathDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPathDetailViewController.h; sourceTree = "<group>"; };
@@ -531,6 +536,8 @@
 				A9FC6DF01958CA30007959CA /* APGasStationsTableVC.m */,
 				A9FF939B197BB8E600D4CCB0 /* APPathDetailViewController.h */,
 				A9FF939C197BB8E600D4CCB0 /* APPathDetailViewController.m */,
+				A9FDDB3519BA47470001ACBE /* APLegalViewController.h */,
+				A9FDDB3619BA47470001ACBE /* APLegalViewController.m */,
 				A94F66E71942689000D8453A /* CarManage */,
 				A98D0896192FDC33000DB81D /* Images.xcassets */,
 				A98D088D192FDC33000DB81D /* OilSavings.xcdatamodeld */,
@@ -542,6 +549,7 @@
 		A98D087C192FDC33000DB81D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A9FDDB3819BA48550001ACBE /* help.html */,
 				A98D087D192FDC33000DB81D /* OilSavings-Info.plist */,
 				A98D087E192FDC33000DB81D /* InfoPlist.strings */,
 				A98D0881192FDC33000DB81D /* main.m */,
@@ -901,6 +909,7 @@
 				A9574D7A19AD3E97002A0EF3 /* barrel_c@2x.png in Resources */,
 				A9B7752B19A54D3E00EA6B69 /* FuelPriceDetail.xib in Resources */,
 				A9574D7E19AD3E97002A0EF3 /* barrel_m@2x.png in Resources */,
+				A9FDDB3919BA48550001ACBE /* help.html in Resources */,
 				A9F7C482193E614F0092FCA2 /* logo_ie@2x.png in Resources */,
 				A9F7C473193E614F0092FCA2 /* logo_ag@2x.png in Resources */,
 				A9F7C491193E614F0092FCA2 /* logo_sp@2x.png in Resources */,
@@ -1038,6 +1047,7 @@
 				A98D088F192FDC33000DB81D /* OilSavings.xcdatamodeld in Sources */,
 				A98955601958D04E0079FBD9 /* APGSTableViewCell.m in Sources */,
 				A9FBF957197DB817001FE719 /* APCarDBAutoCompleteItemsSource.m in Sources */,
+				A9FDDB3719BA47470001ACBE /* APLegalViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
