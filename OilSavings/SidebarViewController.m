@@ -58,13 +58,6 @@
     self.mySelectedIndexSection = -1;
     
 }
-- (void) viewDidAppear:(BOOL)animated{
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if ([[prefs objectForKey:kCarsRegistered] integerValue] == 0) {
-        [self performSegueWithIdentifier:@"AddNewCar" sender:self];
-    }
-
-}
 
 - (IBAction)startInfoPush:(UIButton*)sender{
     //info button was pressed on a row, find the point of the screen of this info button

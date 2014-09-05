@@ -10,6 +10,7 @@
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 #import <AFNetworkActivityLogger.h>
 #import "SWRevealViewController.h"
+#import "APCar.h"
 #import "GAI.h"
 
 @implementation APAppDelegate
@@ -55,10 +56,38 @@
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     if ([[prefs objectForKey:kCarsRegistered] integerValue] == 0) {
-        //Present Add Car View controller by presenting the container View Controller
+        //Add the default Car
         
-        SWRevealViewController* rvc = (SWRevealViewController*) self.window.rootViewController;
-        [rvc revealToggleAnimated:YES];
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        if ([[prefs objectForKey:kCarsRegistered] integerValue] == 0) {
+            APCar *newCar = (APCar *)[NSEntityDescription insertNewObjectForEntityForName:@"Car"
+                                                                   inManagedObjectContext:self.managedObjectContext];
+            newCar.friendlyName = @"Alfa";
+            newCar.brand = @"Alfa Romeo";
+            newCar.model = @"Giuletta 1.6 JTDM (105 HP) Start&Stop";
+            newCar.energy = [NSNumber numberWithInt:kEnergyGasoline];
+            newCar.modelID = [NSNumber numberWithInt:8240];
+            newCar.pA = [NSNumber numberWithFloat:31.573];
+            newCar.pB = [NSNumber numberWithFloat:2.972];
+            newCar.pC = [NSNumber numberWithFloat:-0.0016406];
+            newCar.pD = [NSNumber numberWithFloat:0.0000577];
+            
+            [prefs setInteger:1 forKey:kCarsRegistered];
+            [prefs setInteger:[newCar.modelID intValue] forKey:kPreferredCar];
+            [prefs synchronize];
+            
+        }
+        NSError *error;
+        
+        if (![self.managedObjectContext save:&error]) {
+            /*
+             Replace this implementation with code to handle the error appropriately.
+             
+             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+             */
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
     }
     
     //Override point for customization after application launch.
