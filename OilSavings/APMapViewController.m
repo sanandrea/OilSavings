@@ -142,7 +142,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
             return;
         }
         if (!([array count] == 1)){
-            ALog("Error more than one Car exists with the same model ID %d",modelID);
+            ALog("Error no Car or more than one Car exists with the same model ID %d",modelID);
             return;
         }
         self.myCar = [array objectAtIndex:0];
@@ -159,8 +159,9 @@ static int RESOLVE_SINGLE_PATH = 99999;
     locationManager.delegate = self;
     
     locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters; // 100 m
+    [locationManager requestWhenInUseAuthorization];
     [locationManager startUpdatingLocation];
-    
+
     if ([locationManager location] !=nil) {
         [self setOriginPoint:[locationManager location].coordinate];
     }

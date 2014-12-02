@@ -38,10 +38,10 @@
 //Distance of GasStation from Source plus Distance of GasStation to Destination
 @property (nonatomic) float haversineDistance;
 
-
-- (void) addLine:(APLine*) line;
+- (void) addLineToPath:(APLine*) line;
+#ifndef USE_IOS_MAPS
 - (void) constructMKPolyLines;
-
+#endif
 
 - (int) getDistance;
 - (int) getTime;

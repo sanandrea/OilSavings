@@ -44,10 +44,10 @@
     return self;
 }
 
-#ifndef USE_IOS_MAPS
-- (void) addLine:(APLine*) line;{
+- (void) addLineToPath:(APLine*) line;{
     [self.lines addObject:line];
 }
+#ifndef USE_IOS_MAPS
 
 - (void) constructMKPolyLines{
     for (APLine *line in self.lines) {

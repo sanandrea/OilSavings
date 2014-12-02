@@ -75,7 +75,7 @@ static NSString * const DIRECTIONS_URL = @"https://maps.googleapis.com/maps/api/
                         step = [[APStep alloc] initWithDistance:stepDist andDuration:stepDura andSrcPos:stepSrc andDstPos:stepDst andPoly:stepDict[@"polyline"]];
                         [line addStep:step];
                     }
-                    [path addLine:line];
+                    [path addLineToPath:line];
                 }
                 //ALog("polyline is %@", routeDict[@"overview_polyline"][@"points"]);
                 path.overallPolyline = [APDirectionsClient polylineWithEncodedString:routeDict[@"overview_polyline"][@"points"]];
