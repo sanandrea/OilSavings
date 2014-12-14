@@ -59,8 +59,6 @@
 		A99FCCDB19327AE300B26D6A /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FCCDA19327AE300B26D6A /* SWRevealViewController.m */; };
 		A99FCCDD19327C7E00B26D6A /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A99FCCDC19327C7E00B26D6A /* libsqlite3.0.dylib */; };
 		A99FCCE019327CA400B26D6A /* APMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FCCDF19327CA400B26D6A /* APMapViewController.m */; };
-		A99FCCE31932823500B26D6A /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FCCE11932823500B26D6A /* menu.png */; };
-		A99FCCE41932823500B26D6A /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FCCE21932823500B26D6A /* menu@2x.png */; };
 		A99FCCE6193284E900B26D6A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99FCCE5193284E900B26D6A /* MapKit.framework */; };
 		A9B15D0119B3967F00A34A04 /* powered-by-google-on-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B15D0019B3967F00A34A04 /* powered-by-google-on-white@2x.png */; };
 		A9B773D0195E32E200441B42 /* eur@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B773CC195E32E200441B42 /* eur@2x.png */; };
@@ -927,7 +925,6 @@
 				A9F7C498193E64640092FCA2 /* marker_mid@2x.png in Resources */,
 				A9F7C493193E614F0092FCA2 /* logo_t7@2x.png in Resources */,
 				A9F7C47C193E614F0092FCA2 /* logo_eg@2x.png in Resources */,
-				A99FCCE41932823500B26D6A /* menu@2x.png in Resources */,
 				A9F7C481193E614F0092FCA2 /* logo_h6@2x.png in Resources */,
 				A9F7C484193E614F0092FCA2 /* logo_ip@2x.png in Resources */,
 				A9574D7C19AD3E97002A0EF3 /* barrel_e@2x.png in Resources */,
@@ -943,7 +940,6 @@
 				A93D9F8E193550E0008B530A /* CarCellDesign.xib in Resources */,
 				A98D0897192FDC33000DB81D /* Images.xcassets in Resources */,
 				A9F7C486193E614F0092FCA2 /* logo_kt@2x.png in Resources */,
-				A99FCCE31932823500B26D6A /* menu.png in Resources */,
 				A9F7C489193E614F0092FCA2 /* logo_om@2x.png in Resources */,
 				A9EA15C61957A55800CF4446 /* logo_im@2x.png in Resources */,
 				A9F8DFFB19805D750098DAA8 /* marker_brown@2x.png in Resources */,
