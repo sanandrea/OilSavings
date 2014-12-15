@@ -16,6 +16,7 @@
 #import "APOptionsViewController.h"
 
 #import "GAITrackedViewController.h"
+#import "AMPopTip.h"
 
 
 @interface APMapViewController : GAITrackedViewController <CLLocationManagerDelegate, APNetworkAPI,

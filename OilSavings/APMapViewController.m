@@ -44,6 +44,8 @@ static float kTextPadding = 10.0f;
 //PorkAround: put index of request to a high static value in order to distinguish it
 
 static int RESOLVE_SINGLE_PATH = 99999;
+static int kRightBarButtonAdjustementOffset = 15;
+static int kLeftUpperAdjustement = 50;
 
 @interface APMapViewController ()
 
@@ -66,6 +68,8 @@ static int RESOLVE_SINGLE_PATH = 99999;
 
 @property (nonatomic) BOOL usingGPS;
 
+@property (nonatomic) BOOL firstTime;
+
 //how many directions requests are we making
 @property (nonatomic) NSUInteger totalRequests;
 
@@ -79,10 +83,15 @@ static int RESOLVE_SINGLE_PATH = 99999;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *showGSButton;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *recalculate;
 
+@property (nonatomic, strong) AMPopTip *popTip;
+@property (nonatomic, strong) AMPopTip *carTip;
+@property (nonatomic, strong) UILabel *subTitleLabel;
+
 
 @end
 
 @implementation APMapViewController
+
 
 - (void)viewDidLoad{
     [super viewDidLoad];
@@ -162,13 +171,16 @@ static int RESOLVE_SINGLE_PATH = 99999;
     [locationManager requestWhenInUseAuthorization];
     [locationManager startUpdatingLocation];
 
+    /*
     if ([locationManager location] !=nil) {
         [self setOriginPoint:[locationManager location].coordinate];
     }
+    */
     self.mapView.showsUserLocation = YES;
     
     //Progress
     [self.navigationController showProgress];
+    
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     //check for internet reachability
@@ -178,6 +190,25 @@ static int RESOLVE_SINGLE_PATH = 99999;
             [self showErrorHappened:NSLocalizedString(@"Nessuna connessione a internet", nil) withTitle:NSLocalizedString(@"Connessione Internet", nil)];
         }
     }];
+    
+    [self setupHintTips];
+    
+    [self setUpCustomTitle];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+    {
+        self.firstTime = NO;
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        self.firstTime = YES;
+        
+    }
+    if (self.firstTime) {
+        [self showHint:0];
+    }
 }
 
 
@@ -196,16 +227,17 @@ static int RESOLVE_SINGLE_PATH = 99999;
     }
 }
 - (void) viewDidAppear:(BOOL)animated{
-//    ALog("Map appeared");
-//    if (self.myCar != nil) {
-//        ALog("Car name is: %@", self.myCar.friendlyName);
-//    }
+    [super viewDidAppear:animated];
+}
+
+- (void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-//    NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
     CLLocation *newLocation = [locations lastObject];
     self.myLocation = newLocation.coordinate;
+    NSLog(@"NewLocation %f %f", self.myLocation.latitude, self.myLocation.longitude);
     
     //This is needed for the options view controller to display current src address
     if (!CLLocationCoordinate2DIsValid(self.srcCoord)) {
@@ -272,6 +304,94 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 #pragma mark - UI Actions
+
+- (void)setupHintTips {
+    // alloc the tooltip view and customize it
+    [[AMPopTip appearance] setFont:[UIFont fontWithName:@"Avenir-Medium" size:12]];
+    
+    self.popTip = [AMPopTip popTip];
+    self.popTip.shouldDismissOnTap = YES;
+    self.popTip.edgeMargin = 5;
+    self.popTip.offset = 2;
+    self.popTip.edgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
+    
+    self.carTip = [AMPopTip popTip];
+    self.carTip.shouldDismissOnTap = YES;
+    self.carTip.edgeMargin = 5;
+    self.carTip.offset = 2;
+    self.carTip.edgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
+    
+}
+
+/*!
+ * @param button is the index of the bar button item that we are going to put the tip over
+ */
+
+- (void)showHint:(NSInteger) button {
+    
+    
+    CGRect toolBarFrame;
+    if (button == 1) {
+        toolBarFrame = self.navigationController.toolbar.frame;
+        self.popTip.popoverColor = [UIColor flatLimeColorDark];
+        [self.popTip showText:@"Premi per trovare il percorso ottimo" direction:AMPopTipDirectionDown maxWidth:200 inView:self.mapView fromFrame:toolBarFrame];
+    }else if (button == 2){
+        CGRect tempFrame = self.navigationController.toolbar.frame;
+        toolBarFrame = CGRectMake(tempFrame.size.width * 2 / 3 - kRightBarButtonAdjustementOffset, tempFrame.origin.y, tempFrame.size.width / 3 + kRightBarButtonAdjustementOffset, tempFrame.size.height);
+        self.popTip.popoverColor = [UIColor flatLimeColorDark];
+        [self.popTip showText:@"Lista dei risultati" direction:AMPopTipDirectionDown maxWidth:200 inView:self.mapView fromFrame:toolBarFrame];
+    }else if (button == 0){
+        CGRect tempFrame = self.navigationController.navigationBar.frame;
+        toolBarFrame = CGRectMake(0, tempFrame.origin.y, kLeftUpperAdjustement, tempFrame.size.height);
+        self.carTip.popoverColor = [UIColor flatLimeColorDark];
+        [self.carTip showText:@"Aggiungi il modello dell'auto" direction:AMPopTipDirectionDown maxWidth:200 inView:self.mapView fromFrame:toolBarFrame];
+    }
+    //ALog("Frame of view is %f %f %f %f",test.origin.x, test.origin.y, test.size.width, test.size.height);
+    
+}
+
+- (void) setUpCustomTitle{
+    int temp = 0;
+    int sum = 0;
+    UILabel *first = [self createFirstTitleLabel:&temp];
+    sum += temp;
+    self.subTitleLabel = [self createSecondTitleLabel:&temp fromHeight:sum];
+    sum += temp;
+    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, sum + 20)];
+    
+    [titleView addSubview:first];
+    [titleView addSubview:self.subTitleLabel];
+    
+    self.navigationController.navigationBar.topItem.titleView = titleView;
+}
+
+- (UILabel*) createFirstTitleLabel:(int*)height{
+    NSString *content = NSLocalizedString(@"Distributori intorno a te", @"Gas stations around you");
+    UIFont *customFont = [UIFont systemFontOfSize:14.0f];
+    CGSize size = [content sizeWithAttributes:@{NSFontAttributeName:customFont}];
+    
+    *height = size.height;
+    UILabel *fromLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, 150, size.height)];
+    fromLabel.text = content;
+    fromLabel.textAlignment = NSTextAlignmentCenter;
+    fromLabel.font = customFont;
+    fromLabel.clipsToBounds = YES;
+    return fromLabel;
+}
+
+- (UILabel*) createSecondTitleLabel:(int*)height fromHeight:(int)from{
+    NSString * content = @" ";
+    UIFont *customFont = [UIFont systemFontOfSize:10.0f];
+    CGSize size = [content sizeWithAttributes:@{NSFontAttributeName:customFont}];
+    *height = size.height;
+    UILabel *fromLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, from + 8, 150, size.height)];
+    fromLabel.text = content;
+    fromLabel.font = customFont;
+    fromLabel.textAlignment = NSTextAlignmentCenter;
+    fromLabel.clipsToBounds = YES;
+    return fromLabel;
+}
+
 - (IBAction)options:(id)sender{
     [self performSegueWithIdentifier: @"OptionsSegue" sender: self];
 }
@@ -408,6 +528,9 @@ static int RESOLVE_SINGLE_PATH = 99999;
 }
 
 - (void) gasStation:(APGasStationClient*)gsClient didFinishWithStations:(BOOL) newStations{
+    if (self.firstTime) {
+        [self showHint:1];
+    }
     if (newStations) {
         
         if ([self.gasStations count] > 0) {
@@ -487,6 +610,7 @@ static int RESOLVE_SINGLE_PATH = 99999;
 - (void) foundPath:(APPath*)path withIndex:(NSInteger)index error:(NSError *)er{
     self.processedRequests ++;
     [self.navigationController setProgress:((float)self.processedRequests/self.totalRequests) animated:YES];
+    self.subTitleLabel.text = [NSString stringWithFormat:@"Avanzamento %2.0f %%",((float)self.processedRequests/self.totalRequests) * 100];
     
     if (er != nil) {
         ALog("Why error??? %@", er );
@@ -516,7 +640,11 @@ static int RESOLVE_SINGLE_PATH = 99999;
     //we should recover here
     
     if (self.processedRequests == self.totalRequests){
+        //remove progress bar in uinavigationbar
         [self.navigationController finishProgress];
+        
+        //remove subtitle
+        self.subTitleLabel.text = @"";
         
         //Highlight bestGasStation
         [self setChosenGSRed:self.bestPath.gasStation];
@@ -537,6 +665,10 @@ static int RESOLVE_SINGLE_PATH = 99999;
 
         //Enable Gas Stations List
         self.showGSButton.enabled = YES;
+        if (self.firstTime) {
+            [self showHint:2];
+            self.firstTime = NO;
+        }
 
         //remove existing overlay if any
         NSArray *pointsArray = [self.mapView overlays];

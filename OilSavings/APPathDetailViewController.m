@@ -149,6 +149,9 @@
     
     
     [cell.miniMap addOverlay:self.path.overallPolyline];
+    if (self.path.hasDestination) {
+        [cell.miniMap addOverlay:self.path.secondaryPolyline];
+    }
 }
 
 - (void) customizeGSInfoCell:(APGasStationInfoCell*)cell{

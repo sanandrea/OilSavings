@@ -22,14 +22,16 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - M13ProgressSuite (1.2.5)
+  - AMPopTip (0.7)
+  - M13ProgressSuite (1.2.7)
   - TRAutocompleteView (1.1):
     - AFNetworking (~> 2.5.0)
 
 DEPENDENCIES:
   - AFNetworkActivityLogger (= 2.0.2)
   - AFNetworking (= 2.5.0)
-  - M13ProgressSuite (= 1.2.5)
+  - AMPopTip (= 0.7)
+  - M13ProgressSuite (= 1.2.7)
   - TRAutocompleteView (from `~/XWorkspace/TRAutocompleteView`)
 
 EXTERNAL SOURCES:
@@ -39,7 +41,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworkActivityLogger: 45ca411593444cbdc401b12924b4c17082ad512a
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
-  M13ProgressSuite: bf63f5592f1e40767da5203199804ad5eed3eb48
+  AMPopTip: dc5bdb3a88bc2ed0a7ac9799e0a5d47c5211721f
+  M13ProgressSuite: 931cde7e91d474c04edb4b34517d75ca6d88ccf2
   TRAutocompleteView: 4907a76f829c8b87b803d1431a5b3ea14fa716b4
 
 COCOAPODS: 0.35.0
