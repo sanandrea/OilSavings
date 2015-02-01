@@ -6,14 +6,23 @@
 //  Copyright (c) 2014 Andi Palo. All rights reserved.
 //
 
+//For rounded corners
+#import <QuartzCore/QuartzCore.h>
+
 #import "APGasStationsTableVC.h"
 #import "APGasStation.h"
 #import "APGSTableViewCell.h"
 #import "APPath.h"
 #import "APPathDetailViewController.h"
+#import "Chameleon.h"
 
 @interface APGasStationsTableVC ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *priceToggle;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *timeToggle;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *oilToggle;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *distanceToggle;
 
+@property (strong, nonatomic) UIBarButtonItem *currentToggle;
 @end
 
 @implementation APGasStationsTableVC
@@ -35,7 +44,9 @@
     interstitial_ = [[GADInterstitial alloc] init];
     interstitial_.delegate = self;
     interstitial_.adUnitID = kAdUnitID;
-    [interstitial_ loadRequest:[GADRequest request]];
+    if (!kDEBUG) {
+        [interstitial_ loadRequest:[GADRequest request]];
+    }
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -135,6 +146,7 @@
         [self.gasPaths sortUsingSelector:@selector(comparePricePath:)];
         [self.tableView reloadData];
         self.sortType = kSortPrice;
+        [self customizeToggle:sender];
     }
 }
 - (IBAction)sortByDistance:(id)sender{
@@ -142,6 +154,7 @@
         [self.gasPaths sortUsingSelector:@selector(compareDistancePath:)];
         self.sortType = kSortDistance;
         [self.tableView reloadData];
+        [self customizeToggle:sender];
     }
 }
 - (IBAction)sortByTime:(id)sender{
@@ -149,6 +162,7 @@
         [self.gasPaths sortUsingSelector:@selector(compareTimePath:)];
         self.sortType = kSortTime;
         [self.tableView reloadData];
+        [self customizeToggle:sender];
     }
 }
 - (IBAction)sortByFuel:(id)sender{
@@ -156,10 +170,48 @@
         [self.gasPaths sortUsingSelector:@selector(compareFuelPath:)];
         self.sortType = kSortFuel;
         [self.tableView reloadData];
+        [self customizeToggle:sender];
     }
 }
 
-
+- (void) customizeToggle:(UIBarButtonItem*)button{
+    if (self.currentToggle != nil) {
+        //reset old button to original image
+        if (self.currentToggle == self.priceToggle) {
+            self.currentToggle.image = [UIImage imageNamed:@"eur.png"];
+        }else if (self.currentToggle == self.oilToggle){
+            self.currentToggle.image = [UIImage imageNamed:@"oil.png"];
+        }else if (self.currentToggle == self.distanceToggle){
+            self.currentToggle.image = [UIImage imageNamed:@"route.png"];
+        }else if (self.currentToggle == self.timeToggle){
+            self.currentToggle.image = [UIImage imageNamed:@"watch.png"];
+        }
+    }
+    
+    //put the underline to current barbuttonitem
+    CGRect resizeRect;
+    resizeRect.size = button.image.size;
+    CGRect imRect;
+    imRect.size = resizeRect.size;
+    imRect.size.width -= 2;
+    imRect.size.height -= 2;
+    imRect.origin.x +=1;
+    imRect.origin.y +=1;
+    
+    UIGraphicsBeginImageContextWithOptions(resizeRect.size, NO, 0.0f);
+    
+    // Add a clip before drawing anything, in the shape of an rounded rect
+    [[UIBezierPath bezierPathWithRoundedRect:resizeRect
+                                cornerRadius:5.0] addClip];
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(ctx, [UIColor flatPowderBlueColor].CGColor);
+    CGContextFillRect(ctx, resizeRect);
+    [button.image drawInRect:imRect];
+    button.image = [UIGraphicsGetImageFromCurrentImageContext() imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIGraphicsEndImageContext();
+    self.currentToggle = button;
+}
 #pragma mark - Google AdMob Delegate
 - (void)interstitialDidReceiveAd:(GADInterstitial *)interstitial {
     [interstitial_ presentFromRootViewController:self];    

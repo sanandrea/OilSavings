@@ -24,6 +24,11 @@
     return [NSString stringWithFormat:@"%4.3f €/l",[self.gasStation getPrice]];
 }
 - (NSString *)title{
-    return self.gasStation.name;
+    //assert(self.gasStation.name);
+    if ([self.gasStation.name length] > 0) {
+        return self.gasStation.name;
+    }else{
+        return @"N/A";
+    }
 }
 @end

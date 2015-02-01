@@ -40,9 +40,9 @@
 		<string>MKDirectionsModeCar</string>
 	</array>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>NOOOOOO</string>
+	<string>L&apos;applicazione si basa sulla posizione dell&apos;utente per cercare i distributori più vicini</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>WHYYY</string>
+	<string>L&apos;applicazione si basa sulla posizione dell&apos;utente per cercare i distributori più vicini</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main_iPhone</string>
 	<key>UIRequiredDeviceCapabilities</key>

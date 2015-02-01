@@ -27,7 +27,7 @@ const int REQUEST_BUNDLE = 5;
 //
 const int ENERGIES_COUNT = 6;
 
-const int kDEBUG = 0;
+const int kDEBUG = 1;
 
 const CLLocationDegrees emptyLocation = -1000.0;
 const CLLocationCoordinate2D emptyLocationCoordinate = {emptyLocation, emptyLocation};

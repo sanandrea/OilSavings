@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="jtJ-aG-jUT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="jtJ-aG-jUT">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -144,6 +144,12 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="Awg-H1-xqo"/>
+                    <connections>
+                        <outlet property="distanceToggle" destination="CIN-lD-rUN" id="6Cb-OV-77K"/>
+                        <outlet property="oilToggle" destination="toM-SC-qRA" id="amL-aB-fKb"/>
+                        <outlet property="priceToggle" destination="WWJ-9G-9qX" id="8CV-s6-ZA2"/>
+                        <outlet property="timeToggle" destination="aQB-co-trR" id="pDb-Gf-Rt4"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dPj-pt-B7a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -845,6 +851,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="zLd-2L-Yx3"/>
+        <segue reference="Wgi-4r-0Wq"/>
     </inferredMetricsTieBreakers>
 </document>
