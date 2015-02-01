@@ -146,7 +146,7 @@
         [self.gasPaths sortUsingSelector:@selector(comparePricePath:)];
         [self.tableView reloadData];
         self.sortType = kSortPrice;
-        [self customizeToggle:sender];
+        [self customizeToggle:sender sort:kSortPrice];
     }
 }
 - (IBAction)sortByDistance:(id)sender{
@@ -154,7 +154,7 @@
         [self.gasPaths sortUsingSelector:@selector(compareDistancePath:)];
         self.sortType = kSortDistance;
         [self.tableView reloadData];
-        [self customizeToggle:sender];
+        [self customizeToggle:sender sort:kSortDistance];
     }
 }
 - (IBAction)sortByTime:(id)sender{
@@ -162,7 +162,7 @@
         [self.gasPaths sortUsingSelector:@selector(compareTimePath:)];
         self.sortType = kSortTime;
         [self.tableView reloadData];
-        [self customizeToggle:sender];
+        [self customizeToggle:sender sort:kSortTime];
     }
 }
 - (IBAction)sortByFuel:(id)sender{
@@ -170,11 +170,11 @@
         [self.gasPaths sortUsingSelector:@selector(compareFuelPath:)];
         self.sortType = kSortFuel;
         [self.tableView reloadData];
-        [self customizeToggle:sender];
+        [self customizeToggle:sender sort:kSortFuel];
     }
 }
 
-- (void) customizeToggle:(UIBarButtonItem*)button{
+- (void) customizeToggle:(UIBarButtonItem*)button sort:(SORT_TYPE)type{
     if (self.currentToggle != nil) {
         //reset old button to original image
         if (self.currentToggle == self.priceToggle) {
@@ -207,7 +207,25 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(ctx, [UIColor flatPowderBlueColor].CGColor);
     CGContextFillRect(ctx, resizeRect);
-    [button.image drawInRect:imRect];
+    UIImage *newImage;
+    switch (self.sortType) {
+        case kSortPrice:
+            newImage = [UIImage imageNamed:@"eur.png"];
+            break;
+        case kSortDistance:
+            newImage = [UIImage imageNamed:@"route.png"];
+            break;
+        case kSortFuel:
+            newImage = [UIImage imageNamed:@"oil.png"];
+            break;
+        case kSortTime:
+            newImage = [UIImage imageNamed:@"watch.png"];
+            break;
+
+        default:
+            break;
+    }
+    [newImage drawInRect:imRect];
     button.image = [UIGraphicsGetImageFromCurrentImageContext() imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIGraphicsEndImageContext();
     self.currentToggle = button;
