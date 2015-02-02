@@ -191,12 +191,14 @@
     //put the underline to current barbuttonitem
     CGRect resizeRect;
     resizeRect.size = button.image.size;
+    resizeRect.origin.x = 0;
+    resizeRect.origin.y = 0;
     CGRect imRect;
     imRect.size = resizeRect.size;
     imRect.size.width -= 2;
     imRect.size.height -= 2;
-    imRect.origin.x +=1;
-    imRect.origin.y +=1;
+    imRect.origin.x = resizeRect.origin.x + 1;
+    imRect.origin.y = resizeRect.origin.y + 1;
     
     UIGraphicsBeginImageContextWithOptions(resizeRect.size, NO, 0.0f);
     
