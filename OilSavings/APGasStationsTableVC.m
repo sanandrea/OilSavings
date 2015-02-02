@@ -120,15 +120,19 @@
     
     int dist = [path getDistance];
     
-    if (dist < 750) {
+    if (dist < 999) {
         cell.gsDistance.text = [NSString stringWithFormat:@"%d m", dist];
     } else {
-        float distKM = dist / 1000;
+        float distKM = (float) dist / 1000;
         cell.gsDistance.text = [NSString stringWithFormat:@"%2.1f Km", distKM];
     }
     
     int time = [path getTime];
-    cell.gsTime.text = [NSString stringWithFormat:@"%d min", (int)(time / 60)];
+    if (time > 60) {
+        cell.gsTime.text = [NSString stringWithFormat:@"%d min", (int)(time / 60)];
+    }else{
+        cell.gsTime.text = [NSString stringWithFormat:@"%d sec", (int) time];
+    }
     
     cell.gsFuelRecharge.text = [NSString stringWithFormat:@"%3.2f L", [path getFuelExpense]];
     
