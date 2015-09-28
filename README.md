@@ -10,6 +10,10 @@ Moreover the user is able to choose from a rich DB of car models that provide th
 see APIClient/APGasStationClient.[hm]
 
 
+###To Build
+use 'pod install' on root dir
+
+
 ###Green
 Save the planet, less CO2 emmisions!
 
