@@ -4,7 +4,7 @@ This is an iPhone app written in objective c that allows users to find the neare
 
 Moreover the user is able to choose from a rich DB of car models that provide the optimizing algorithm with fuel consumption rates.
 
-
+The folder showcase contains some screenshots. Unfortunately they are only in Italian!
 
 ###To Configure
 see APIClient/APGasStationClient.[hm]
