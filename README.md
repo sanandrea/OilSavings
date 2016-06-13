@@ -6,6 +6,14 @@ Moreover the user is able to choose from a rich DB of car models that provide th
 
 The folder showcase contains some screenshots. Unfortunately they are only in Italian!
 
+###Showcase
+
+![alt text](https://github.com/sanandrea/OilSavings/blob/master/showcase/0x0ss.jpg "Map")
+![alt text](https://github.com/sanandrea/OilSavings/blob/master/showcase/0x0ss-2.jpg "Search")
+![alt text](https://github.com/sanandrea/OilSavings/blob/master/showcase/0x0ss-3.jpg "Gas Station Info")
+![alt text](https://github.com/sanandrea/OilSavings/blob/master/showcase/0x0ss-4.jpg "Saving result")
+![alt text](https://github.com/sanandrea/OilSavings/blob/master/showcase/0x0ss-5.jpg "My cars")
+
 ###To Configure
 see APIClient/APGasStationClient.[hm]
 
